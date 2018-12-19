@@ -1,0 +1,23 @@
+
+
+<button id="btn1">按钮1</button>
+<button id="btn2">按钮1</button>
+
+<script>
+$(function(){
+    $('#btn1').on('click',function(){
+        alert('btn1-1');
+    })
+    $('#btn1').on('click',function(){
+        alert('btn1-2');
+    })
+    $('#btn1').off('click');
+    $('#btn2').on('click.first',function(){
+        alert('btn2-1');
+    })
+    $('#btn2').on('click.second',function(){
+        alert('btn2-2');
+    })
+    $('#btn2').off('click.first');
+})
+</script>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <xmp>
+
+    </xmp>
+
+
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    <!--  -->
+    <script type="text/javascript">
+    //request相当于ajax异步请求
+    //定时器相当于 ajax的回调函数
+    //实现连续调用 异步请求的方式，将异步请求放入请求函数，在异步请求回调函数中递归调用请求函数，递归的结束条件是
+        var arr=['a','b','c'];
+        function request(item){
+            setTimeout(function(){
+                arr.splice(0,1);
+                if(arr.length!=0){
+                    request(arr[0])
+                }
+            },200)
+            console.log('request');
+
+        }
+        request(arr[0]);
+
+
+
+      //两组异步请求  先请求第一组，再请求第二组
+      var arr1=[1,2,3,4];//请求列表，请求4次
+      var arr2=[5,6,7,8];//请求列表，请求4次
+      function request1(item){
+            setTimeout(function(){
+                console.log(arr1[0]);
+
+                arr1.splice(0,1);
+                if(arr1.length!=0){
+                    arguments.callee(arr1[0])
+                }else{
+                    if(arr2.length!=0){
+                        request2(arr2[0])
+                    }
+                }
+            },200)
+            // console.log('request1');
+
+        }
+      function request2(item){
+            setTimeout(function(){
+                console.log(arr2[0]);
+                
+                arr2.splice(0,1);
+                if(arr2.length!=0){
+                    arguments.callee(arr2[0])
+                }
+            },200)
+            // console.log('request2');
+
+        }
+        // request1();
+        request2();
+    </script>
+</body>
+
+</html>

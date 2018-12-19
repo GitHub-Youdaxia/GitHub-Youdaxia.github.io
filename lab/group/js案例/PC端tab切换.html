@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+
+    <style type="text/css">
+    .tab-tit li {
+        float: left;
+        margin-left: 20px;
+    }
+
+    .tab-con .mod {
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <h2>PC</h2>
+    <div class="tab-change-box">
+        <div class="tab-tit clearfloat ">
+            <ul>
+                <li>所有活动</li>
+                <li>我参加的</li>
+            </ul>
+        </div>
+        <div class="tab-con">
+            <div class="mod">
+                mod内容1
+            </div>
+            <div class="mod">
+                mod内容2
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+  /**
+   * [tab description]
+   * @param  {[string]} tabChangeBox [tab切换元素类名]
+   * @param  {[boolean]} autoPlay     [true为设置自动切换]
+   * @param  {[number]} speed        [切换速度]
+   * @return {[type]}              [null]
+   */
+        function tab(tabChangeBox, autoPlay, speed) {
+            var index = 0;
+            // var timer=null;
+            if (tabChangeBox) {
+                var lis = $('.' + tabChangeBox + '').find('.tab-tit').find('li');
+                var divs = $('.' + tabChangeBox + '').find('.tab-con').find('.mod');
+            }
+
+            if (!isNaN(speed)) {
+                var speed = speed;
+            }
+            if (autoPlay === true) {
+                var autoPlay = true;
+            }
+            if (tabChangeBox) {}
+            lis.each(function(index, item) {
+                index = index;
+                $(item).on('mouseover', function(event) {
+                    if (autoPlay) {
+                        clearInterval(timer);
+                        if (timer) {
+                            clearInterval(timer);
+                            timer = null;
+                        }
+                    }
+
+                    changeOption(index);
+                })
+                $(item).bind('mouseout', function(event) {
+                    /* Act on the event */
+                    if (autoPlay) {
+                        timer = setInterval(autoPlay, speed)
+                    }
+
+                });
+
+            })
+            if (autoPlay) {
+                timer = setInterval(autoPlay, speed);
+            }
+
+            function autoPlay() {
+                index++;
+                if (index >= lis.length) {
+                    index = 0;
+                }
+                changeOption(index);
+            }
+
+            function changeOption(curIndex) {
+                for (var i = 0; i < lis.length; i++) {
+                    $(lis[i]).removeClass('active');
+                    $(divs[i]).hide().removeClass('annimal-tabBox');
+                }
+                $(lis[curIndex]).addClass('active');
+                $(divs[curIndex]).addClass('annimal-tabBox').show();
+                index = curIndex;
+            }
+        }
+        tab('tab-change-box', true,2000 );//自动切换
+    });
+
+    </script>
+</body>
+
+</html>

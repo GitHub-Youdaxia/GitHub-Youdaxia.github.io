@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>重复选择select的某一项出发change事件方法</title>
+    
+
+
+
+    <style type="text/css">
+    </style>
+
+    <body style="text-align: center">
+        <select id="assistPapersType">
+            <option value="">请选择</option>
+            <option value="1">1-证件类型</option>
+            <option value="2">2-证件类型</option>
+            <option value="3">3-证件类型</option>
+        </select>
+
+        <p id="info"></p>
+        <select id="assistPapersType2">
+            <option value="">请选择</option>
+            <option value="1">1-证件类型</option>
+            <option value="2">2-证件类型</option>
+            <option value="3">3-证件类型</option>
+        </select>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#assistPapersType").change(function () {
+                    if ($(this).val() !== '') {
+                        console.log('选中了' + $(this).val());
+                        $('#info').text($(this).val());
+                        alert($(this).val());
+                    }
+                    $(this).blur();
+                }).focus(function () {
+                    $(this).prop('selectedIndex', 0);
+                });
+                $("#assistPapersType2").change(function () {
+                    if ($(this).val() !== '') {
+                        alert($(this).val());
+                    }
+                 
+                })
+
+            });
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>计算器</title>
+
+<link rel="stylesheet" href="./calculator.css" type="text/css" />
+<style>
+
+</style>
+</head>
+<body>
+
+<div id="jsq_container">
+<div id="jsq_the-calculator">
+<div id="jsq_the-display">
+	<div id="calculatorText"></div>
+	<div id="jsq_total" style='overflow:hidden;'>0</div>
+</div>
+<div id="jsq_the-buttons">
+  <div class="button-row clearfix">
+	<button id="jsq_calc_clear" value="C/E" >C/E</button>
+	<button id="jsq_calc_back" value="&larr;" >&larr;</button>
+	<button id="jsq_calc_neg" value="-/+" >-/+</button>
+	<button class="calc_op" value="/" >&divide;</button>
+  </div>
+  <div class="button-row clearfix">
+	<button class="calc_int" value="7" >7</button>
+	<button class="calc_int" value="8" >8</button>
+	<button class="calc_int" value="9" >9</button>
+	<button class="calc_op" value="*" >&times;</button>
+  </div>
+  <div class="button-row clearfix">
+	<button class="calc_int" value="4" >4</button>
+	<button class="calc_int" value="5" >5</button>
+	<button class="calc_int" value="6" >6</button>
+	<button class="calc_op" value="-" >-</button>
+  </div>
+  <div class="button-row clearfix">
+	<button class="calc_int" value="1" >1</button>
+	<button class="calc_int" value="2" >2</button>
+	<button class="calc_int" value="3" >3</button>
+	<button class="calc_op" value="+" >+</button>
+  </div>
+  <div class="button-row clearfix">
+	<button id="jsq_calc_zero" class="calc_int" value="0" >0</button>
+	<button  id="jsq_calc_decimal" value="." >.</button>
+	<button id="jsq_calc_eval" class="calc_op" value="=" >=</button>
+  </div>
+  <div id="jsq_extra-buttons" class="button-row">
+	<button id="jsq_calc_denom"  value="1/x" ><span class="denominator"><span class="denom-top">1</span><span class="denom-slash">/</span><span class="denom-btm">x</span></span></button>
+	<button id="jsq_calc_sqrt"  value="&radic;" >&radic;</button>
+	<button id="jsq_calc_square"  value="x2" >x<span class="exponent">2</span></button>
+	<button id="jsq_calc_powerof"  value="^" >y<span class="exponent">x</span></button>
+  </div>
+</div>
+</div>
+<div id="jsq_the-results">
+	<h4 class="jsq_the-results_title">计算结果</h4>
+<ul id="jsq_results_list"><li id="jsq_result_default">&nbsp;</li></ul>
+<a id="jsq_result_clear" title='清空结果' href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+</div>
+</div>
+
+
+
+<script src="./jquery-2.2.3.min.js"></script>
+<script src="./js.js"></script>
+<script src="./calculator.js"></script>
+
+</body>
+</html>

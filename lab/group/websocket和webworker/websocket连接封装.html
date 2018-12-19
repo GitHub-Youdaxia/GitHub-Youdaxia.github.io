@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../../B-JUI/js/jquery-3.2.1.min.js"></script>
+    <script>
+    (function($) {
+        $.peripheralRequest = function(options) {
+            new peripheralRequest(options);
+        }
+        var peripheralRequest = function(options) {
+            this.options = {
+                success: function() {},
+                error: function() {},
+            }
+            this.options = $.extend({}, this.options, options);
+            this.init();
+        }
+        peripheralRequest.prototype = {
+            init: function() {
+                this.excute();
+            },
+            tool: {
+
+            },
+            excute: function() {
+                var that = this;
+                var options = this.options;
+                $.peripheraWebsocket(that)
+            }
+        }
+    })(jQuery)
+
+    window.websocketObj = {};
+
+    $(function() {
+        $.peripheraWebsocket = function(peripheralRequest) {
+            var url = peripheralRequest.options.url;
+            var msg = JSON.stringify(peripheralRequest.options.msg);
+            if (window.websocketObj[url] == undefined) {
+                //针对这个地址初始化websocket对象并加上重连机制
+                $.when(connect(url)).done(function(isOpen) {
+                    if (isOpen) {
+                        window.websocketObj[url].onmessage = function(data) {
+                            peripheralRequest.options.success(data);
+                        }
+                        window.websocketObj[url].send(msg);
+                    }
+                });
+
+            } else {
+                window.websocketObj[url].send(msg);
+            }
+        }
+
+        function connect(url) {
+            var defer = $.Deferred();
+            var websocket, lockReconnect = false;
+            var connectObj = {
+                init: function(url) {
+                    websocket = new WebSocket(url);
+                    window.websocketObj[url] = websocket;
+                    websocket.onopen = function(evt) {
+
+                        console.log('onopen');
+                        defer.resolve(true);
+                    };
+
+                    websocket.onclose = function(evt) {
+
+                        console.log("onclose:");
+
+                    };
+                    websocket.onerror = function(evt) {
+                        console.log("onerror:");
+                    };
+                }
+            }
+            connectObj.init(url);
+            return defer.promise();
+        }
+    });
+    </script>
+</body>
+
+</html>

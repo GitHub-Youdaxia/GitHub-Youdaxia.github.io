@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#ddd">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/kakaxi.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#ddd">
+
+
+
+
+
+  <meta name="keywords" content="jquery技巧篇" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="YHHBlog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="转载自https://yusi123.com/3105.html百度搜索jquery技巧篇jQuery代码开发技巧收集 重用你的元素查询// id最快，其次是标签var allItems = $(&amp;quot;li.item&amp;quot;);    使用jQuery切换样式文件$(&amp;apos;link[media=&amp;apos;screen&amp;apos;]&amp;apos;).attr(&amp;apos;href&amp;a">
+<meta name="keywords" content="jquery技巧篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jquery技巧篇">
+<meta property="og:url" content="http://youhanghang.com/2018/10/29/jquery技巧篇/index.html">
+<meta property="og:site_name" content="YHHBlog">
+<meta property="og:description" content="转载自https://yusi123.com/3105.html百度搜索jquery技巧篇jQuery代码开发技巧收集 重用你的元素查询// id最快，其次是标签var allItems = $(&amp;quot;li.item&amp;quot;);    使用jQuery切换样式文件$(&amp;apos;link[media=&amp;apos;screen&amp;apos;]&amp;apos;).attr(&amp;apos;href&amp;a">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-10T06:35:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jquery技巧篇">
+<meta name="twitter:description" content="转载自https://yusi123.com/3105.html百度搜索jquery技巧篇jQuery代码开发技巧收集 重用你的元素查询// id最快，其次是标签var allItems = $(&amp;quot;li.item&amp;quot;);    使用jQuery切换样式文件$(&amp;apos;link[media=&amp;apos;screen&amp;apos;]&amp;apos;).attr(&amp;apos;href&amp;a">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://youhanghang.com/2018/10/29/jquery技巧篇/"/>
+
+
+
+
+
+  <title>jquery技巧篇 | YHHBlog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YHHBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">断剑重铸之日，其势归来之时</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-实验室">
+          <a href="/lab/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            实验室
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://youhanghang.com/2018/10/29/jquery技巧篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="游来游去">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YHHBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">jquery技巧篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T17:00:12+08:00">
+                2018-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="转载自https-yusi123-com-3105-html"><a href="#转载自https-yusi123-com-3105-html" class="headerlink" title="转载自https://yusi123.com/3105.html"></a><a href="https://yusi123.com/3105.html" target="_blank" rel="noopener">转载自https://yusi123.com/3105.html</a></h4><h4 id="百度搜索jquery技巧篇"><a href="#百度搜索jquery技巧篇" class="headerlink" title="百度搜索jquery技巧篇"></a><a href="https://www.baidu.com/s?wd=jquery技巧篇" target="_blank" rel="noopener">百度搜索jquery技巧篇</a></h4><p>jQuery代码开发技巧收集</p>
+<h4 id="重用你的元素查询"><a href="#重用你的元素查询" class="headerlink" title="重用你的元素查询"></a>重用你的元素查询</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// id最快，其次是标签</span><br><span class="line">var allItems = $(&quot;li.item&quot;);  </span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+<h4 id="使用jQuery切换样式文件"><a href="#使用jQuery切换样式文件" class="headerlink" title="使用jQuery切换样式文件"></a>使用jQuery切换样式文件</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&apos;link[media=&apos;screen&apos;]&apos;).attr(&apos;href&apos;, &apos;Alternative.css&apos;);  </span><br></pre></td></tr></table></figure> 
+<h4 id="正确使用ToggleClass"><a href="#正确使用ToggleClass" class="headerlink" title="正确使用ToggleClass"></a>正确使用ToggleClass</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//class. Where some developers would use:  </span><br><span class="line">a.hasClass(&apos;blueButton&apos;) ? a.removeClass(&apos;blueButton&apos;) : a.addClass(&apos;blueButton&apos;);  </span><br><span class="line">//简单实现</span><br><span class="line">a.toggleClass(&apos;blueButton&apos;); </span><br></pre></td></tr></table></figure> 
+<h4 id="创建一个嵌套的过滤器"><a href="#创建一个嵌套的过滤器" class="headerlink" title="创建一个嵌套的过滤器"></a>创建一个嵌套的过滤器</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//判断浏览器类型：</span><br><span class="line">$.browser.mozilla = /firefox/.test(navigator.userAgent.toLowerCase());</span><br><span class="line">$.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());</span><br><span class="line">$.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());</span><br><span class="line">$.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());</span><br><span class="line">//等号后面的表达式返回的就是 true/false， 可以直接用来替换原来的 </span><br><span class="line">//检查是否为 IE6：</span><br><span class="line">if (&apos;undefined&apos; == typeof(document.body.style.maxHeight)) &#123;&#125;</span><br><span class="line">//检查是否为 IE 6-8：</span><br><span class="line">if (!$.support.leadingWhitespace) &#123;&#125;</span><br></pre></td></tr></table></figure> 
+<h4 id="使用jQuery来替换一个元素"><a href="#使用jQuery来替换一个元素" class="headerlink" title="使用jQuery来替换一个元素"></a>使用jQuery来替换一个元素</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;inner first&quot;&gt;Hello&lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;inner second&quot;&gt;And&lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;inner third&quot;&gt;Goodbye&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">$(&apos;.third&apos;).replaceWith($(&apos;.first&apos;));</span><br></pre></td></tr></table></figure> 
+<h4 id="验证一个元素是否为空"><a href="#验证一个元素是否为空" class="headerlink" title="验证一个元素是否为空"></a>验证一个元素是否为空</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if ($(&apos;#keks&apos;).html()) &#123; //Nothing found ;&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+<h4 id="在无序的set中查找一个元素的索引"><a href="#在无序的set中查找一个元素的索引" class="headerlink" title="在无序的set中查找一个元素的索引"></a>在无序的set中查找一个元素的索引</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&quot;ul &gt; li&quot;).click(function () &#123;  </span><br><span class="line">    var index = $(this).prevAll().length;  </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="创建元素时使用对象来定义属性"><a href="#创建元素时使用对象来定义属性" class="headerlink" title="创建元素时使用对象来定义属性"></a>创建元素时使用对象来定义属性</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var e = $(&quot;&quot;, &#123; href: &quot;#&quot;, class: &quot;a-class another-class&quot;, title: &quot;...&quot; &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+<h4 id="使用jQuery预加载图片"><a href="#使用jQuery预加载图片" class="headerlink" title="使用jQuery预加载图片"></a>使用jQuery预加载图片</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">jQuery.preloadImages = function() &#123; for(var i = 0; i&apos;).attr(&apos;src&apos;, arguments[i]); &#125; &#125;;  </span><br><span class="line">// Usage $.preloadImages(&apos;image1.gif&apos;, &apos;/path/to/image2.png&apos;, &apos;some/image3.jpg&apos;);   </span><br></pre></td></tr></table></figure> 
+<h4 id="隐藏包含特定值的元素"><a href="#隐藏包含特定值的元素" class="headerlink" title="隐藏包含特定值的元素"></a>隐藏包含特定值的元素</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&quot;p.value:contains(&apos;thetextvalue&apos;)&quot;).hide();</span><br></pre></td></tr></table></figure> 
+<h4 id="自动的滚动到页面特定区域"><a href="#自动的滚动到页面特定区域" class="headerlink" title="自动的滚动到页面特定区域"></a>自动的滚动到页面特定区域</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">jQuery.fn.autoscroll = function(selector) &#123;</span><br><span class="line">  $(&apos;html,body&apos;).animate(</span><br><span class="line">    &#123;scrollTop: $(selector).offset().top&#125;,</span><br><span class="line">    500</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line">//Then to scroll to the class/area you wish to get to like this:</span><br><span class="line">$(&apos;.area_name&apos;).autoscroll();</span><br></pre></td></tr></table></figure> 
+<h4 id="替换字符串中的单词"><a href="#替换字符串中的单词" class="headerlink" title="替换字符串中的单词"></a>替换字符串中的单词</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var el = $(&apos;#id&apos;);</span><br><span class="line">el.html(el.html().replace(/word/ig, &apos;&apos;));</span><br></pre></td></tr></table></figure> 
+<h4 id="关闭右键的菜单"><a href="#关闭右键的菜单" class="headerlink" title="关闭右键的菜单"></a>关闭右键的菜单</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(document).bind(&apos;contextmenu&apos;,function(e)&#123; return false; &#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="剔除元素中的HTML"><a href="#剔除元素中的HTML" class="headerlink" title="剔除元素中的HTML"></a>剔除元素中的HTML</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(function($) &#123;</span><br><span class="line">    $.fn.stripHtml = function() &#123;</span><br><span class="line">        var regexp = /&amp;lt;(&quot;[^&quot;]*&quot;|&apos;[^&apos;]*&apos;|[^&apos;&quot;&amp;gt;])*&amp;gt;/gi;</span><br><span class="line">        this.each(function() &#123;</span><br><span class="line">            $(this).html(</span><br><span class="line">                $(this).html().replace(regexp,&quot;&quot;)</span><br><span class="line">            );</span><br><span class="line">        &#125;);</span><br><span class="line">        return $(this);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(jQuery);</span><br><span class="line">//usage:</span><br><span class="line">$(&apos;p&apos;).stripHtml();</span><br></pre></td></tr></table></figure> 
+<h4 id="使用closest来得到父元素"><a href="#使用closest来得到父元素" class="headerlink" title="使用closest来得到父元素"></a>使用closest来得到父元素</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&apos;#searchBox&apos;).closest(&apos;div&apos;);</span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+<h4 id="选择或者不选页面上全部复选框"><a href="#选择或者不选页面上全部复选框" class="headerlink" title="选择或者不选页面上全部复选框"></a>选择或者不选页面上全部复选框</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var tog = false; // or true if they are checked on load</span><br><span class="line">$(&apos;a&apos;).click(function() &#123;</span><br><span class="line">    $(&quot;input[type=checkbox]&quot;).attr(&quot;checked&quot;,!tog);</span><br><span class="line">    tog = !tog;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="取得鼠标的X和Y坐标"><a href="#取得鼠标的X和Y坐标" class="headerlink" title="取得鼠标的X和Y坐标"></a>取得鼠标的X和Y坐标</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">    $(document).mousemove(function(e)&#123;</span><br><span class="line">        $(document).ready(function() &#123;</span><br><span class="line">        $().mousemove(function(e)&#123;</span><br><span class="line">        $(&apos;#XY&apos;).html(&quot;Gbin1 X Axis : &quot; + e.pageX + &quot; | Gbin1 Y Axis &quot; + e.pageY);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="使得整个列表元素-LI-可点击"><a href="#使得整个列表元素-LI-可点击" class="headerlink" title="使得整个列表元素(LI)可点击"></a>使得整个列表元素(LI)可点击</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&quot;ul li&quot;).click(function()&#123;</span><br><span class="line">  window.location=$(this).find(&quot;a&quot;).attr(&quot;href&quot;); return false;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="使用jQuery来解析XML"><a href="#使用jQuery来解析XML" class="headerlink" title="使用jQuery来解析XML"></a>使用jQuery来解析XML</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function parseXml(xml) &#123;</span><br><span class="line">  //find every Tutorial and print the author</span><br><span class="line">  $(xml).find(&quot;Tutorial&quot;).each(function()</span><br><span class="line">  &#123;</span><br><span class="line">  $(&quot;#output&quot;).append($(this).attr(&quot;author&quot;) + &quot;&quot;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+<h4 id="判断一个图片是否加载完全"><a href="#判断一个图片是否加载完全" class="headerlink" title="判断一个图片是否加载完全"></a>判断一个图片是否加载完全</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&apos;#theGBin1Image&apos;).attr(&apos;src&apos;, &apos;image.jpg&apos;).load(function() &#123;</span><br><span class="line">    alert(&apos;This Image Has Been Loaded&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="在表单中禁用“回车键”"><a href="#在表单中禁用“回车键”" class="headerlink" title="在表单中禁用“回车键”"></a>在表单中禁用“回车键”</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&quot;#form&quot;).keypress(function(e) &#123;</span><br><span class="line">  if (e.which == 13) &#123;</span><br><span class="line">    return false;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="清除所有的表单数据"><a href="#清除所有的表单数据" class="headerlink" title="清除所有的表单数据"></a>清除所有的表单数据</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function clearForm(form) &#123;</span><br><span class="line">  // iterate over all of the inputs for the form</span><br><span class="line">  // element that was passed in</span><br><span class="line">  $(&apos;:input&apos;, form).each(function() &#123;</span><br><span class="line">    var type = this.type;</span><br><span class="line">    var tag = this.tagName.toLowerCase(); // normalize case</span><br><span class="line">    // it&apos;s ok to reset the value attr of text inputs,</span><br><span class="line">    // password inputs, and textareas</span><br><span class="line">    if (type == &apos;text&apos; || type == &apos;password&apos; || tag == &apos;textarea&apos;)</span><br><span class="line">      this.value = &quot;&quot;;</span><br><span class="line">    // checkboxes and radios need to have their checked state cleared</span><br><span class="line">    // but should *not* have their &apos;value&apos; changed</span><br><span class="line">    else if (type == &apos;checkbox&apos; || type == &apos;radio&apos;)</span><br><span class="line">      this.checked = false;</span><br><span class="line">    // select elements need to have their &apos;selectedIndex&apos; property set to -1</span><br><span class="line">    // (this works for both single and multiple select elements)</span><br><span class="line">    else if (tag == &apos;select&apos;)</span><br><span class="line">      this.selectedIndex = -1;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure> 
+<h4 id="将表单中的按钮禁用"><a href="#将表单中的按钮禁用" class="headerlink" title="将表单中的按钮禁用"></a>将表单中的按钮禁用</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//下面的代码对于ajax操作非常有用，你可以有效的避免用户多次提交数据，个人也经常使用：</span><br><span class="line"></span><br><span class="line">//禁用按钮：</span><br><span class="line"></span><br><span class="line">$(&quot;#somebutton&quot;).attr(&quot;disabled&quot;, true);</span><br><span class="line">启动按钮：</span><br><span class="line"></span><br><span class="line">$(&quot;#submit-button&quot;).removeAttr(&quot;disabled&quot;);</span><br><span class="line">//可能大家往往会使用.attr(‘disabled’,false);，不过这是不正确的调用。</span><br></pre></td></tr></table></figure> 
+<h4 id="输入内容后启用递交按钮"><a href="#输入内容后启用递交按钮" class="headerlink" title="输入内容后启用递交按钮"></a>输入内容后启用递交按钮</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//这个代码和上面类似，都属于帮助用户控制表单递交按钮。使用这段代码后，递交按钮只有在用户输入指定内容后才可以启动。</span><br><span class="line">$(&apos;#username&apos;).keyup(function() &#123;</span><br><span class="line">    $(&apos;#submit&apos;).attr(&apos;disabled&apos;, !$(&apos;#username&apos;).val()); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="禁止多次递交表单"><a href="#禁止多次递交表单" class="headerlink" title="禁止多次递交表单"></a>禁止多次递交表单</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(document).ready(function() &#123;</span><br><span class="line">  $(&apos;form&apos;).submit(function() &#123;</span><br><span class="line">    if(typeof jQuery.data(this, &quot;disabledOnSubmit&quot;) == &apos;undefined&apos;) &#123;</span><br><span class="line">      jQuery.data(this, &quot;disabledOnSubmit&quot;, &#123; submited: true &#125;);</span><br><span class="line">      $(&apos;input[type=submit], input[type=button]&apos;, this).each(function() &#123;</span><br><span class="line">        $(this).attr(&quot;disabled&quot;, &quot;disabled&quot;);</span><br><span class="line">      &#125;);</span><br><span class="line">      return true;</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">      return false;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="高亮显示目前聚焦的输入框标示"><a href="#高亮显示目前聚焦的输入框标示" class="headerlink" title="高亮显示目前聚焦的输入框标示"></a>高亮显示目前聚焦的输入框标示</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//有时候你需要提示用户目前操作的输入框，你可以使用下面代码高亮显示标示：</span><br><span class="line">$(&quot;form :input&quot;).focus(function() &#123;</span><br><span class="line">  $(&quot;label[for=&apos;&quot; + this.id + &quot;&apos;]&quot;).addClass(&quot;labelfocus&quot;);</span><br><span class="line">&#125;).blur(function() &#123;</span><br><span class="line">  $(&quot;label&quot;).removeClass(&quot;labelfocus&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<h4 id="自动将数据导入selectbox中"><a href="#自动将数据导入selectbox中" class="headerlink" title="自动将数据导入selectbox中"></a>自动将数据导入selectbox中</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//下面代码能够使用ajax数据自动生成选择框的内容</span><br><span class="line">$(function()&#123;</span><br><span class="line">  $(&quot;select#ctlJob&quot;).change(function()&#123;</span><br><span class="line">    $.getJSON(&quot;/select.php&quot;,&#123;id: $(this).val(), ajax: &apos;true&apos;&#125;, function(j)&#123;</span><br><span class="line">      var options = &apos;&apos;;</span><br><span class="line">      for (var i = 0; i &lt; j.length; i++) &#123;</span><br><span class="line">        options += &apos;&lt;option value=&quot;&apos; + j[i].optionValue + &apos;&quot;&gt;&apos; + j[i].optionDisplay + &apos;&lt;/option&gt;&apos;;</span><br><span class="line">      &#125;</span><br><span class="line">      $(&quot;select#ctlPerson&quot;).html(options);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure> 
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jquery/" rel="tag"># jquery</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/29/flex学习/" rel="next" title="flex布局学习">
+                <i class="fa fa-chevron-left"></i> flex布局学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/29/jquery插件开发/" rel="prev" title="jquery插件开发">
+                jquery插件开发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">游来游去</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#转载自https-yusi123-com-3105-html"><span class="nav-number">1.</span> <span class="nav-text">转载自https://yusi123.com/3105.html</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#百度搜索jquery技巧篇"><span class="nav-number">2.</span> <span class="nav-text">百度搜索jquery技巧篇</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重用你的元素查询"><span class="nav-number">3.</span> <span class="nav-text">重用你的元素查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用jQuery切换样式文件"><span class="nav-number">4.</span> <span class="nav-text">使用jQuery切换样式文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正确使用ToggleClass"><span class="nav-number">5.</span> <span class="nav-text">正确使用ToggleClass</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个嵌套的过滤器"><span class="nav-number">6.</span> <span class="nav-text">创建一个嵌套的过滤器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用jQuery来替换一个元素"><span class="nav-number">7.</span> <span class="nav-text">使用jQuery来替换一个元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证一个元素是否为空"><span class="nav-number">8.</span> <span class="nav-text">验证一个元素是否为空</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在无序的set中查找一个元素的索引"><span class="nav-number">9.</span> <span class="nav-text">在无序的set中查找一个元素的索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建元素时使用对象来定义属性"><span class="nav-number">10.</span> <span class="nav-text">创建元素时使用对象来定义属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用jQuery预加载图片"><span class="nav-number">11.</span> <span class="nav-text">使用jQuery预加载图片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隐藏包含特定值的元素"><span class="nav-number">12.</span> <span class="nav-text">隐藏包含特定值的元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动的滚动到页面特定区域"><span class="nav-number">13.</span> <span class="nav-text">自动的滚动到页面特定区域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#替换字符串中的单词"><span class="nav-number">14.</span> <span class="nav-text">替换字符串中的单词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭右键的菜单"><span class="nav-number">15.</span> <span class="nav-text">关闭右键的菜单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#剔除元素中的HTML"><span class="nav-number">16.</span> <span class="nav-text">剔除元素中的HTML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用closest来得到父元素"><span class="nav-number">17.</span> <span class="nav-text">使用closest来得到父元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择或者不选页面上全部复选框"><span class="nav-number">18.</span> <span class="nav-text">选择或者不选页面上全部复选框</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#取得鼠标的X和Y坐标"><span class="nav-number">19.</span> <span class="nav-text">取得鼠标的X和Y坐标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使得整个列表元素-LI-可点击"><span class="nav-number">20.</span> <span class="nav-text">使得整个列表元素(LI)可点击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用jQuery来解析XML"><span class="nav-number">21.</span> <span class="nav-text">使用jQuery来解析XML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断一个图片是否加载完全"><span class="nav-number">22.</span> <span class="nav-text">判断一个图片是否加载完全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在表单中禁用“回车键”"><span class="nav-number">23.</span> <span class="nav-text">在表单中禁用“回车键”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#清除所有的表单数据"><span class="nav-number">24.</span> <span class="nav-text">清除所有的表单数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将表单中的按钮禁用"><span class="nav-number">25.</span> <span class="nav-text">将表单中的按钮禁用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入内容后启用递交按钮"><span class="nav-number">26.</span> <span class="nav-text">输入内容后启用递交按钮</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#禁止多次递交表单"><span class="nav-number">27.</span> <span class="nav-text">禁止多次递交表单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高亮显示目前聚焦的输入框标示"><span class="nav-number">28.</span> <span class="nav-text">高亮显示目前聚焦的输入框标示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动将数据导入selectbox中"><span class="nav-number">29.</span> <span class="nav-text">自动将数据导入selectbox中</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">游来游去</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

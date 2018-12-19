@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+ 
+    <link rel="stylesheet" href="/lab/plugins/bootstrap-treeview/bootstrap-treeview.css">
+</head>
+
+<body>
+
+
+    <div id="function-tree"></div>
+
+
+    <script src="/lab/plugins/bootstrap-treeview/bootstrap-treeview.js"></script>
+    <script>
+        var menudata = [{
+            "tx_name": "交易",
+            "parent_tx_code": "11111",
+            "tx_path": "",
+            "tx_code": "000000"
+        }, {
+            "tx_name": "存款业务",
+            "parent_tx_code": "000000",
+            "tx_path": "",
+            "tx_code": "10"
+        }, {
+            "tx_name": "测试菜单2",
+            "parent_tx_code": "1001",
+            "tx_path": "error.html",
+            "tx_code": "100100"
+        }, {
+            "tx_name": "测试菜单1",
+            "parent_tx_code": "10",
+            "tx_path": "",
+            "tx_code": "1001"
+        }];
+
+
+
+        var menudatatemp = [];
+        for (var obj in menudata) {
+            var arr = {};
+            arr.nodeId = menudata[obj].tx_code;
+            arr.pid = menudata[obj].parent_tx_code;
+            // arr.level = menudata[obj].menuLevel;
+            arr.text = menudata[obj].tx_name;
+            arr.href = menudata[obj].tx_path;
+            arr.tag = '';
+            menudatatemp.push(arr);
+        }
+
+        menudata = transData(menudatatemp, 'nodeId', 'pid', 'nodes');
+        console.log('%c' + 'menudata', 'color:#ccc');
+        console.log(menudata);
+        $('#function-tree').treeview({
+            data: menudata,
+            levels: 5,
+            backColor: '#FFF',
+            selectedBackColor: '#48B16B',
+            selectedColor: '#fff',
+            multiSelect: true,
+            selectedIcon: 'glyphicon glyphicon-ok',
+        })
+
+
+        function transData(a, id, pid, children) {
+            var r = [];
+            var hash = {};
+            var i = 0;
+            var j = 0;
+            var len = a.length;
+            for (; i < len; i++) {
+                hash[a[i][id]] = a[i];
+            }
+            for (; j < len; j++) {
+                var aVal = a[j];
+                var hashVP = hash[aVal[pid]];
+                if (hashVP && aVal[pid] != '0000000') {
+                    !hashVP[children] && (hashVP[children] = []);
+                    hashVP[children].push(aVal);
+                } else {
+                    r.push(aVal);
+                }
+            }
+            return r;
+        }
+        $('#function-tree').on('nodeSelected', function (event, data) {
+            console.log('data:',data);
+            //$('#function-tree').treeview('unselectNode', data['nodeId']);
+           
+        })
+        $('#function-tree').on('nodeUnselected', function (event, data) {
+         
+        })        
+    </script>
+</body>
+
+</html>

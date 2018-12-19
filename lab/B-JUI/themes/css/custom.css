@@ -1,0 +1,66 @@
+#bjui-hnav-navbar {
+    display: inline-block;
+    margin-bottom: 0;
+    height: 24px;
+    line-height: 24px;
+}
+
+#bjui-hnav-navbar>li {
+    float: left;
+    margin-left: 30px;
+}
+
+#bjui-hnav-navbar>li a {
+    color: #FFF;
+}
+#bjui-top .container_fluid{height: 24px;}
+.hide{display: none;}
+/*清除浮动代码*/
+.clearfloat:after {display: block;clear: both;content: "";visibility: hidden;height: 0;}
+.clearfloat{zoom:1;}
+
+#bjui-navtab > .tabsPageContent > .navtabPage{
+    overflow:auto;
+}
+#bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > .nav .close{
+    font-size: 14px;
+}
+/*隐藏滚动条*/
+/* #bjui-navtab > .tabsPageContent > .navtabPage */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* 展示显示代码元素的样式*/
+.showCodeBox{display: -webkit-flex; /* Safari */display: flex;position: absolute;}
+/* .showCodeBox.right{width: 50%;height: 100%;right: 0; top:0;flex-direction:column; }
+.showCodeBox.bottom{width: 100%;height: 50%;bottom: 0;left: 0;flex-direction:row;}
+.showCodeBox textarea{flex-grow: 1;}
+.showCodeBox textarea{display: none;}
+
+.srcBtns{position: absolute;top: 0;right: 0;}
+.codeBoxPosition{display:none;}
+*/
+.source-code-textarea{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+} 
+#srcBtns{position: fixed;right: 0;top:300px;z-index: 1111;}
+
+
+/*自定义简单的markdown样式*/
+div.markdown .list-group-item{
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+    text-indent: 2em;
+}
+span.tip{
+    color: red;
+    font-size: 18px;
+    margin-left: 3px;
+    margin-right: 3px;
+}

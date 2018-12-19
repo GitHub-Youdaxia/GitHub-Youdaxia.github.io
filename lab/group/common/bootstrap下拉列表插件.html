@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+
+    <link rel="stylesheet" href="/lab/plugins/bootstrapSelect/bootstrap-select.css">
+    <script src="/lab/plugins/bootstrapSelect/bootstrap-select.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <select id="assistPapersType" data-toggle="selectpicker" data-width="100%" aria-required="true" class="selectpicker">
+        <option value="0">请选择</option>
+        <option value="1">1-证件类型</option>
+        <option value="2">2-证件类型</option>
+        <option value="3">3-证件类型</option>
+    </select>
+    <select id="assistPapersType2"  class="selectpicker">
+        <option value="0">请选择</option>
+        <option value="1">1-证件类型</option>
+        <option value="2">2-证件类型</option>
+        <option value="3">3-证件类型</option>
+    </select>
+
+
+    <xmp>
+
+    </xmp>
+
+
+
+    <!--  -->
+    <script>
+        ;
+        (function ($) {
+            $.fn.selectpickerCustome = function (options) {
+                if (options == 'val') {
+                    return $(this).selectpicker('val');
+                }                
+                new selectpickerCustome(options, $(this));
+
+            }
+            var selectpickerCustome = function (options, $this) {
+                if (typeof options == 'object') {
+                    this.options = {
+                        data: [],
+                        $this: $this,
+                        selectpickerOptions: {},
+                        callback: function () {},
+                    }
+                    this.options = $.extend({}, this.options, options);
+                    this.init();
+                }
+
+            }
+            selectpickerCustome.prototype = {
+                init: function () {
+                    this.excute();
+                },
+                excute: function () {
+                    var that = this;
+                    var $this = that.options.$this;
+                    $this.empty();
+                    var selectpickerOptions = that.options.selectpickerOptions;
+                    var methods = {
+                        //获取html  
+                        addOptionsHtml: function (data) {
+                            var opts = '';
+                            if (typeof data != "undefined") {
+                                if (data != "") {
+                                    opts += '<option>--请选择--</option>';
+                                    for (var i = 0; i < data.length; i++) {
+                                        opts += '<option value=' + data[i].v + ' >' + data[i].k +
+                                            '-' +
+                                            data[i].v +
+                                            '</option>';
+                                    }
+
+                                }
+                            }
+                            $this.append(opts);
+                        },
+                        addNewOption:function(value){
+                            //找到输入框的值 隐藏下拉框，重新获取焦点，向原声select append 选项并设置为选中
+                            $this.next().find('.filter-option').text(value);
+                            $this.next().removeClass('open');
+                            $this.next().find('.selectpicker').focus();
+                            $this.append('<option value="' + value + '">' + value + '</option>');
+                            $this.val(value);
+                        }
+
+                    };
+                    methods.addOptionsHtml(that.options.data);
+
+                    $this.selectpicker(selectpickerOptions);
+                    $this.selectpicker("refresh");
+                    $this.selectpicker("render");
+                    $this.next().delegate('.input-block-level', 'keyup', function (event) {
+                        var lastLi = $this.next().find('.dropdown-menu').find(
+                            'li:last-child');
+                        var noresults = lastLi.hasClass('no-results');
+                        if (event.keyCode == '13' && noresults) {
+                            
+                            var value = $(this).val();
+                            methods.addNewOption(value);
+
+                        }
+                    })
+                    $this.next().delegate('.no-results', 'click', function (event) {
+                        var value = $(this).parents('.dropdown-menu').find('.input-block-level').val();
+                        methods.addNewOption(value);
+
+                    })
+                }
+            }
+        })(jQuery);
+    </script>
+    <script type="text/javascript">
+        $(function () {
+
+            var data = [{
+                k: 'a',
+                v: '1'
+            }, {
+                k: 'b',
+                v: '2'
+            }, {
+                k: 'c',
+                v: '3'
+            }, {
+                k: 'd',
+                v: '4'
+            }];
+
+            $('#assistPapersType').selectpickerCustome({
+                data: data,
+                selectpickerOptions: {
+                    noneResultsText: '添加：',
+                    liveSearch: true,
+                    // defaultSelect: "",
+                }
+
+            });
+            console.log($('#assistPapersType').selectpickerCustome('val'));
+            $('#assistPapersType').on('show.bs.select',function(){
+                alert('show.bs.select')
+            })
+            $('#assistPapersType2').on('show.bs.select',function(){
+                alert('show.bs.select')
+            })
+
+        })
+    </script>
+</body>
+
+</html>

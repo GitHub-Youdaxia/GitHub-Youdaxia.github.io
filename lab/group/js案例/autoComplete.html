@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    <!--  -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/custom.css"> -->
+    <style type="text/css">
+        .autocomplete-suggestions {
+            font-size: 10px;
+            border: 1px solid #999;
+            background: #FFF;
+            cursor: default;
+            overflow: auto;
+            -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+            -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+            box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+        }
+
+        .autocomplete-suggestion {
+            padding: 2px 5px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .autocomplete-no-suggestion {
+            padding: 2px 5px;
+        }
+
+        .autocomplete-selected {
+            background: #8fceff;
+        }
+
+        .autocomplete-suggestions strong {
+            font-weight: normal;
+            color: #3399FF;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="search" id="menuSearchParam">
+    
+
+    <script>
+           /**
+     * 扩展String方法
+     */
+    $.extend(String.prototype, {
+        isPositiveInteger: function() {
+            return (new RegExp(/^[1-9]\d*$/).test(this))
+        },
+        isInteger: function() {
+            return (new RegExp(/^\d+$/).test(this))
+        },
+        isNumber: function() {
+            return (new RegExp(/^([-]{0,1}(\d+)[\.]+(\d+))|([-]{0,1}(\d+))$/).test(this))
+        },
+        isNormalID: function() {
+            return (new RegExp(/^[a-zA-Z][0-9a-zA-Z_-]*$/).test(this))
+        },
+        includeChinese: function() {
+            return (new RegExp(/[\u4E00-\u9FA5]/).test(this))
+        },
+        trim: function() {
+            return $.trim(this)
+        },
+        startsWith: function (pattern) {
+            return this.indexOf(pattern) === 0
+        },
+        endsWith: function(pattern) {
+            var d = this.length - pattern.length
+            return d >= 0 && this.lastIndexOf(pattern) === d
+        },
+        replaceSuffix: function(index) {
+            return this.replace(/\[[0-9]+\]/,'['+index+']').replace('#index#',index)
+        },
+        replaceSuffix2: function(index) {
+            return this.replace(/\-(i)([0-9]+)$/, '-i'+ index).replace('#index#', index)
+        },
+        trans: function() {
+            return this.replace(/&lt;/g, '<').replace(/&gt;/g,'>').replace(/&quot;/g, '"')
+        },
+        encodeTXT: function() {
+            return (this).replaceAll('&', '&amp;').replaceAll('<','&lt;').replaceAll('>', '&gt;').replaceAll(' ', '&nbsp;')
+        },
+        replaceAll: function(os, ns) {
+            return this.replace(new RegExp(os, 'gm'), ns)
+        },
+        /*替换占位符为对应选择器的值*/ //{^(.|\#)[A-Za-z0-9_-\s]*}
+        replacePlh: function($box) {
+            $box = $box || $(document)
+            return this.replace(/{\/?[^}]*}/g, function($1) {
+                var $input = $box.find($1.replace(/[{}]+/g, ''))
+                
+                return $input && $input.val() ? $input.val() : $1
+            })
+        },
+        replaceMsg: function(holder) {
+            return this.replace(new RegExp('({.*})', 'g'), holder)
+        },
+        replaceTm: function($data) {
+            if (!$data) return this
+            
+            return this.replace(RegExp('({[A-Za-z_]+[A-Za-z0-9_-]*})','g'), function($1) {
+                return $data[$1.replace(/[{}]+/g, '')]
+            })
+        },
+        replaceTmById: function(_box) {
+            var $parent = _box || $(document)
+            
+            return this.replace(RegExp('({[A-Za-z_]+[A-Za-z0-9_-]*})','g'), function($1) {
+                var $input = $parent.find('#'+ $1.replace(/[{}]+/g, ''))
+                return $input.val() ? $input.val() : $1
+            })
+        },
+        isFinishedTm: function() {
+            return !(new RegExp('{\/?[^}]*}').test(this))
+        },
+        skipChar: function(ch) {
+            if (!this || this.length===0) return ''
+            if (this.charAt(0)===ch) return this.substring(1).skipChar(ch)
+            return this
+        },
+        isValidPwd: function() {
+            return (new RegExp(/^([_]|[a-zA-Z0-9]){6,32}$/).test(this))
+        },
+        isValidMail: function() {
+            return(new RegExp(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/).test(this.trim()))
+        },
+        isSpaces: function() {
+            for (var i = 0; i < this.length; i += 1) {
+                var ch = this.charAt(i)
+                
+                if (ch!=' '&& ch!='\n' && ch!='\t' && ch!='\r') return false
+            }
+            return true
+        },
+        isPhone:function() {
+            return (new RegExp(/(^([0-9]{3,4}[-])?\d{3,8}(-\d{1,6})?$)|(^\([0-9]{3,4}\)\d{3,8}(\(\d{1,6}\))?$)|(^\d{3,8}$)/).test(this))
+        },
+        isUrl:function() {
+            return (new RegExp(/^[a-zA-z]+:\/\/([a-zA-Z0-9\-\.]+)([-\w .\/?%&=:]*)$/).test(this))
+        },
+        isExternalUrl:function() {
+            return this.isUrl() && this.indexOf('://'+ document.domain) == -1
+        },
+        toBool: function() {
+            return (this.toLowerCase() === 'true') ? true : false
+        },
+        toJson: function() {
+            var json = this
+            
+            try {
+                if (typeof json === 'object') json = json.toString()
+                if (!json.trim().match("^\{(.+:.+,*){1,}\}$")) return this
+                else return JSON.parse(this)
+            } catch (e) {
+                return this
+            }
+        },
+        toObj: function() {
+            var obj = null
+            
+            try {
+                obj = (new Function('return '+ this))()
+            } catch (e) {
+                obj = this
+                BJUI.debug('String toObj：Parse "String" to "Object" error! Your str is: '+ this)
+            }
+            return obj
+        },
+        /**
+         * String to Function
+         * 参数(方法字符串或方法名)： 'function(){...}' 或 'getName' 或 'USER.getName' 均可
+         * Author: K'naan
+         */
+        toFunc: function() {
+            if (!this || !this.length) return undefined
+            
+            if (this.startsWith('function')) {
+                return (new Function('return '+ this))()
+            }
+            
+            try {
+                var m_arr = this.split('.'), fn = window
+                
+                for (var i = 0; i < m_arr.length; i++) {
+                    fn = fn[m_arr[i]]
+                }
+                
+                if (typeof fn === 'function') {
+                    return fn
+                }
+            } catch (e) {
+                return undefined
+            }
+        }
+    })
+    </script>
+    <script src="../../plugins/autoComplete/jquery.autocomplete.js"></script>
+    <script src="../../plugins/autoComplete/ChinesePY.js"></script>
+    <script>
+
+        $(function () {
+
+            var arr = [{
+                "value": "219110-客户账户信息查询",
+                "data": "html/Source/reverseWritingTransaction/customerAccInfoQuery.ehtml"
+            }, {
+                "value": "220103-非指定账户圈存",
+                "data": "html/Source/reverseWritingTransaction/unspecifiedAccDeposit.ehtml"
+            }, {
+                "value": "210431-转存现金收付",
+                "data": "html/Source/reverseWritingTransaction/transferCashReceiptPay.ehtml"
+            }, {
+                "value": "210305-密码重置",
+                "data": "html/Source/reverseWritingTransaction/ResetPassword.ehtml"
+            }, {
+                "value": "219003-挂失登记簿查询",
+                "data": "html/Source/reverseWritingTransaction/EnquiriesOnTheLossRegister.ehtml"
+            }, {
+                "value": "210705-随机换折/单/簿",
+                "data": "html/Source/reverseWritingTransaction/randomChangeSheet.ehtml"
+            }, {
+                "value": "210604-转存现金收付取消",
+                "data": "html/Source/reverseWritingTransaction/transferCashReceiptPayCancel.ehtml"
+            }, {
+                "value": "219103-转存业务平衡表查询",
+                "data": "html/Source/reverseWritingTransaction/transferBalanceQuery.ehtml"
+            }, {
+                "value": "210307-挂失撤销凭证",
+                "data": "html/Source/reverseWritingTransaction/ReportLossOfRevocationVoucher.ehtml"
+            }, {
+                "value": "210303-再挂失",
+                "data": "html/Source/reverseWritingTransaction/ReReportLoss.ehtml"
+            }, {
+                "value": "410105-信用卡账户转账还款",
+                "data": "html/Source/reverseWritingTransaction/creditCardAccTransferRepayment.ehtml"
+            }, {
+                "value": "310130-退汇挂账核销",
+                "data": "html/Source/reverseWritingTransaction/CancellationOfForeignExchangeByRegistered.ehtml"
+            }, {
+                "value": "210304-人工解挂失",
+                "data": "html/Source/reverseWritingTransaction/ArtificialSoluteReportLoss.ehtml"
+            }, {
+                "value": "310190-跨行汇款登记簿",
+                "data": "html/Source/reverseWritingTransaction/CrossBankRemittanceRegister.ehtml"
+            }, {
+                "value": "210607-转存现金收付冲正",
+                "data": "html/Source/reverseWritingTransaction/transferCashReceiptPayCorrect.ehtml"
+            }, {
+                "value": "210302-挂失事项更改",
+                "data": "html/Source/reverseWritingTransaction/ReportLossEventUpdate.ehtml"
+            }, {
+                "value": "390101-行名行号查询",
+                "data": "html/Source/reverseWritingTransaction/rowNameLineNumQueryConditions.ehtml"
+            }, {
+                "value": "210308-紧急挂失",
+                "data": "html/Source/reverseWritingTransaction/UrgentReportLoss.ehtml"
+            }, {
+                "value": "310120-预约账户汇款申请",
+                "data": "html/Source/reverseWritingTransaction/BookingAccountRemittanceApplication.ehtml"
+            }, {
+                "value": "310121-预约账户汇款修改/撤销",
+                "data": "html/Source/reverseWritingTransaction/ReservationAccountRemittance.ehtml"
+            }, {
+                "value": "310122-预约账户汇款查询",
+                "data": "html/Source/reverseWritingTransaction/ReservationAccountRemittanceInquiry.ehtml"
+            }, {
+                "value": "110101-客户信息录入/修改",
+                "data": "html/Source/reverseWritingTransaction/customerInfoWriteUpdate.ehtml"
+            }, {
+                "value": "019007-联网核查流水查询",
+                "data": "html/Source/queryManage/NetworkFlowQuery.ehtml"
+            }, {
+                "value": "019005-柜员交易流水查询",
+                "data": "html/Source/queryManage/CounterTransFlowQuery.ehtml"
+            }, {
+                "value": "010201-柜员密码修改",
+                "data": "html/Source/tellerManage/tellerPasswordModify.ehtml"
+            }, {
+                "value": "020102-机构签退",
+                "data": "html/Source/organizationManage/instSignBack.ehtml"
+            }, {
+                "value": "019003-柜员签到/签退登记簿查询",
+                "data": "html/Source/tellerManage/tellerSignRecordQuery.ehtml"
+            }, {
+                "value": "010202-修改智能令牌静态密码",
+                "data": "html/Source/tellerManage/brainPowerPasswordModify.ehtml"
+            }, {
+                "value": "019004-柜员末笔账务类交易查询",
+                "data": "html/Source/queryManage/TellerLastTransQuery.ehtml"
+            }, {
+                "value": "029003-新旧机构对照查询",
+                "data": "html/Source/organizationManage/newAndOldInstContrastQuery.ehtml"
+            }, {
+                "value": "029001-网点信息查询",
+                "data": "html/Source/organizationManage/networkInfoQuery.ehtml"
+            }, {
+                "value": "210101-综合开户",
+                "data": "html/Source/integratedTransaction/colligateOpenAccount.html"
+            }, {
+                "value": "210103-行内取款",
+                "data": "html/Source/integratedTransaction/withdrawMoney.ehtml"
+            }, {
+                "value": "210630-冲正",
+                "data": "html/Source/integratedTransaction/accountingClassCorrect.ehtml"
+            }, {
+                "value": "210403-冻结",
+                "data": "html/Source/integratedTransaction/freeze.ehtml"
+            }, {
+                "value": "210406-扣划",
+                "data": "html/Source/integratedTransaction/deduct.ehtml"
+            }, {
+                "value": "310101-汇款",
+                "data": "html/Source/integratedTransaction/remitMoney.ehtml"
+            }, {
+                "value": "110201-综合签约",
+                "data": "html/Source/integratedTransaction/colligateSignContract.html"
+            }, {
+                "value": "210405-急付款解止付划账",
+                "data": "html/Source/integratedTransaction/emergPayRelsStopTran.ehtml"
+            }, {
+                "value": "210402-解止付",
+                "data": "html/Source/integratedTransaction/relsStop.ehtml"
+            }, {
+                "value": "210401-止付",
+                "data": "html/Source/integratedTransaction/stopPayment.ehtml"
+            }, {
+                "value": "210404-急付款开户方止付",
+                "data": "html/Source/integratedTransaction/emergPayOpenAccStopPay.ehtml"
+            }, {
+                "value": "210105-综合销户",
+                "data": "html/Source/integratedTransaction/comprehensiveRemoveAccount.ehtml"
+            }, {
+                "value": "210301-凭证密印挂失",
+                "data": "html/Source/integratedTransaction/voucherPrintingAndLossOfLoss.ehtml"
+            }, {
+                "value": "210306-挂失补发折/单/卡",
+                "data": "html/Source/integratedTransaction/missingNewFoldCard.ehtml"
+            }, {
+                "value": "210620-绿卡通/一本通定活互转取消",
+                "data": "html/Source/integratedTransaction/GreenCartoonorOnePassAccount.ehtml"
+            }, {
+                "value": "210104-子账户管理",
+                "data": "html/Source/integratedTransaction/sonAccount-firstInterface.ehtml"
+            }, {
+                "value": "110102-客户信息管理",
+                "data": "html/Source/integratedTransaction/costumerRelationshipManagement.ehtml"
+            }, {
+                "value": "210610-账务类交易取消",
+                "data": "html/Source/integratedTransaction/accountingClassCancel.ehtml"
+            }, {
+                "value": "210102-行内存款",
+                "data": "html/Source/integratedTransaction/bankDeposit.ehtml"
+            }];
+            console.log('arr:', arr);
+            $('#menuSearchParam').autocomplete({
+                lookup: arr,
+                minChars: 1,
+                onSelect: function (suggestion) {
+                    var pId = suggestion.value.split("-")[0];
+                    var name = suggestion.value.split("-")[1];
+                    var url = suggestion.data;
+                    openMenuNavtab(pId, name, url);
+                    // suggestion.data);
+                },
+                showNoSuggestionNotice: true,
+                noSuggestionNotice: 'Sorry, no matching results',
+                lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
+                    var retValue = "";
+                    if (suggestion != null) {
+                        var py = Pinyin.GetJP(suggestion.value.split("-")[1]);
+                        var pyAll = Pinyin.GetQP(suggestion.value.split("-")[1]);
+                        retValue = suggestion.value.split("-")[0] + "-" + suggestion.value.split(
+                            "-")[1] + "-" + py + "|" + pyAll;
+                    }
+                    return retValue.indexOf(queryLowerCase) !== -1;
+                },
+            });
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>数据库知识</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+    <style type="text/css">
+        .table>tbody>tr>td,
+        .table>tbody>tr>th,
+        .table>tfoot>tr>td,
+        .table>tfoot>tr>th,
+        .table>thead>tr>td,
+        .table>thead>tr>th {
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>tb_bas_dic_master字典主表，20766代表外设类型，用20766在tb_bas_dic_detail详情表中查询所有外设类型</li>
+        <li>tb_bas_dic_detail是一张详情表，只依据opt_code查找它对应的类型及码值，opt_code的值可以是tb_bas_dic_master字典主表opt_code，也可以是tb_bas_dic_detail中的某一个grouping_code，值可以用英文单词可读性更强</li>
+        <li>每种外设类型对应一定数量的外设品牌,所以外设类型是外设品牌的分组类型，所以在tb_bas_dic_detail中的grouping_code外设类型的分组名为opt_code+'_'+subopt_code,例如ICC_IC读卡器的grouping_code
+            的值20766_01，通过select * from tb_bas_dic_detail where opt_code='20766_01' 查到该分组下所有的品牌
+            <p>每个品牌又有不同的型号，以此类推，在当前每个品牌的grouping_code再次填入分组分组名为opt_code+'_'+subopt_code为20766_01_01，并在当前表中字段opt_code='20766_01_01'
+                配上它对应的型号列表，包括型号名称和码值。以此类推可以一直递归下去。
+            </p>
+        </li>
+        <li>
+            请求码表里的列表数据应该封装成一个公共方法，发送必需参数是opt_code，返回必需字段是 subopt_code subopt_name opt_code grouping_code
+        </li>
+        <li>
+            三级联动实现过程
+            <p>第一级select：依据20766查询所有外设类型</p>
+            <p>第二级select：选中某一条外设类型例如 ICC_IC读卡器，获取它的grouping_code 20766_01，用select * from tb_bas_dic_detail where opt_code='20766_01'找到ICC_IC读卡器对应的外设品牌列表</p>
+            <p>第三级select：选中品牌CENT_升腾，获取它的grouping_code 20766_01_01，用select * from tb_bas_dic_detail where opt_code='20766_01_01'找到CENT_升腾对应的外设型号列表</p>
+        </li>
+        <li>数据类似三级菜单，grouping_code类似于parent_id</li>
+    </ul>
+    <hr>
+    <h3>另一种做法</h3>
+    <ul>
+        <li>
+            后来实际做法是在opt_code=20766_01 的grouping_code字段填入opt_code=20766的subopt_code信息例如01,03,05
+            
+        </li>
+        <li>
+            当选中ICC_IC读卡器时遍历所有opt_code=20766_01 的数据筛选出grouping_code包含01的列表，从而实现联动。
+        </li>
+    </ul>
+    <h3>tb_bas_dic_master</h3>
+    <table class="table table-bordered" width="727" border="0" cellpadding="0" cellspacing="0" style="width:545.25pt;border-collapse:collapse;table-layout:fixed;">
+        <colgroup>
+            <col width="122" class="xl65" style="mso-width-source:userset;mso-width-alt:3904;">
+            <col width="155" class="xl65" style="mso-width-source:userset;mso-width-alt:4960;">
+            <col width="75" span="6" class="xl65" style="mso-width-source:userset;mso-width-alt:2400;">
+        </colgroup>
+        <tbody>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl65" height="19" width="122" style="height:14.25pt;width:91.50pt;" x:str="">opt_code</td>
+                <td class="xl65" width="155" style="width:116.25pt;" x:str="">opt_name</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">del_flag</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve1</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve2</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve3</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">upd_flag</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">upd_time</td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl65" height="19" style="height:14.25pt;" x:num="">20765</td>
+                <td class="xl65" x:str="">商易通/助农通转账</td>
+                <td class="xl65" x:str="">
+                    <span style="mso-spacerun:yes;">&nbsp;</span>
+                </td>
+                <td class="xl65" colspan="5" style="mso-ignore:colspan;"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl65" height="19" style="height:14.25pt;" x:num="">20766</td>
+                <td class="xl65" x:str="">外设类型</td>
+                <td class="xl65" x:str="">
+                    <span style="mso-spacerun:yes;">&nbsp;</span>
+                </td>
+                <td class="xl65" colspan="5" style="mso-ignore:colspan;"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl65" height="19" style="height:14.25pt;" x:num="">20768</td>
+                <td class="xl65" x:str="">外设品牌</td>
+                <td class="xl65" x:str="">
+                    <span style="mso-spacerun:yes;">&nbsp;</span>
+                </td>
+                <td class="xl65" colspan="5" style="mso-ignore:colspan;"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl65" height="19" style="height:14.25pt;" x:num="">20769</td>
+                <td class="xl65" x:str="">申请事项</td>
+                <td class="xl65" x:str="">
+                    <span style="mso-spacerun:yes;">&nbsp;</span>
+                </td>
+                <td class="xl65" colspan="5" style="mso-ignore:colspan;"></td>
+            </tr>
+            <!--[if supportMisalignedColumns]-->
+            <tr width="0" style="display:none;">
+                <td width="122" style="width:92;"></td>
+                <td width="155" style="width:116;"></td>
+                <td width="75" style="width:56;"></td>
+            </tr>
+            <!--[endif]-->
+        </tbody>
+    </table>
+
+    <h3>tb_bas_dic_detail</h3>
+    <table class="table table-bordered" width="1036" border="0" cellpadding="0" cellspacing="0" style="width:777.00pt;border-collapse:collapse;table-layout:fixed;">
+        <colgroup>
+            <col width="101" style="mso-width-source:userset;mso-width-alt:3232;">
+            <col width="163" style="mso-width-source:userset;mso-width-alt:5216;">
+            <col width="75" span="2" style="mso-width-source:userset;mso-width-alt:2400;">
+            <col width="128" style="mso-width-source:userset;mso-width-alt:4096;">
+            <col width="75" span="4" style="mso-width-source:userset;mso-width-alt:2400;">
+            <col width="119" style="mso-width-source:userset;mso-width-alt:3808;">
+            <col width="75" style="mso-width-source:userset;mso-width-alt:2400;">
+        </colgroup>
+        <tbody>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl65" height="19" width="101" style="height:14.25pt;width:75.75pt;" x:str="">subopt_code</td>
+                <td class="xl65" width="163" style="width:122.25pt;" x:str="">subopt_name</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">opt_code</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">disp_seq</td>
+                <td class="xl65" width="128" style="width:96.00pt;" x:str="">upd_time</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">del_flag</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve1</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve2</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve3</td>
+                <td class="xl65" width="190" style="width:142.50pt;" x:str="">grouping_code</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">upd_flag</td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">01</td>
+                <td x:str="">ICC_IC读卡器</td>
+                <td class="xl65" x:num="">20766</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C2,&quot;_&quot;,A2)" x:str="">20766_01</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">02</td>
+                <td x:str="">MSG_磁条卡读写器</td>
+                <td class="xl65" x:num="">20766</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C3,&quot;_&quot;,A3)" x:str="">20766_02</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">03</td>
+                <td x:str="">PIN_非国密密码键盘</td>
+                <td class="xl65" x:num="">20766</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C4,&quot;_&quot;,A4)" x:str="">20766_03</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">04</td>
+                <td x:str="">PIN_国密密码键盘</td>
+                <td class="xl65" x:num="">20766</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C5,&quot;_&quot;,A5)" x:str="">20766_04</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">05</td>
+                <td x:str="">MPN_柜外清</td>
+                <td class="xl65" x:num="">20766</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C6,&quot;_&quot;,A6)" x:str="">20766_05</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">06</td>
+                <td x:str="">IDD_身份证阅读器</td>
+                <td class="xl65" x:num="">20766</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C7,&quot;_&quot;,A7)" x:str="">20766_06</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">07</td>
+                <td x:str="">FNG_指纹仪</td>
+                <td class="xl65" x:num="">20766</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C8,&quot;_&quot;,A8)" x:str="">20766_07</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">08</td>
+                <td x:str="">PRT_打印机</td>
+                <td class="xl65" x:num="">20766</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C9,&quot;_&quot;,A9)" x:str="">20766_08</td>
+                <td class="xl65"></td>
+            </tr>
+            <!--[if supportMisalignedColumns]-->
+            <tr width="0" style="display:none;">
+                <td width="101" style="width:76;"></td>
+                <td width="163" style="width:122;"></td>
+                <td width="75" style="width:56;"></td>
+                <td width="128" style="width:96;"></td>
+                <td width="75" style="width:56;"></td>
+                <td width="190" style="width:143;"></td>
+                <td width="75" style="width:56;"></td>
+            </tr>
+            <!--[endif]-->
+        </tbody>
+    </table>
+    <table class="table table-bordered" width="1107" border="0" cellpadding="0" cellspacing="0" style="width:830.25pt;border-collapse:collapse;table-layout:fixed;">
+        <colgroup>
+            <col width="101" style="mso-width-source:userset;mso-width-alt:3232;">
+            <col width="163" style="mso-width-source:userset;mso-width-alt:5216;">
+            <col width="75" span="2" style="mso-width-source:userset;mso-width-alt:2400;">
+            <col width="128" style="mso-width-source:userset;mso-width-alt:4096;">
+            <col width="75" span="4" style="mso-width-source:userset;mso-width-alt:2400;">
+            <col width="190" style="mso-width-source:userset;mso-width-alt:6080;">
+            <col width="75" style="mso-width-source:userset;mso-width-alt:2400;">
+        </colgroup>
+        <tbody>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl65" height="19" width="101" style="height:14.25pt;width:75.75pt;" x:str="">subopt_code</td>
+                <td class="xl65" width="163" style="width:122.25pt;" x:str="">subopt_name</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">opt_code</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">disp_seq</td>
+                <td class="xl65" width="128" style="width:96.00pt;" x:str="">upd_time</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">del_flag</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve1</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve2</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve3</td>
+                <td class="xl65" width="190" style="width:142.50pt;" x:str="">grouping_code</td>
+                <td class="xl65" width="75" style="width:56.25pt;" x:str="">upd_flag</td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">01</td>
+                <td x:str="">CENT_升腾</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C2,&quot;_&quot;,A2)" x:str="">20766_01_01</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">02</td>
+                <td x:str="">CINC_中航</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C3,&quot;_&quot;,A3)" x:str="">20766_01_02</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">03</td>
+                <td x:str="">DASC_得实</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C4,&quot;_&quot;,A4)" x:str="">20766_01_03</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">04</td>
+                <td x:str="">GUOG_国光</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C5,&quot;_&quot;,A5)" x:str="">20766_01_04</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">05</td>
+                <td x:str="">HJIA_禾嘉</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C6,&quot;_&quot;,A6)" x:str="">20766_01_05</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">06</td>
+                <td x:str="">INVS_因纳伟盛</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C7,&quot;_&quot;,A7)" x:str="">20766_01_06</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">07</td>
+                <td x:str="">JINC_金诚信</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C8,&quot;_&quot;,A8)" x:str="">20766_01_07</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">08</td>
+                <td x:str="">NANT_南天</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C9,&quot;_&quot;,A9)" x:str="">20766_01_08</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">09</td>
+                <td x:str="">SDSS_神思</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C10,&quot;_&quot;,A10)" x:str="">20766_01_09</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">10</td>
+                <td x:str="">SDTJ_时代天鉴</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C11,&quot;_&quot;,A11)" x:str="">20766_01_10</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">11</td>
+                <td x:str="">STAR_实达</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C12,&quot;_&quot;,A12)" x:str="">20766_01_11</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">12</td>
+                <td x:str="">STON_四通</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C13,&quot;_&quot;,A13)" x:str="">20766_01_12</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">13</td>
+                <td x:str="">SZHS_深圳华视</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C14,&quot;_&quot;,A14)" x:str="">20766_01_13</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">14</td>
+                <td x:str="">TESO_天诚盛业</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C15,&quot;_&quot;,A15)" x:str="">20766_01_14</td>
+                <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+                <td class="xl66" height="19" style="height:14.25pt;" x:str="">15</td>
+                <td x:str="">ZLZK_中联智科</td>
+                <td x:str="">20766_01</td>
+                <td class="xl65"></td>
+                <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" x:num="">0</td>
+                <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+                <td class="xl65" x:fmla="=CONCATENATE(C16,&quot;_&quot;,A16)" x:str="">20766_01_15</td>
+                <td class="xl65"></td>
+            </tr>
+            <!--[if supportMisalignedColumns]-->
+            <tr width="0" style="display:none;">
+                <td width="101" style="width:76;"></td>
+                <td width="163" style="width:122;"></td>
+                <td width="75" style="width:56;"></td>
+                <td width="128" style="width:96;"></td>
+                <td width="75" style="width:56;"></td>
+                <td width="190" style="width:143;"></td>
+                <td width="75" style="width:56;"></td>
+            </tr>
+            <!--[endif]-->
+        </tbody>
+    </table>
+    <table class="table table-bordered" width="1009" border="0" cellpadding="0" cellspacing="0" style="width:756.75pt;border-collapse:collapse;table-layout:fixed;">
+            <colgroup><col width="101" span="3" style="mso-width-source:userset;mso-width-alt:3232;">
+            <col width="75" style="mso-width-source:userset;mso-width-alt:2400;">
+            <col width="128" style="mso-width-source:userset;mso-width-alt:4096;">
+            <col width="75" span="4" style="mso-width-source:userset;mso-width-alt:2400;">
+            <col width="128" style="mso-width-source:userset;mso-width-alt:4096;">
+            <col width="75" style="mso-width-source:userset;mso-width-alt:2400;">
+            </colgroup><tbody><tr height="19" style="height:14.25pt;">
+             <td class="xl65" height="19" width="101" style="height:14.25pt;width:75.75pt;" x:str="">subopt_code</td>
+             <td class="xl65" width="101" style="width:75.75pt;" x:str="">subopt_name</td>
+             <td class="xl65" width="101" style="width:75.75pt;" x:str="">opt_code</td>
+             <td class="xl65" width="75" style="width:56.25pt;" x:str="">disp_seq</td>
+             <td class="xl65" width="128" style="width:96.00pt;" x:str="">upd_time</td>
+             <td class="xl65" width="75" style="width:56.25pt;" x:str="">del_flag</td>
+             <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve1</td>
+             <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve2</td>
+             <td class="xl65" width="75" style="width:56.25pt;" x:str="">reserve3</td>
+             <td class="xl65" width="128" style="width:96.00pt;" x:str="">grouping_code</td>
+             <td class="xl65" width="75" style="width:56.25pt;" x:str="">upd_flag</td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+             <td class="xl66" height="19" style="height:14.25pt;" x:str="">01</td>
+             <td x:str="">型号1</td>
+             <td x:str="">20766_01_01</td>
+             <td class="xl65"></td>
+             <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+             <td class="xl65" x:fmla="=CONCATENATE(C2,&quot;_&quot;,A2)" x:str="">20766_01_01_01</td>
+             <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+             <td class="xl66" height="19" style="height:14.25pt;" x:str="">02</td>
+             <td x:str="">型号2</td>
+             <td x:str="">20766_01_01</td>
+             <td class="xl65"></td>
+             <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+             <td class="xl65" x:fmla="=CONCATENATE(C3,&quot;_&quot;,A3)" x:str="">20766_01_01_02</td>
+             <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+             <td class="xl66" height="19" style="height:14.25pt;" x:str="">03</td>
+             <td x:str="">型号3</td>
+             <td x:str="">20766_01_01</td>
+             <td class="xl65"></td>
+             <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+             <td class="xl65" x:fmla="=CONCATENATE(C4,&quot;_&quot;,A4)" x:str="">20766_01_01_03</td>
+             <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+             <td class="xl66" height="19" style="height:14.25pt;" x:str="">04</td>
+             <td x:str="">型号4</td>
+             <td x:str="">20766_01_01</td>
+             <td class="xl65"></td>
+             <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+             <td class="xl65" x:fmla="=CONCATENATE(C5,&quot;_&quot;,A5)" x:str="">20766_01_01_04</td>
+             <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+             <td class="xl66" height="19" style="height:14.25pt;" x:str="">05</td>
+             <td x:str="">型号5</td>
+             <td x:str="">20766_01_01</td>
+             <td class="xl65"></td>
+             <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+             <td class="xl65" x:fmla="=CONCATENATE(C6,&quot;_&quot;,A6)" x:str="">20766_01_01_05</td>
+             <td class="xl65"></td>
+            </tr>
+            <tr height="19" style="height:14.25pt;">
+             <td class="xl66" height="19" style="height:14.25pt;" x:str="">06</td>
+             <td x:str="">型号6</td>
+             <td x:str="">20766_01_01</td>
+             <td class="xl65"></td>
+             <td class="xl67" x:num="43319.46769675926">2018/8/7 11:13</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" x:num="">0</td>
+             <td class="xl65" colspan="2" style="mso-ignore:colspan;"></td>
+             <td class="xl65" x:fmla="=CONCATENATE(C7,&quot;_&quot;,A7)" x:str="">20766_01_01_06</td>
+             <td class="xl65"></td>
+            </tr>
+            <!--[if supportMisalignedColumns]-->
+             <tr width="0" style="display:none;">
+              <td width="101" style="width:76;"></td>
+              <td width="75" style="width:56;"></td>
+              <td width="128" style="width:96;"></td>
+              <td width="75" style="width:56;"></td>
+              <td width="128" style="width:96;"></td>
+              <td width="75" style="width:56;"></td>
+             </tr>
+            <!--[endif]-->
+           </tbody></table>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+
+</body>
+
+</html>

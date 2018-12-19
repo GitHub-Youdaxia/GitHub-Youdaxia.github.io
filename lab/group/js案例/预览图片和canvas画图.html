@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="/lab/B-JUI/js/jquery-3.2.1.min.js"></script>
+    <script src="/lab/plugins/viewer/viewer-jquery.min.js"></script>
+    <link rel="stylesheet" href="/lab/plugins/viewer/viewer.min.css">
+    <script src="/lab/plugins/html2canvas/html2canvas.js"></script>
+
+    <style type="text/css">
+    img {
+        width: 200px;
+    }
+
+    #view-img {
+        width: 500px;
+    }
+
+    #view-img img {
+        width: 30px;
+        height: 30px;
+    }
+    </style>
+
+    <body>
+ 
+        <ul id="view-img">
+            <p>文字</p>
+            <li><img src="/lab/plugins/viewer/tibet-1.jpg" alt=""></li>
+            <li><img src="/lab/plugins/viewer/tibet-2.jpg" alt=""></li>
+            <li><img src="/lab/plugins/viewer/tibet-3.jpg" alt=""></li>
+            <li><img src="/lab/plugins/viewer/tibet-4.jpg" alt=""></li>
+            <li><img src="/lab/plugins/viewer/tibet-5.jpg" alt=""></li>
+            <li><img src="/lab/plugins/viewer/tibet-6.jpg" alt=""></li>
+            <p>文字</p>
+        </ul>
+        <div id="img-box"></div>
+        <div>
+            <img src="/lab/plugins/viewer/tibet-6.jpg" alt="">
+            <img src="/lab/plugins/viewer/tibet-6.jpg" alt="">
+            <img src="/lab/plugins/viewer/tibet-6.jpg" alt="">
+            <img src="/lab/plugins/viewer/tibet-6.jpg" alt="">
+            <img src="/lab/plugins/viewer/tibet-6.jpg" alt="">
+            <img src="/lab/plugins/viewer/tibet-6.jpg" alt="">
+            <img src="/lab/plugins/viewer/tibet-6.jpg" alt="">
+            <img src="/lab/plugins/viewer/tibet-6.jpg" alt="">
+        </div>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $('body').viewer();
+            html2canvas($('#view-img'), {
+                height: $('#view-img').outerHeight() + 150,
+                onrendered: function(canvas) {
+                    canvas.id = "mycanvas";
+                    var context = canvas.getContext('2d');
+                    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    for (var i = 0; i < imageData.data.length; i += 4) {
+                        if (imageData.data[i + 3] == 0) {
+                            imageData.data[i] = 255;
+                            imageData.data[i + 1] = 255;
+                            imageData.data[i + 2] = 255;
+                            imageData.data[i + 3] = 255;
+                        }
+                    }
+                    context.putImageData(imageData, 0, 0);
+                    var mainwh = $('#view-img').width(); //获取元素的宽
+                    var mainhg = $('#view-img').height(); //获取元素高，若是做长图可以将此参数传递给canvas的高
+                    var img = convertCanvasToImage(canvas);
+                    $("#img-box").html(img); //添加到展示图片div区域
+
+                }
+            });
+            //绘制显示图片 
+            function convertCanvasToImage(canvas) {
+                var image = new Image();
+                image.src = canvas.toDataURL("imageTest/png"); //生成图片地址
+                return image;
+            }
+        });
+        </script>
+    </body>
+
+</html>

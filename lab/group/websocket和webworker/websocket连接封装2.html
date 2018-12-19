@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>封装2</title>
+</head>
+
+<body>
+    <ul>
+        <li></li>
+    </ul>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script>
+        (function ($) {
+            //将websocket的请求调用封装起来，每次请求都实例化一个对象，都有单独的success和error，参数中的url可以是不同的websocket的地址
+            //将websocket的创建与重连机制做成一个公共插件，每次传递websocketRequest都会判断是否已创建websocket对象，
+            //如果传过来的地址未创建，则创建websocket对象赋值在window.websocketObj[url]中，定义websocket的监听事件，并加上重连机制，
+            //如果已创建，则赋值请求对象websocketRequest到websocket对象上，并直接发送消息
+            
+
+            // $.websocketRequest({
+            //     msg: {
+            //         port: '8182'
+            //     },
+            //     url: 'ws://127.0.0.1:8182/',
+            //     success: function (data) {
+            //         console.log('success:',data);
+            //     },
+            //     error:function(data){
+            //         console.log('error:',data);
+            //     }
+
+            // })
+            $.websocketRequest = function (options) {
+
+                new websocketRequest(options);
+            }
+            var websocketRequest = function (options) {
+                this.options = {
+                    success: function () {},
+                    error: function () {},
+                }
+                this.options = $.extend({}, this.options, options);
+                this.init();
+            }
+            websocketRequest.prototype = {
+                init: function () {
+                    this.excute();
+                },
+                tool: {
+
+                },
+                excute: function () {
+                    var that = this;
+                    var options = this.options;
+                    $.createWebSocket(that)
+                }
+            }
+        })(jQuery)
+
+
+        $(function () {
+            window.websocketObj = {};
+            $.createWebSocket = function (websocketRequest) {
+                var url = websocketRequest.options.url;
+                var msg = JSON.stringify(websocketRequest.options.msg);
+                if (window.websocketObj[url] == undefined) {
+                    new createWebSocket(websocketRequest);
+                } else {
+                    //非常重要，监听onmessage事件后，接收到消息后，要用websocketRequest.options.success(data)调用，所以
+                    //每次发送前都要把websocketRequest请求对象赋值到当前websocket对象属性上
+                    //当前请求的websocket对象接收消息后，从当前websocket对象属性websocketRequest获得websocketRequest对象，调用websocketRequest.options.success();
+                    window.websocketObj[url].websocketRequest = websocketRequest;
+                    window.websocketObj[url].send(msg);
+                }
+            }
+            var createWebSocket = function (websocketRequest) {
+                this.url = websocketRequest.options.url;
+                this.init(websocketRequest);
+            }
+            createWebSocket.prototype = {
+                init: function (websocketRequest) {
+                    this.excute(websocketRequest);
+                },
+                excute: function (websocketRequest) {
+                    console.log('初始化websocket');
+                    var that = this;
+                    var lockReconnect = false;
+                    createWebSocketObj(that.url, websocketRequest);
+
+                    function createWebSocketObj(url, websocketRequest) {
+                        try {
+                            if ('WebSocket' in window) {
+                                window.websocketObj[url] = new WebSocket(url);
+                            } else if ('MozWebSocket' in window) {
+                                window.websocketObj[url] = new MozWebSocket(url);
+                            } else {
+                                console.log('浏览器不支持WebSocket');
+                            }
+                            window.websocketObj[url].onclose = function () {
+                                reconnect(that.url);
+                                console.log("连接关闭!" + new Date().toUTCString());
+                            };
+                            window.websocketObj[url].onerror = function () {
+                                reconnect(that.url);
+                                console.log("连接错误!");
+                            };
+                            window.websocketObj[url].onopen = function () {
+                                heartCheck.reset().start(window.websocketObj[url]); //心跳检测重置
+                                console.log("连接成功!" + new Date().toUTCString());
+                                if (websocketRequest != undefined) {
+                                    //第一次初始化创建websocket对象后在调用本身，因为已创建过，所以第二次会执行发送的代码
+                                    $.createWebSocket(websocketRequest);
+                                }
+                            };
+                            window.websocketObj[url].onmessage = function (event) { //如果获取到消息，心跳检测重置
+                                heartCheck.reset().start(window.websocketObj[url]); //拿到任何消息都说明当前连接是正常的
+                                if (event.data != 'pong') {
+                                    // console.log(event)
+                                    var data = eval("(" + event.data + ")");
+                                    if(data.out.respondCode=='000000'){
+                                        // window.websocketObj[url].websocketRequest 非常重要，是一个变值，每次发送前都会重新赋值一个新的websocketRequest
+                                        window.websocketObj[url].websocketRequest.options.success(data);
+                                    }else{
+                                        window.websocketObj[url].websocketRequest.options.error(data);
+                                    }
+                                } else {
+                                    console.log("来自" + url + "的心跳:" + event.data);
+                                }
+                            }
+                        } catch (e) {
+                            reconnect(that.url);
+                            console.log(e);
+                        }
+                    }
+
+                    function reconnect(url) {
+                        if (lockReconnect) return;
+                        lockReconnect = true;
+                        setTimeout(function () { //没连接上会一直重连，设置延迟避免请求过多
+                            createWebSocketObj(url);
+                            lockReconnect = false;
+                        }, 2000);
+                    }
+                    //心跳检测
+                    var heartCheck = {
+                        timeout: 5000, //9分钟发一次心跳
+                        timeoutObj: null,
+                        serverTimeoutObj: null,
+                        reset: function () {
+                            clearTimeout(this.timeoutObj);
+                            clearTimeout(this.serverTimeoutObj);
+                            return this;
+                        },
+                        start: function (ws) {
+                            var self = this;
+                            this.timeoutObj = setTimeout(function () {
+                                //这里发送一个心跳，后端收到后，返回一个心跳消息，
+                                //onmessage拿到返回的心跳就说明连接正常
+                                ws.send("ping");
+                                console.log("ping!")
+                                self.serverTimeoutObj = setTimeout(function () { //如果超过一定时间还没重置，说明后端主动断开了
+                                    ws.close(); //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
+                                }, self.timeout)
+                            }, this.timeout)
+                        }
+                    }
+                }
+            }
+
+
+        });
+    </script>
+
+    <script>
+        // var lockReconnect = false; //避免ws重复连接
+        // var ws = null; // 判断当前浏览器是否支持WebSocket
+        // var url = "ws://127.0.0.1:8181";
+        // // createWebSocket(url); //连接ws
+
+        // function createWebSocket(url) {
+        //     try {
+        //         if ('WebSocket' in window) {
+        //             ws = new WebSocket(url);
+        //         } else if ('MozWebSocket' in window) {
+        //             ws = new MozWebSocket(url);
+        //         } else {
+        //             console.log('浏览器不支持WebSocket');
+        //         }
+        //         initEventHandle();
+        //     } catch (e) {
+        //         reconnect(url);
+        //         console.log(e);
+        //     }
+        // }
+
+        // function initEventHandle() {
+        //     //使用on定义事件可以覆盖之前的on绑定的事件，若使用addEventListener则会增加绑定多次
+        //     ws.onclose = function () {
+        //         reconnect(url);
+        //         console.log("连接关闭!" + new Date().toUTCString());
+        //     };
+        //     ws.onerror = function () {
+        //         reconnect(url);
+        //         console.log("连接错误!");
+        //     };
+        //     ws.onopen = function () {
+        //         heartCheck.reset().start(); //心跳检测重置
+        //         console.log("连接成功!" + new Date().toUTCString());
+        //     };
+        //     ws.onmessage = function (event) { //如果获取到消息，心跳检测重置
+        //         heartCheck.reset().start(); //拿到任何消息都说明当前连接是正常的
+        //         console.log("收到消息啦:" + event.data);
+        //         if (event.data != 'pong') {
+        //             var obj = eval("(" + event.data + ")");
+
+        //         };
+        //     }
+        // }
+        // // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        // window.onbeforeunload = function () {
+        //     ws.close();
+        // }
+
+        // function reconnect(url) {
+        //     if (lockReconnect) return;
+        //     lockReconnect = true;
+        //     setTimeout(function () { //没连接上会一直重连，设置延迟避免请求过多
+        //         createWebSocket(url);
+        //         lockReconnect = false;
+        //     }, 2000);
+        // }
+
+        // //心跳检测
+        // var heartCheck = {
+        //     timeout: 5000, //9分钟发一次心跳
+        //     timeoutObj: null,
+        //     serverTimeoutObj: null,
+        //     reset: function () {
+        //         clearTimeout(this.timeoutObj);
+        //         clearTimeout(this.serverTimeoutObj);
+        //         return this;
+        //     },
+        //     start: function () {
+        //         var self = this;
+        //         this.timeoutObj = setTimeout(function () {
+        //             //这里发送一个心跳，后端收到后，返回一个心跳消息，
+        //             //onmessage拿到返回的心跳就说明连接正常
+        //             ws.send("ping");
+        //             console.log("ping!")
+        //             self.serverTimeoutObj = setTimeout(function () { //如果超过一定时间还没重置，说明后端主动断开了
+        //                 ws.close(); //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
+        //             }, self.timeout)
+        //         }, this.timeout)
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+<!--      -->
+
+    <style type="text/css">
+    body,html{padding: 0;margin: 0;}
+    .header{height: 200px;background-color: #333;color: #FFF;}
+    .wrap{position: absolute;top: 200px;bottom: 200px;width: 100%;overflow: hidden;}
+    .height2000{height: 2000px;background-color: #CCC;}
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h2 id="title">使用绝对定位让整个页面不滚动-局部可以滚动</h2>
+        <p>让页面出现滚动条的原因是当前元素所占的空间超过一个页面的高度，</p>
+        <p>overflow 属性规定当内容溢出元素框时发生的事情</p>
+    </div class="header">
+    <div class="wrap">
+        <div class="height2000">
+            然后在调用better-scroll使当前wrap元素内的元素滚动。
+            <p>需求：elem app页面头部固定高度，下面内容高度不固定但是不能让整个页面出现滚动条</p>
+            <p>实现方法</p>
+            <div>
+                <xmp>
+                .header{height: 200px;background-color: #333;color: #FFF;}
+                .wrap{position: absolute;top: 200px;bottom: 200px;width: 100%;overflow: hidden;}
+                .height2000{height: 2000px;background-color: #CCC;}                    
+                </xmp>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) 
+    
+    
+    <script type="text/javascript">
+    -->
+
+
+    </script>
+</body>
+
+</html>

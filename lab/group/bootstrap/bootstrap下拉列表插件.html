@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+        <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+
+    <link rel="stylesheet" href="/lab/plugins/bootstrapSelect/bootstrap-select.css">
+    <script src="/lab/plugins/bootstrapSelect/bootstrap-select.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <select id="assistPapersType" data-toggle="selectpicker" data-width="100%" aria-required="true" class="show-tick">
+        <option value="0">请选择</option>
+        <option value="1">1-证件类型</option>
+        <option value="2">2-证件类型</option>
+        <option value="3">3-证件类型</option>
+    </select>
+    <select id="assistPapersType2" class="selectpicker" data-width="100%" aria-required="true" class="show-tick">
+        <option value="0">请选择</option>
+        <option value="1">1-证件类型</option>
+        <option value="2">2-证件类型</option>
+        <option value="3">3-证件类型</option>
+    </select>
+    <xmp>
+
+    </xmp>
+
+
+
+    <!--  -->
+    <script type="text/javascript">
+        $(function () {
+
+            /**
+             *选项下拉
+             */
+            $.fn.loadSelectItemsNewIF = function (options) {
+                var defaults = {
+                    itemCode: "",
+                    searchBar: false,
+                    defaultSelect: "",
+                    isRequired: true,
+                    data: []
+                }
+                var options = $.extend(defaults, options);
+                var $this = $(this);
+                $this.empty();
+                var method = {
+                    //获取html  
+                    getHtml: function (data) {
+                        var opts = '';
+                        var isRequired = options.isRequired;
+                        if (isRequired == true) {
+                            opts = '<option value="" selected="selected">--请选择--</option>';
+                        }
+                        if (typeof data != "undefined") {
+                            if (data != "") {
+                                var array = data;
+                                var arr = {};
+                                for (var j = 0; j < array.length; j++) {
+                                    arr[array[j].k] = array[j].v;
+                                }
+                                for (var i in arr) {
+                                    opts += '<option value=' + i + ' >' + i + '-' + arr[i] +
+                                        '</option>';
+                                }
+                            }
+                        }
+                        return opts;
+                    },
+                    //追加至文档
+                    addToDom: function (html, options) {
+                        $this.append(html);
+                        //添加搜索
+                        if (options.searchBar == true) {
+                            $this.data("live-search", "true");
+                            $this.addClass("selectpicker");
+                        }
+                        $this.selectpicker("refresh");
+                        // $this.selectpicker("render");
+
+                        //添加默认选项
+                        var defaultSelect = options.defaultSelect;
+                        if (defaultSelect.length == 0) {
+                            defaultSelect = '';
+                        }
+                        $this.selectpicker("val", defaultSelect);
+
+						// $this.parent().find(".bootstrap-select").on("click", function (e) {
+						// 	e.stopPropagation();
+						// });
+						// $this.parent().find(".bootstrap-select").on("dblclick", function () {
+						// 	if ($this.attr("disabled") == "disabled") {
+						// 		return false;
+						// 	}
+						// });
+						// $this.parent().find("button").on("click", function (e) {
+						// 	if ($this.attr("disabled") == "disabled") {
+						// 		$(this).attr("disabled", "disabled");
+						// 		return;
+						// 	}
+						// 	$(this).removeAttr("disabled");
+						// 	$(this).parent(".bootstrap-select").addClass("open");
+
+						// });
+						// $this.parent().find("ul").delegate("li", "click", function (e) {
+						// 	if ($this.attr("disabled") == "disabled") {
+						// 		return;
+						// 	}
+						// 	var node = $(this).parents(".bootstrap-select");
+						// 	if (node.hasClass("open")) {
+						// 		node.removeClass("open");
+						// 	}
+
+						// })                        
+                    }
+
+                }
+                method.addToDom(method.getHtml(options.data), options);
+                //return this;
+            }
+
+            var data = [{
+                k: 'a',
+                v: '1'
+            }, {
+                k: 'b',
+                v: '2'
+            }, {
+                k: 'c',
+                v: '3'
+            }, {
+                k: 'd',
+                v: '4'
+            }];
+
+            $('#assistPapersType').loadSelectItemsNewIF({
+                data: data,
+                searchBar: true
+            });
+            $('#assistPapersType2').on('show.bs.select',function(){
+                alert();
+            });
+        })
+    </script>
+</body>
+
+</html>

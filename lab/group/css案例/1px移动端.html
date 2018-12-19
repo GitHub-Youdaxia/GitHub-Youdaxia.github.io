@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+
+    <style type="text/css">
+
+        .box {
+            width: 200px;
+            height: 100px;
+            background: #CCC;
+            margin: 10px auto;
+            position: relative;
+        }
+
+        .border {
+            border: 1px solid red;
+        }
+
+
+        /*搜到的第二种*/
+
+        .wi-cell {
+            position: relative;
+        }
+
+        .wi-cell:before {
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            height: 1px;
+            border-top: 1px solid red;
+            color: #e5e5e5;
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+            /* left: 15px; */
+        }
+
+        .border_4 {
+            background-color: #e4e4ea;
+            border: none;
+            position: relative;
+        }
+
+        /*实现四边边线都是正常的0.5倍*/
+
+        .border_4:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200%;
+            height: 200%;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            transform-origin: left top;
+            transform: scale(0.5, 0.5);
+        }
+        .border-1px:after{
+            content:"";
+            position:absolute;
+            left:0;
+            top:0;
+            width: 200%;
+            height: 200%;
+            border: 1px solid #000;
+            transform: scale(0.5,0.5);
+            transform-origin: 0 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 id="title">手机端实现真正的一像素边框</h2>
+    <!-- <h3>第一种</h3>
+    <div class="box border"></div>
+    <div class="box border-1px"></div>
+    <div class="box border-bottom-1px"></div>
+    <div class="box border-top-1px"></div>
+    <div class="box border-left-1px"></div>
+    <div class="box border-right-1px"></div> -->
+    <h3>第一种</h3>
+    <div class="box wi-cell"></div>
+    <h3>第二种</h3>
+    <div class="box border_4"></div>
+    <div class="box border-1px"></div>
+
+
+
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+    <script type="text/javascript">
+    </script>
+</body>
+
+</html>

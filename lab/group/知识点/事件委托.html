@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+
+    <title>Document</title>
+    <style type="text/css">
+
+        #shijianweituo ul,
+        li {
+            list-style: none;
+        }
+
+        #shijianweituo .div {
+            display: block;
+            width: 500px;
+            padding: 200px 0 0 200px;
+        }
+
+       #shijianweituo  .div ul li {
+            display: block;
+            width: 100%;
+            text-align: center;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        #shijianweituo .div ul li:nth-child(2n) {
+            background: #f00;
+        }
+
+        #shijianweituo .dialog {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        #shijianweituo .dialog .dialog-con {
+            width: 500px;
+            height: 500px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #FFF;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="shijianweituo" class="div">
+        <ul>
+            <li>
+                <a>测试1</a>
+            </li>
+            <li>
+                <a>测试2</a>
+            </li>
+            <li>
+                <a>测试3</a>
+            </li>
+            <li>
+                <a>测试4</a>
+            </li>
+            <li>
+                <a>测试5</a>
+            </li>
+            <li>
+                <a>测试6</a>
+            </li>
+            <li>
+                <a>测试7</a>
+            </li>
+            <li>
+                <a>测试8</a>
+            </li>
+        </ul>
+    </div>
+    <div class="dialog">
+        <div class="dialog-con">
+
+        </div>
+    </div>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+    <script type="text/javascript">
+        $("#shijianweituo ul").on('click', 'a', function (e) {
+            alert("点击的内容是：" + $(this).text());
+        });
+        $("#shijianweituo ul").append("<li><a> 测试新增</a></li>");
+
+        // $('.dialog-con').on('click', function (e) {
+        //     console.log(e.target);
+        //     console.log(e.currentTarget);
+
+        // })
+        $('#shijianweituo .dialog').on('click', function (e) {
+            console.log(e.currentTarget == this);//true
+            if (e.target == e.currentTarget) {
+                $(this).hide();
+            }
+
+        })
+    </script>
+</body>
+
+</html>

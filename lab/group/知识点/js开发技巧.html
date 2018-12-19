@@ -1,0 +1,116 @@
+<xmp>
+从数组中随机获取成员
+var items = [12, 548 , 'a' , 2 , 5478 , 'foo' , 8852, , 'Doe' , 2145 , 119];
+var  randomItem = items[Math.floor(Math.random() * items.length)];
+</xmp>
+
+<xmp>
+获取指定范围内的随机数
+这个功能在生成测试用的假数据时特别有数，比如介与指定范围内的工资数。
+
+var x = Math.floor(Math.random() * (max - min + 1)) + min;
+</xmp>
+
+<xmp>
+生成随机的字母数字字符串
+function generateRandomAlphaNum(len) {
+    var rdmString = "";
+    for( ; rdmString.length < len; rdmString  += Math.random().toString(36).substr(2));
+    return  rdmString.substr(0, len);
+}
+</xmp>
+
+<xmp>
+打乱数字数组的顺序
+var numbers = [5, 458 , 120 , -215 , 228 , 400 , 122205, -85411];
+numbers = numbers.sort(function(){ return Math.random() - 0.5});
+/* numbers 数组将类似于 [120, 5, 228, -215, 400, 458, -85411, 122205]  */
+</xmp>
+
+<xmp>
+对象转换为数组
+var argArray = Array.prototype.slice.call(arguments);
+
+获取数组中的最大值和最小值
+var  numbers = [5, 458 , 120 , -215 , 228 , 400 , 122205, -85411]; 
+var maxInNumbers = Math.max.apply(Math, numbers); 
+var minInNumbers = Math.min.apply(Math, numbers);
+
+清空数组
+var myArray = [12 , 222 , 1000 ];  
+myArray.length = 0; // myArray will be equal to [].
+
+五分制打分系统
+按 Ctrl+C 复制代码
+
+/*五分制打分系统*/
+function getRating(rating) {
+    if(rating > 5 || rating < 0) throw new Error("数字不在范围内");
+    return "★★★★★☆☆☆☆☆".substring(5 - rating, 10 - rating );
+}
+//调用方法及执行的结果
+getRating(3);//结果：★★★☆☆
+按 Ctrl+C 复制代码
+生成n个相同字符拼接成的字符串
+按 Ctrl+C 复制代码
+
+/*生成index个相同的str字符串*/
+function create_str(index,str) {
+    return new Array(index + 1).join(str);
+}
+//调用方法及执行结果
+create_str(2,"abc")//结果：abcabc
+按 Ctrl+C 复制代码
+多行字符串
+按 Ctrl+C 复制代码
+
+/*第一种    通过反斜杠处理换行*/
+var str = "console.log(123)
+    console.log(123)
+    console.log(123)
+    console.log(123)
+    console.log(123)";
+按 Ctrl+C 复制代码
+按 Ctrl+C 复制代码
+
+/*第二种    通过函数的方式*/
+var str = (function () {
+    /**
+        console.log(123)
+        console.log(123)
+        console.log(123)
+        console.log(123)
+    **/
+}).toString().split("**")[1];
+按 Ctrl+C 复制代码
+/*第三种*/
+var str = "console.log(123)" +
+    "console.log(123)" +
+    "console.log(123)" +
+    "console.log(123)";
+快速生成一个，值依次递增的数组
+Array.apply(null, new Array(15)).map(function(item, index) {
+　　return index + 1;
+});
+//ES6语法
+Array.from(Array(10), (v, i) => i);
+劫持函数
+window.alert = function(s) {
+    if (confirm("是否要弹框框，内容是" + s + "？")) {
+        alert(s);
+    }
+};
+快速地将其他数据类型转换成number类型
+console.log(typeof +"1");//number
+console.log(typeof +new Date())//number
+取整同时转成数值型
+/*直接去除小数点后面的，不能四舍五入*/
+("10.567890"|0)//10   number
+获取随机码
+Math.random().toString(16).substring(2); //14位随机码
+Math.random().toString(36).substring(2); //11位随机码
+获取数组当中的最大最小值
+Math.min.apply(Math,[1,2,3,4,5,6])//获取最小值
+Math.max.apply(Math,[1,2,3,4,5,6])//获取最小值
+</xmp>
+

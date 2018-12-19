@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+
+
+
+    <button id="digui-send" class="btn btn-primary btn-lg">发送</button>
+
+    <script type="text/javascript">
+        (function ($) {
+            $.fn.localAuthorize = function (options) {
+                new localAuthorize(options);
+            }
+            var localAuthorize = function (options) {
+                this.options = {
+                    domId: '',
+                    name: '',
+                    data: null,
+                    url: '',
+                    callback: function () {}
+                }
+                this.options = $.extend({}, this.options, options);
+                this.init();
+            }
+            localAuthorize.prototype = {
+                init: function () {
+                    this.createlocalAuthorize();
+                },
+                createlocalAuthorize: function () {
+                    var that = this;
+                    $('body').data('currentModal', that)
+                    var domId = that.options.domId;
+                    var modal = '<div id="' + domId +
+                        '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModal3" aria-hidden="true" data-keyboard=true data-remote=true> <div class="modal-dialog"><div class="modal-content"></div></div></div>';
+                    $('body').append(modal);
+                    $('#' + domId).modal(that.options.options);
+                    $('#' + domId).on('show.bs.modal', function () {
+                        console.log('show.bs.modal');
+                    })
+                    $('#' + domId).on('shown.bs.modal	', function () {
+                        console.log('shown.bs.modal	');
+                    })
+                    $('#' + domId).on('hide.bs.modal', function () {
+                        console.log('hide.bs.modal');
+                    })
+                    $('#' + domId).on('hidden.bs.modal', function () {
+                        $(this).remove();
+                        that.options.callback(that.options.data);
+                    })
+                }
+            }
+        })(jQuery);
+
+        $(function () {
+            //请求数组
+            var arr = [{
+                name: 'a',
+                url: '/lab/group/common/remote1.html'
+            }, {
+                name: 'b',
+                url: '/lab/group/common/remote2.html'
+            }];
+
+            function request(item) {
+                $.fn.localAuthorize({
+                    domId: item.name,
+                    options: {
+                        backdrop: 'static',
+                        keyboard: false,
+                        remote: item.url,
+                    },
+                    callback: function (data) {
+                        // alert('公共提交返回data'+data);
+                        console.log('公共提交回调函数data:', data);
+
+                        arr.splice(0, 1);
+                        if (arr.length != 0) {
+                            request(arr[0])
+                        }
+                    }
+                })
+            }
+            $('#digui-send').on('click', function () {
+                if (arr.length > 0) {
+                    request(arr[0]);
+                } else {
+                    alert('连续提交完毕');
+                }
+            })
+        })
+
+    </script>
+</body>
+
+</html>

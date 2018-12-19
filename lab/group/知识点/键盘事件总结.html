@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--  -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/custom.css"> -->
+    <title>Document</title>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>浏览器的快捷键是基于浏览器获得焦点的情况下才能使用，获得焦点的元素例如input在按键时，keydown,keypress,keyup会依次触发并向上冒泡</li>
+        <li>tabindex=负值 元素可聚焦，但不能通过键盘导航来聚焦</li>
+        <li>tabindex=0 元素可聚焦，相对顺序是按照他们在dom中的先后顺序</li>
+        <li>tabindex=正值 元素可聚焦，按数值排序，相同tabindex按照在dom里的先后顺序</li>
+        <li>根据键盘序号导航顺序，值为0，非法值，或者没有tabindex值得元素放在tabindex值为正值的元素后面</li>
+        <li>
+            <xmp>
+                    
+                    如果在文档元素上进行按键设置，则无论元素是否获得焦点，该事件都会发生,以冒泡形式body，document,window。
+                    $(window).on('keypress', function () {
+                        console.log('window')
+                    })
+                    $(document).on('keypress', function () {
+                        console.log('document')
+                    })
+                    $('body').on('keypress', function () {
+                        console.log('body')
+                    })
+                    一个div.dialog窗口内运行计算器，计算器运行绑定按键到window的事件定义，关闭子页面后，如果不取消绑定，该绑定不会消失，关闭后，按键时仍会出发计算器页面绑定的事件函数，所以应该绑定到局部元素内
+                    随局部元素关闭，继而绑定的按键事件也消失。
+            </xmp>
+        </li>
+        <li>
+            <xmp>
+                    在div内绑定按键，默认div无法获得焦点，需要加上tabindex,当点击这个div时div获得了焦点，此时按上键盘会
+                    先执行这个div绑定按键事件的方法，之后会向上冒泡，如果组织冒泡，外层绑定的按键事件方法就不会执行了。
+            </xmp>
+        </li>
+        <li>
+            <xmp>
+            </xmp>
+        </li>
+    </ul>
+
+    <input id="input" placeholder="placeholder" />
+
+    <div id="div" tabindex="1" style="height: 100px;background: #CCC">
+        <p>该div监听了keypress事件并阻止向上冒泡</p>
+        <!-- <input id="input2" type="text" placeholder="在input内输入时触发keypress,keydow,keyup事件，并会向上冒泡" style="width: 500px"> -->
+    </div>
+    <div>
+        <h3>两组单选框，测试浏览器自带焦点切换的操作，Tab键切换焦点组，左右箭头在焦点组里切换</h3>
+        <p>
+                <input name='city' type="radio">
+                <input name='city' type="radio">
+                <input name='city' type="radio">
+                <input name='city' type="radio">
+        </p>
+
+        <p>
+                <input  type="radio" name="cardTypeRadioYS" id="1540951917692_3_0" data-toggle="icheck" value="3" data-label="芯片">
+                <input  type="radio" name="cardTypeRadioYS" id="1540951917692_3_0" data-toggle="icheck" value="3" data-label="芯片">
+                <input  type="radio" name="cardTypeRadioYS" id="1540951917692_3_0" data-toggle="icheck" value="3" data-label="芯片">
+                <input  type="radio" name="cardTypeRadioYS" id="1540951917692_3_0" data-toggle="icheck" value="3" data-label="芯片">
+        </p>
+       
+
+    </div>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+<script>
+    //
+    $(function () {
+        $(window).on('keypress', function () {
+            console.log('window keypress')
+        })
+        $(document).on('keypress', function () {
+            console.log('document keypress')
+        })
+        $('body').on('keypress', function () {
+            console.log('body keypress')
+        })
+        $('#input').on('keypress', function (e) {
+            e.stopPropagation();
+            console.log('input keypress')
+        })
+
+        $('#div').on('keypress', function (e) {
+            e.stopPropagation();
+            //div要有tabindex
+            console.log('div keypress')
+        })
+
+        $('#div').on('keyup', function (e) {
+            e.stopPropagation();
+            //div要有tabindex
+            console.log('div keyup')
+        })
+        $('#div').on('keydown', function (e) {
+            e.stopPropagation();
+            //div要有tabindex
+            console.log('div keydown')
+        })
+
+    })
+</script>
+</body>
+
+</html>

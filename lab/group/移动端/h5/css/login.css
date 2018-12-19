@@ -1,0 +1,233 @@
+/*
+* @Author: Administrator
+* @Date:   2018-05-16 09:48:18
+* @Last Modified by:   Administrator
+* @Last Modified time: 2018-05-16 13:52:59
+*/
+ul{margin-bottom: 0;}
+.login-con{
+	font-family: PingFangSC-Regular;
+}
+.login-header {
+    background-size: 100% 100%;
+    overflow: hidden;
+    position: relative;
+    height: 14.0rem;
+}
+
+.login-header-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.blur {
+    -webkit-filter: blur(2px);
+    /* Chrome, Opera */
+    -moz-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
+}
+
+.logo-box {
+    margin-top: 5.4375rem;
+    text-align: center;
+}
+
+.logo-box img {
+    width: 8.375rem;
+    height: 3.125rem;
+}
+
+.login-tab {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3.75rem;
+    line-height: 3.75rem;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.login-tab li {
+    float: left;
+    width: 50%;
+    height: 3.75rem;
+    text-align: center;
+    font-size: 1rem;
+    color: #FFF;
+    font-weight: bold;
+    font-family: "PingFangSC-Regular";
+}
+
+.login-tab-active {
+    border-bottom: 0.125rem solid #E95C53;
+}
+
+
+
+
+/*实现四边边线都是正常的0.5倍*/
+
+
+/* .login-form .login-form-item input:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200%;
+    height: 200%;
+    border: 1px solid #E5E5E5;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    transform-origin: left top;
+    transform: scale(0.5, 0.5);
+} */
+
+.login-form {
+    margin-top: 1.875rem;
+}
+
+.login-form .login-form-item {
+    margin-bottom: 0.625rem;
+    	    height: 2.5rem;
+
+}
+
+.login-form .login-form-item input {
+    display: block;
+    width: 18.75rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    text-indent: 0.9375rem;
+    font-size: 0.875rem;
+    font-family: "PingFangSC-Regular";
+    color: #808080;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.125rem;
+    border: 1px solid #E5E5E5;
+}
+
+.password-box {
+    width: 18.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.0rem;
+    color: #434A54;
+    font-family: "PingFangSC-Regular";
+    letter-spacing: 0;
+    line-height: 2.5rem;
+}
+
+.password-box .check-icon {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.1875rem;
+    vertical-align: middle;
+    background: url('../images/Checkbox@2x.png') no-repeat;
+    background-size: 100% 100%;
+}
+.password-box .check-icon.check-icon-checked {
+    background: url('../images/xuanz2@2x.png');
+        background-size: 100% 100%;
+
+}
+
+.password-box a {
+    font-family: PingFangSC-Regular;
+    font-size: 1.0rem;
+    color: #434A54;
+    letter-spacing: 0;
+    float: right;
+}
+
+.big-btn {
+    display: block;
+    width: 18.75rem;
+    height: 2.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    background: #E95C53;
+    border-radius: 0.25rem;
+    color: #FFF;
+    font-size: 0.875rem;
+}
+
+.login-tip-box {
+    text-align: center;
+    font-family: PingFangSC-Regular;
+    font-size: 0.875rem;
+    color: #808080;
+    letter-spacing: 0;
+    line-height: 2.5rem;
+}
+.other-login ul{
+	text-align: center;
+}
+.other-login .other-login-icon{
+	width: 2.5rem;
+	height: 2.5rem;
+	display: inline-block;
+	margin-left: 0.9375rem;
+	margin-right: 0.9375rem;
+
+}
+.other-login .other-login-icon.weixin{
+	background: url('../images/wxfx@2x.png') no-repeat;
+		    background-size: 100% 100%;
+
+}.other-login .other-login-icon.weibo{
+	background: url('../images/xinlfx@2x.png') no-repeat;
+		    background-size: 100% 100%;
+
+}.other-login .other-login-icon.qq{
+	background: url('../images/qqfx@2x.png') no-repeat;
+		    background-size: 100% 100%;
+
+}
+.register-tip{
+	text-align: center;
+	line-height: 2.5rem;
+}
+.register-tip span{
+	font-family: PingFangSC-Regular;
+font-size: 0.875rem;
+color: #808080;
+letter-spacing: 0;
+}.register-tip a{
+	font-family: PingFangSC-Regular;
+font-size: 0.875rem;
+color: #EE6723 ;
+letter-spacing: 0;
+margin-left: 0.325rem;
+}
+
+.regist-box-phone{
+	    width: 18.75rem;
+
+margin-left: auto;margin-right: auto;
+}
+.login-form .login-form-item .regist-box-phone input{
+	display: inline-block;
+	width: 12.5rem;
+}
+.get-code-btn{
+	float: right;
+	font-size: 0.875rem;
+	color: #434a54;
+	width: 5.625rem;
+	height: 2.5rem;
+	border: 0.0625rem solid #e5e5e5;
+	border-radius: 0.25rem;
+}
+.login-tab-con{
+	display: none;
+}
+.login-tab-con:first-of-type{
+	display: block;
+}

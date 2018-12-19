@@ -1,0 +1,228 @@
+ul {
+    margin-bottom: 0;
+}
+h3{
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+}
+body,a {
+    font-family: PingFangSC-Regular;
+}
+.clearfloat:after {display: block;clear: both;content: "";visibility: hidden;height: 0;}
+.clearfloat{zoom:1;}
+.person-header {
+    height: 14rem;
+    position: relative;
+    overflow: hidden;
+    color: #FFF;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(6px);
+}
+
+.background img {
+    width: 100%;
+    height: 100%;
+}
+
+.person-box {
+    position: relative;
+    margin-top: 5.9375rem;
+}
+
+.person-box-left {
+    /* width: 66.7%; */
+}
+
+.person-box-left,
+.person-box-right {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.person-box-left .avatar {
+    float: left;
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 50%;
+    margin-left: 1.5625rem;
+    position: relative;
+    top: -.625rem;
+}
+
+.person-info {
+    float: left;
+    margin-left: .9375rem;
+    width: 10rem
+}
+
+.person-edit {
+    width: .9375rem;
+    height: .9375rem;
+    margin-left: .9375rem;
+}
+
+.person-info p {
+    line-height: 1;
+}
+
+.person-info .person-nickname {
+    font-size: 1rem;
+    margin-bottom: .65625rem
+}
+
+.person-info .person-describle {
+    font-size: .75rem;
+}
+
+.person-box-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.person-box-right img {
+    float: right;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.person-box-right img:first-child {
+    margin-left: 1.875rem;
+    margin-right: .9375rem;
+}
+
+.header-bottom {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.header-bottom ul {
+    height: 3.125rem;
+}
+
+.header-bottom ul li {
+    float: left;
+    width: 33.33%;
+    height: 3.125rem;
+    text-align: center;
+    position: relative;
+}
+.header-bottom ul li:after{
+content: "";
+position: absolute;
+margin: auto;
+top: 0;bottom: 0;right: 0;
+width: .03125rem;
+height: 1.25rem;
+background-color: rgba(255, 255, 255, 0.3)
+}
+.header-bottom ul li:last-child:after{
+display: none;
+}
+.header-bottom ul li a {
+    color: #FFF;
+
+}
+
+.header-bottom ul li a p:first-child {
+    font-size: .9375rem;
+}
+
+.header-bottom u l li a p:last-child {
+    font-size: .75rem;
+}
+
+.tab-box .swiper-slide {
+    text-align: center;
+    height: 3rem;
+    line-height: 3rem;
+    color:#434A54 ;
+    font-size: 1rem;
+}
+.tab-box .swiper-slide.person-item-active{
+    color: #E95C53;
+    border-bottom: .0625rem solid #E95C53;
+}
+.person-list-box {
+    border: .0625rem solid #e5e5e5;
+}
+
+.tab-con-list{
+min-height: 30rem;
+}
+.tab-con-list .swiper-slide{
+    /* background-color: #CCC; */
+}
+
+.travel-notes ul li{
+    height: 10.78125rem;
+    padding-top: .9375rem;
+    padding-left: .9375rem;
+    padding-right: .9375rem;
+}
+.travel-notes-con{
+    overflow: hidden;
+    padding-bottom: .625rem;
+}
+.travel-notes-img,.travel-notes-text{
+    float: left;
+}
+.travel-notes-img img{
+    width: 8.125rem;
+    height: 5.9375rem;
+}
+.travel-notes-text{
+    width: 12.8125rem;
+    margin-left: .35rem;
+    height: 5.9375rem;
+    position: relative;
+}
+.travel-notes-title{
+    font-size: 1rem;
+    color: #434A54;
+    font-weight: 500;
+}
+.travel-notes-info{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.125rem;
+    line-height: 1.125rem;
+    font-size: .75rem;
+    color: #808080;
+}
+.travel-notes-info img{
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 50%;
+    margin-right: .4375rem;
+}
+.travel-person-date{
+    float: right;
+}
+.travel-notes-btn-box{
+    border-top:.03125rem solid #E5E5E5;
+    height: 2.8125rem;
+}
+.travel-notes-btn{
+    float: right;
+    width: 5rem;
+    height: 1.5625rem;
+    font-size: .75rem;
+    color: #808080;
+    border: .03125rem solid #E5E5E5;
+    margin-top: .625rem;
+    margin-left:.625rem;
+
+}

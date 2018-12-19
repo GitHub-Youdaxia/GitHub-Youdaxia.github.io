@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>3级联动生成器插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    <!--  -->
+    <style type="text/css">
+        body {
+            font-size: 13px;
+            text-align: center;
+        }
+
+        div {
+            width: 800px;
+            border: 1px solid #000000;
+            background-color: #f5e8e8;
+            margin: 100px 300px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-primary">
+        <hr /> 外设类型：
+        <select id="select1">
+            <option>---请选择---</option>
+        </select>
+        外设品牌：
+        <select id="select2">
+            <option>---请选择---</option>
+        </select>
+        外设型号：
+        <select id="select3">
+            <option>---请选择---</option>
+        </select>
+
+    </div>
+    <div class="bg-primary">
+        <hr /> 外设类型：
+        <select id="select4">
+            <option>---请选择---</option>
+        </select>
+        外设品牌：
+        <select id="select5">
+            <option>---请选择---</option>
+        </select>
+        外设型号：
+        <select id="select6">
+            <option>---请选择---</option>
+        </select>
+
+    </div>
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script>
+        (function ($) {
+            $.fn.selectPlugin = function (options) {
+                new selectPlugin(options);
+            }
+            var selectPlugin = function (options) {
+                this.options = {
+                    data: null,
+                    firstSelect: null,
+                    secondSelect: null,
+                    thirdSelect: null,
+                    callback: function () {},
+                }
+                this.options = $.extend({}, this.options, options);
+                this.init();
+            }
+            selectPlugin.prototype = {
+                init: function () {
+                    this.render();
+                },
+                method: {
+                    resetDom: function (node) {
+                        node.html("<option>---请选择---</option>");
+                    }
+                },
+                render: function () {
+                    var that = this;
+                    var options = this.options;
+                    //初始化第一个节点
+                    var htmlStr1 = "<option>---请选择---</option>";
+                    $.each(options.data, function (text) {
+                        var valueArr = text.split('_');
+                        htmlStr1 += "<option value='" + valueArr[0] + "'>" + valueArr[1] +
+                            "</option>";
+                    })
+                    options.firstSelect.html(htmlStr1);
+
+                    //一级变动
+                    options.firstSelect.change(function () {
+                        //清空二三级
+                        that.method.resetDom(options.secondSelect);
+                        that.method.resetDom(options.thirdSelect);
+                        $.each(options.data, function (cs, pps) {
+                            var cs = cs.split('_')[1];
+                            if (options.firstSelect.find("option:selected").text() == cs) {
+                                var htmlStr2 = "<option>---请选择---</option>";
+                                $.each(pps, function (pp, xhs) {
+                                    var valueArr = pp.split('_');
+                                    htmlStr2 += "<option value='" + valueArr[0] +
+                                        "'>" + valueArr[1] + "</option>";
+                                });
+                                options.secondSelect.html(htmlStr2)
+                                options.secondSelect.change(function () {
+                                    that.method.resetDom(options.thirdSelect);
+
+                                    $.each(pps, function (pp, xhs) {
+                                        var pp = pp.split('_')[1];
+                                        if (options.secondSelect.find(
+                                                "option:selected").text() ==
+                                            pp) {
+                                            var htmlStr3 =
+                                                "<option>---请选择---</option>";
+                                            $.each(xhs.split(','), function () {
+                                                var valueArr = this
+                                                    .split('|');
+                                                htmlStr3 +=
+                                                    "<option value='" +
+                                                    valueArr[0] +
+                                                    "'>" + valueArr[
+                                                        1] +
+                                                    "</option>";
+                                            })
+                                            options.thirdSelect.html(
+                                                htmlStr3);
+                                        }
+                                    })
+                                    options.thirdSelect.find("option").eq(1).attr(
+                                        "selected", true);
+
+                                })
+
+                            }
+                        })
+                        options.secondSelect.find("option").eq(1).attr("selected", true).trigger(
+                            'change');
+
+                    })
+                }
+            }
+        })(jQuery)
+
+        $(function () {
+            var data = {
+                PIN_类型一: {
+                    AAAA_品牌1: "10|型号10,2|型号2,3|型号3",
+                    BBBB_品牌2: "20|型号20,5|型号5,6|型号6",
+                    CCCC_品牌3: "30|型号30,8|型号8,9|型号9"
+                },
+                FNG_类型二: {
+                    DDDD_品牌4: "40|型号40,2|型号2,3|型号3",
+                    EEEE_品牌5: "50|型号50,2|型号2,3|型号3",
+                    FFFF_品牌6: "60|型号60,2|型号2,3|型号3"
+                },
+                MSG_类型三: {
+                    GGGG_品牌7: "70|型号70,2|型号2,3|型号3",
+                    HHHH_品牌8: "80|型号80,2|型号2,3|型号3",
+                    IIII_品牌9: "90|型号90,2|型号2,3|型号3",
+                }
+            };
+            $.fn.selectPlugin({
+                data: data,
+                firstSelect: $('#select1'),
+                secondSelect: $('#select2'),
+                thirdSelect: $('#select3'),
+            })
+            var data2 = {
+                PIN_类型一: {
+                    AAAA_品牌1: "10|型号10,2|型号2,3|型号3",
+                    BBBB_品牌2: "20|型号20,5|型号5,6|型号6",
+                    CCCC_品牌3: "30|型号30,8|型号8,9|型号9"
+                },
+                FNG_类型二: {
+                    DDDD_品牌4: "40|型号40,2|型号2,3|型号3",
+                    EEEE_品牌5: "50|型号50,2|型号2,3|型号3",
+                    FFFF_品牌6: "60|型号60,2|型号2,3|型号3"
+                },
+                MSG_类型三: {
+                    GGGG_品牌7: "70|型号70,2|型号2,3|型号3",
+                    HHHH_品牌8: "80|型号80,2|型号2,3|型号3",
+                    IIII_品牌9: "90|型号90,2|型号2,3|型号3",
+                }
+            };
+            $.fn.selectPlugin({
+                data: data2,
+                firstSelect: $('#select4'),
+                secondSelect: $('#select5'),
+                thirdSelect: $('#select6'),
+            })
+        })
+    </script>
+    <script>
+        //     $.fn.globalPeripheralData = {
+        //         "ICC_IC读卡器": {
+        //             "CENT_升腾": "CKB-5150#CKB-5150,CKB-5120C#CKB-5120C",
+        //             "GUOG_国光": "CJ9009T#CJ9009T,CJ200A#CJ200A",
+        //             "STAR_实达": "STAR-36#STAR-36,STAR-56#STAR-56",
+        //             "NANT_南天": "BP8903-C#BP8903-C,BP8903-D#BP8903-D,BP8903IRA-N#BP8903IRA-N,BP8903VIRA-A#BP8903VIRA-A",
+        //             "HJIA_禾嘉": "HJ-K18B#HJ-K18B,K18E#K18E",
+        //             "JINC_金诚信": "GHC825C#GHC825C",
+        //             "SDSS_神思": "SS728#SS728",
+        //         },
+        //         "MSG_磁条卡读写器": {
+        //             "CENT_升腾": "CKB-5150#CKB-5150,CKB-5120C#CKB-5120C",
+        //             "GUOG_国光": "CJ9009T#CJ9009T,CJ200A#CJ200A",
+        //             "STAR_实达": "STAR-36#STAR-36,STAR-56#STAR-56",
+        //             "NANT_南天": "BP8903-C#BP8903-C,BP8903-D#BP8903-D,BP8903IRA-N#BP8903IRA-N,BP8903VIRA-A#BP8903VIRA-A",
+        //             "HJIA_禾嘉": "HJ-K18B#HJ-K18B,K18E#K18E",
+        //             "JINC_金诚信": "GHC825C#GHC825C",
+        //             "SDSS_神思": "SS728#SS728",
+        //         },
+        //         "PIN_国密密码键盘": {
+        //             "CENT_升腾": "a10#a10,i90#i90",
+        //             "GUOG_国光": "CJ800H#CJ800H,CJ800K#CJ800K",
+        //             "STAR_实达": "STAR MT-207S#STAR MT-207S,STAR  MT-207/D10#STAR  MT-207/D10",
+        //             "HJIA_禾嘉": "SJM1611-902#SJM1611-902",
+        //             "SDTJ_时代天鉴": "G959#G959,TJ-948#TJ-948",
+        //             "ZLZK_中联智科": "CTECH-GW08#CTECH-GW08",
+        //             "NANT_南天": "BP8910-G066#BP8910-G066",
+        //         },
+        //         "PIN_非国密密码键盘": {
+        //             "CENT_升腾": "ckb-15sd#ckb-15sd",
+        //             "STAR_实达": "STAR-14SKB/D/J#STAR-14SKB/D/J,STAR-14SKB/D#STAR-14SKB/D",
+        //             "HJIA_禾嘉": "SJM1611-902#SJM1611-902",
+        //             "NANT_南天": "BP8904KV-BP#BP8904KV-BP,BP8904KV-YC(GD)#BP8904KV-YC(GD),BP8904KV-ST#BP8904KV-ST,BP8904-A042#BP8904-A042",
+        //         },
+        //         "MPN_柜外清": {
+        //             "CENT_升腾": "a10#a10,i90#i90",
+        //             "GUOG_国光": "CJ800H#CJ800H,CJ800K#CJ800K",
+        //             "STAR_实达": "STAR MT-207S#STAR MT-207S,STAR  MT-207/D10#STAR  MT-207/D10",
+        //             "HJIA_禾嘉": "SJM1611-902#SJM1611-902",
+        //             "SDTJ_时代天鉴": "G959#G959,TJ-948#TJ-948",
+        //             "ZLZK_中联智科": "CTECH-GW08#CTECH-GW08",
+        //             "NANT_南天": "BP8910-G066#BP8910-G066"
+        //         },
+        //         "IDD_身份证阅读器": {
+        //             "CENT_升腾": "CR100#CR100",
+        //             "GUOG_国光": "CJ9009T#CJ9009T",
+        //             "STAR_实达": "STAR-56#STAR-56",
+        //             "NANT_南天": "BP8903-D#BP8903-D",
+        //             "HJIA_禾嘉": "K18E#K18E",
+        //             "JINC_金诚信": "GHC825C#GHC825C",
+        //             "SDSS_神思": "SS728#SS728,SS628(100)F-D02U#SS628(100)F-D02U,SS628(100)F-D02C#SS628(100)F-D02C,SS628(100)F-002U#SS628(100)F-002U,SS628(100)WF-T33U#SS628(100)WF-T33U",
+        //             "INVS_因纳伟盛": "INVSS100-D#INVSS100-D,INWS100-H#INWS100-H",
+        //             "JLDZ_精伦": "iDR210#iDR210",
+        //             "SDTJ_时代天鉴": "TJ-580#TJ-580",
+        //             "SZHS_华视": "CVR-100U-CT#CVR-100U-CT",
+        //             "STON_四通": "ST-SF-3#ST-SF-3",
+        //         },
+        //         "FNG_指纹仪": {
+        //             "TESO_天诚盛业": "CT2008#CT2008",
+        //         },
+        //         "PRT_打印机": {
+        //             "CINC_中航": "PB-B#PB-B,PB-C#PB-C,PB-D#PB-D,DMP-F201#DMP-F201",
+        //             "STAR_实达": "BP-3000II#BP-3000II",
+        //             "NANT_南天": "MPR10#MPR10,MPR20#MPR20,PR9/K10#PR9/K10",
+        //             "DESC_得实": "DS-200#DS-200",
+        //         }
+        //     }
+
+        <
+        /body>
+
+        <
+        /html>

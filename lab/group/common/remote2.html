@@ -1,0 +1,22 @@
+
+<h1>远程模态框内容2</h1>
+
+<div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+        </button>
+        <button id="submit" type="button" class="btn btn-primary">
+            提交更改
+        </button>
+    </div>
+<script>
+
+    $(function(){
+        $('#submit').on('click',function(event){
+            var currentModal=$('body').data('currentModal');
+            var domId=currentModal.options.domId;            
+            var data={name:'小张'};
+            currentModal.options.data=data;
+            $('#'+domId).modal('hide');           
+        })
+    })
+</script>

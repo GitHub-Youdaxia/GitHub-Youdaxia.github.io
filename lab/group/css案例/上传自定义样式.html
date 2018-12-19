@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<style>
+		#upload {
+			opacity: 0;
+			position: absolute;
+			width: 100px;
+			height: 50px;
+			left: 100px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div>
+		<button id="btn">添加</button>
+		<input id="fileName" type="text">
+
+		<input id="upload" type="file">
+
+	</div>
+	<script>
+		$('#btn').on('click', function () {
+			$('#upload')[0].click();
+		})
+		$('#upload').on('change', function () {
+			$('#fileName').val($(this).val());
+		})
+	</script>
+</body>
+
+</html>

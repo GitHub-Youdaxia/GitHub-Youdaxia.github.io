@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <meta name="full-screen" content="yes" /> -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>右键菜单</title>
+    <style>
+    .youjian {
+        width: 50%;
+        height: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid #CCC;
+    }
+    button{color: #FFF;}
+    button:hover{background-color: #CCC;}
+    .btn-blue{background-color: blue}
+    .btn-green{background-color: green}
+    .btn-orange{background-color: orange}
+    .btn-red{background-color: red}
+
+    #right_click_button_html {
+/*         background: green;
+ */    }
+    </style>
+</head>
+
+<body>
+    <a href=""></a>
+    <div id="draw" class="youjian">
+    </div>
+
+    <script type="text/javascript">
+    var button_html1 = "<div  id='right_click_button_html' class='btn-group-vertical'><button class='btn btn-blue' type='button' id='select_id' value='查询' onclick='select()'>查看</button><button class='btn btn-green' type='button' id='fileup_id' value='上传' onclick='fileupload()'>上传</button><button class='btn btn-orange' type='button' id='dowmload_id' value='下载' onclick='download()' >下载</button><button class='btn btn-red' type='button' id='dele_id' value='删除' onclick='dele()'>删除</button></div>";
+    var styleStr = '<style type="text/css">#right_click_button_html {visibility : hidden;position : absolute;}</style>';
+    $('body').before(styleStr);
+    $('body').append(button_html1);
+
+    $('#draw').on('contextmenu', function(e) {
+        e.preventDefault();
+        showMenu();
+    })
+    $('#draw').on('click', function(e) {
+        hideMenu();
+    })
+    $(window).on('click', function() {
+        hideMenu();
+    })
+    var menu = document.getElementById('right_click_button_html');
+    /*显示菜单*/
+    function showMenu() {
+        var e = window.event || arguments[0];
+
+        menu.style.top = e.clientY + "px";
+
+
+        menu.style.left = e.clientX + "px";
+        /*设置菜单可见*/
+        menu.style.visibility = "visible";
+
+    }
+    /*隐藏菜单*/
+    function hideMenu() {
+        menu.style.visibility = 'hidden';
+    }
+    </script>
+</body>
+
+</html>

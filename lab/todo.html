@@ -1,0 +1,66 @@
+<script>
+
+/*
+ ** 将1234格式化成1,234
+ */
+ function formateAnswer(num) {
+  num += '';
+  var reg = /(?=(?!(\b))(\d{3})+$)/g;
+  if (num.indexOf('.') > 0) {
+    var intArea = num.split('.')[0];
+    var decimals = num.split('.')[1];
+    return intArea.replace(reg, ",") + '.' + decimals;
+  } else {
+    return num.replace(reg, ",");
+  }
+
+}
+/*
+ ** 将1,234格式化成1234
+ */
+function formateAnswer2(num) {
+  num += '';
+  num = num.replace(/,/g, '');
+  return num;
+
+}
+// formateAnswer('20000100000000000000000000000000000.00')
+// "20,000,100,000,000,000,000,000,000,000,000,000.00"
+/**
+ * @function 金额数值转中文
+ * @param money 传入金额最大999999999999999.9999元, 传入类型为string
+ * @returns 金额大写
+ */
+ //数字金额大写转换(可以处理整数,小数,负数)   
+function upDigit(digit)     
+{    
+    n=digit.replace(/\,/g,'');  
+    var fraction = ['角', '分'];    
+    var digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];    
+    var unit = [ ['元', '万', '亿'], ['', '拾', '佰', '仟']  ];    
+    var head = n < 0? '欠': '';    
+    n = Math.abs(n);    
+  
+    var s = '';    
+  
+    for (var i = 0; i < fraction.length; i++)     
+    {    
+        s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');    
+    }    
+    s = s || '整';    
+    n = Math.floor(n);    
+  
+    for (var i = 0; i < unit[0].length && n > 0; i++)     
+    {    
+        var p = '';    
+        for (var j = 0; j < unit[1].length && n > 0; j++)     
+        {    
+            p = digit[n % 10] + unit[1][j] + p;    
+            n = Math.floor(n / 10);    
+        }    
+        s = p.replace(/(零.)*零$/, '').replace(/^$/, '零')  + unit[0][i] + s;    
+    }    
+    return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');    
+}  
+
+</script>

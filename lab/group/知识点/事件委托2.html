@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件委托测试</title>
+    
+
+</head>
+
+<body>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        div {
+            display: block;
+            width: 500px;
+            padding: 200px 0 0 200px;
+        }
+
+        div ul li {
+            display: block;
+            width: 100%;
+            text-align: center;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        div ul li:nth-child(2n) {
+            background: #f00;
+        }
+    </style>
+    <div>
+        <ul>
+            <li>
+                <a>测试1</a>
+            </li>
+            <li>
+                <a>测试2</a>
+            </li>
+            <li>
+                <a>测试3</a>
+            </li>
+            <li>
+                <a>测试4</a>
+            </li>
+            <li>
+                <a>测试5</a>
+            </li>
+            <li>
+                <a>测试6</a>
+            </li>
+            <li>
+                <a>测试7</a>
+            </li>
+            <li>
+                <a>测试8</a>
+            </li>
+        </ul>
+    </div>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+    <script type="text/javascript">
+        document.getElementsByTagName("ul")[0].addEventListener('click', function (e) {
+            alert("点击的内容是：" + e.target.innerHTML);
+        });
+    </script>
+</body>
+
+</html>

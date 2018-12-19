@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+
+    <style type="text/css">
+    .triangle
+    {
+
+        width:0px;
+        height:0px;
+        position: absolute;
+        /*No.1*/
+        /*开始写代码，请实现20px等边三角形，以及制定动画效果，请兼容Firefox、Safari、Chrome、Opera浏览器*/
+        border-bottom:26px solid red;
+        border-left:15px solid transparent;
+        border-right:15px solid transparent;
+        -webkit-animation:move1 5s infinite;
+        -o-animation:move1 5s infinite;
+        animation:move1 5s infinite;
+        /*end_code*/
+    }
+    .box{
+        -webkit-animation:followMove 5s infinite;   //动画 5秒 重复n次
+        -o-animation:followMove 5s infinite;
+        animation:followMove 5s infinite;
+        width:200px;
+        height:200px;
+        position:relative;
+        border:1px solid red;
+        left:10px;
+        margin: 0 auto;
+    }
+    /*No.2*/
+    /*开始写代码，请实现详细的动画效果，请兼容Firefox、Safari、Chrome、Opera浏览器*/
+
+    @keyframes move1 {
+        0%{left:-7.5%;top:0;border-bottom-color: red;}
+        25%{left:92.5%;top:0;border-bottom-color: yellow;}
+        50%{left:92.5%;top:100%;border-bottom-color: blue;}
+        75%{left:-7.5%;top:100%;border-bottom-color: green;}
+        100%{left:-7.5%;top:0;border-bottom-color: red;}
+    }
+
+     @keyframes followMove {
+        0%{border-color:red;}
+        25%{border-color: yellow;}
+        50%{border-color:blue;}
+        75%{border-color:green;}
+        100%{border-color:red;}
+    }
+    </style>
+</head>
+
+<body>
+
+    <h2 id="title">css正三角形+矩形移动动画</h2>
+    <div class="box">
+      <div class="triangle"></div>
+    </div>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+    <script type="text/javascript">
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+
+
+
+
+
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+    <script id="js" type="text/javascript">
+        function SuperType() {
+                this.property = true;
+            }
+  
+            SuperType.prototype.getSuperValue = function () {
+                return this.property;
+            };
+            function SubType() {
+                this.subproperty = false;
+            }
+            //继承了 SuperType
+            SubType.prototype = new SuperType();
+            SubType.prototype.getSubValue = function () {
+                return this.subproperty;
+            };
+            var fuqin = new SubType();
+            var instance = new SubType();
+            
+            console.log(instance.getSuperValue()); //true
+            console.log(instance.__proto__);
+            console.log(instance.constructor); 
+            console.log(SubType.prototype); 
+            //SubType.prototype 原形是一个对象，不是一个function的名字
+            console.log(SubType.prototype.prototype); 
+            console.log(SubType.prototype.__proto__); 
+            console.log(SuperType.constructor); 
+            console.log(SuperType.prototype.constructor); 
+             console.log(instance.__proto__=== SubType.prototype);
+             console.log(fuqin.constructor);
+
+
+
+    </script>
+
+</body>
+
+</html>

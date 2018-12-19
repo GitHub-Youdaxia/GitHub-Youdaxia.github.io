@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+
+    <style type="text/css">
+    .tab-tit li {
+        float: left;
+        margin-left: 20px;
+    }
+
+    .tab-con .mod {
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <input type="file">
+    <br>
+    <img src="" height="200" alt="Image preview area..." title="preview-img">
+    <script>
+    var fileInput = document.querySelector('input[type=file]'),
+        previewImg = document.querySelector('img');
+    fileInput.addEventListener('change', function() {
+        var file = this.files[0];
+        var reader = new FileReader();
+        // 监听reader对象的的onload事件，当图片加载完成时，把base64编码賦值给预览图片
+        reader.addEventListener("load", function() {
+            previewImg.src = reader.result;
+        }, false);
+        // 调用reader.readAsDataURL()方法，把图片转成base64
+        reader.readAsDataURL(file);
+
+        var fileSrc=getObjectURL(file);
+
+        $('body').append('<p>'+fileSrc+'</p>');
+
+    }, false);
+
+    //获取上传文件路径
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    </script>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+
+</body>
+
+</html>

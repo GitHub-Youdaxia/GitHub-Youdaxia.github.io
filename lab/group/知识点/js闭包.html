@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+
+    <style type="text/css">
+    #bibao li{cursor: pointer;}
+    </style>
+</head>
+
+<body>
+    <div id="bibao">
+     
+    //非闭包
+    <ul id="test1">
+        <li>1  </li>
+        <li>2  </li>
+        <li>3  </li>
+
+    </ul>
+    <hr>
+    //闭包
+    <ul id="test2">
+        <li>1  </li>
+        <li>2  </li>
+        <li>3  </li>
+    </ul>
+
+   </div>
+    <hr>
+
+
+
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+    <script>
+        $(function () {
+            var oUL1 = document.getElementById("test1");
+            var oLi = oUL1.getElementsByTagName("li");
+            for (var i = 0; i < oLi.length; i++) {
+                oLi[i].onclick = function () {
+                    console.log(i);
+                }
+            }
+            //打印3的原因:
+            //循环执行的是遍历元素，给每个click事件绑定一个函数，for循环是外部作用域，函数内是局部作用域，
+            //i变量是外部变量，循环完毕后i值i=3
+            //当点击时打印外部变量i值是3
+
+        })
+    </script>
+
+    <!-- 闭包 -->
+    <script>
+        $(function () {
+            var oUL = document.getElementById("test2");
+            var oLi = oUL.getElementsByTagName("li");
+            for (var i = 0; i < oLi.length; i++) {
+                oLi[i].index = i;
+                oLi[i].onclick = (function (a) {
+                    return function () {
+                        console.log(a);
+                        console.log('外部变量'+i);//是3
+                    }
+                })(i)
+                //能打印0,1,2原因
+                //将click事件绑定的函数放在另一个立即执行函数的作用域中，每个立即执行函数内变量a值都不一样，当点击时变量a从外部作用域取，每个都不一样
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">确定</button>
+
+
+    <script>
+        $(function(){
+            $('#btn').data('dd','dd')
+            $('#btn').on('click',function(event){
+                alert('1');
+            })
+            var newBtn=$('#btn').clone(true);
+            newBtn.addClass('ddddddddddddd');
+            $.CurrentNavtab.append(newBtn);
+            $('#btn').remove()
+        })
+
+    </script>
+</body>
+</html>

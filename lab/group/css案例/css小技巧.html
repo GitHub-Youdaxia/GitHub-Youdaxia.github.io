@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+
+    <style type="text/css">
+    .nav-a {
+        display: block;
+        position: relative;
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+        background-color: #000;
+        color: #FFF;
+        text-align: center;
+    }
+    
+    .nav-a:hover {
+        color: #FFF;
+        text-decoration: none;
+    }
+    
+    .nav-a:after {
+        content: "";
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid white;
+        top: 20px;
+        right: 10px;
+        transform: rotate(0deg);
+        transition: all 300ms ease 0s;
+    }
+    
+    .nav-a:hover:after {
+        content: "";
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid white;
+        top: 20px;
+        right: 10px;
+        transform: rotate(90deg);
+        transition: all 300ms ease 0s;
+    }
+    
+    .nav-b {
+        box-sizing: border-box;
+        display: block;
+        position: relative;
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+        background-color: #000;
+        color: #FFF;
+        text-align: center;
+    }
+    
+    .nav-b:hover {
+        color: #FFF;
+        text-decoration: none;
+    }
+    
+    .nav-b:after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 6px;
+        background: #5dbfd4;
+        transition: width .3s;
+        margin: 0 auto;
+    }
+    
+    .nav-b:hover:after {
+        width: 100%;
+    }
+    .nav-c {
+        box-sizing: border-box;
+        display: block;
+        position: relative;
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+        background-color: #000;
+        color: #FFF;
+        text-align: center;
+    }
+    
+    .nav-c:hover {
+        color: #FFF;
+        text-decoration: none;
+    }
+    
+    .nav-c:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;   
+        margin: auto;
+        background: #5dbfd4;
+        transition: width .3s;
+        width: 0;
+        height: 6px;
+    }
+    
+    .nav-c:hover:after {
+        width: 100%;
+    }
+    /*弹窗消失效果*/
+    
+    .tan-ul li:hover .sub-ul {
+
+        transition: transform .3s cubic-bezier(0.39, 0.575, 0.565, 1) 0s, opacity .2s linear .1s, visibility 0s linear 0s;
+        opacity: 1;
+         transform: none;
+        visibility: visible;
+
+    }
+    
+    .sub-ul {
+          transform: translateY(-1em);
+         background-color: #000;color: #FFF;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+        opacity: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>css实现导航链接小三角</h1>
+    <a class="nav-a" href="#">导航</a>
+    <h1>导航css底部动画border</h1>
+    <a class="nav-b" href="#">导航</a>
+    <ol>
+        <li>使用伪类after添加内容宽度为0 margin:0 auto transition设置动画过渡效果</li>
+        <li>在某种状态下：hover下让伪类宽度变成100%</li>
+        <li>margin:0 auto控制样式从中间向两边延长</li>
+    </ol>
+
+    <h1>导航css底部动画border 定位在元素内部</h1>
+    <a class="nav-c" href="#">导航 nav-c</a>
+    <ol>
+
+    </ol>
+    
+    <h1>弹窗的出现动画效果</h1>
+    <ul class="tan-ul">
+        <li>导航1
+            <ul class="sub-ul">
+                <li>ddd</li>
+                <li>ddd</li>
+                <li>ddd</li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul class="tan-ul">
+        <li>导航1
+            <ul >
+                <li>ddd</li>
+                <li>ddd</li>
+                <li>ddd</li>
+            </ul>
+        </li>
+    </ul>    
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+</body>
+
+</html>

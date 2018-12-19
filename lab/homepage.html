@@ -1,0 +1,44 @@
+
+<div class="container" id="homepage-content">
+    <!-- <h1>plugins插件目录下的插件版本是旧的</h1> -->
+    <!-- <a id="group" href="json/group.json">111111111</a> -->
+
+    <div id="all-content" class="row">
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        var groupData = $.groupData;
+        var htmlStr = "";
+        for (let i = 0; i < groupData.length; i++) {
+            const elementI = groupData[i];
+            htmlStr += '<div class="col-md-3 col-sm-3">';
+            htmlStr += '<h4><a href="#">' + elementI['className'] + '<a></h4>';
+            var list = elementI['list'];
+            for (let j = 0; j < list.length; j++) {
+                const elementJ = list[j];
+                //data-toggle='navtab' data-options={'id':'" + elementJ.id + "','url':'" + elementJ.url + "','title':'" + elementJ.title +"'}
+
+                if (elementJ.external == undefined) {
+                    elementJ.external = false;
+                }
+                htmlStr += " <a href='#' data-external=" + elementJ.external + "  data-id=" + elementJ.id +
+                    " data-title=" + elementJ.title.replace(/,/g, '-') + " data-url=" + "/lab/group/" +
+                    elementI['className'] + "/" + elementJ.url + " class='list-group-item'>" +
+                    elementJ.title + "</a>";
+            }
+            htmlStr += '</div>';
+        }
+        $('#all-content').html(htmlStr);
+        $('#all-content').on('click', 'a.list-group-item', function (event) {
+            var id = $(this).data('id');
+            var title = $(this).data('title');
+            var url = $(this).data('url');
+            var external = $(this).data('external');
+            openMenuNavtab(id, title, url, external);
+
+        })
+    })
+</script>

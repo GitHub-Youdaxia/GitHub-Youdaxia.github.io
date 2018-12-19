@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+
+    <style type="text/css">
+    #duoxingjiazaianli ul {
+      margin: 0 auto;
+      padding: 0;
+      width: 300px;
+      list-style: none;
+    }
+
+    #duoxingjiazaianli .lazy {
+      margin-bottom: 100px;
+      width: 300px;
+      height: 168px;
+      text-align: center;
+      line-height: 168px; /*垂直居中*/
+    }
+    #duoxingjiazaianli img{width: 200px;height: 200px;}
+    #duoxingjiazaianli{
+      overflow: auto;
+      height: 100%;;
+    }
+    </style>
+</head>
+
+<body>
+
+  <div id="duoxingjiazaianli">
+      <h2 id="title">惰性加载案例</h2>
+
+      <ul>
+       <li class="lazy"><img data-original="/lab/images/0.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/1.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/2.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/3.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/4.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/5.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/6.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/7.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/8.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/9.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/10.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/11.jpg" src="/lab/images/loading.gif"/></li>
+       <li class="lazy"><img data-original="/lab/images/12.jpg" src="/lab/images/loading.gif"/></li>
+     </ul>
+  </div>
+ 
+
+
+
+
+
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+    <script type="text/javascript">
+    init();
+
+    function init() {
+      var images = document.images;
+      // 加载首屏图片
+      for (var i = 0, len = images.length; i < len; i++) {
+        var obj = images[i];
+        // 如果在可视区域并且还没被加载过
+        if(obj.getBoundingClientRect().top < document.documentElement.clientHeight && !obj.isLoad) {
+          obj.isLoad = true;
+          // 先调用 HTML5 方法
+          if (obj.dataset)
+            imageLoaded(obj, obj.dataset.original);
+          else
+            imageLoaded(obj, obj.getAttribute('data-original'));
+        } else {
+          break;
+        }
+      }
+    }
+    $('#duoxingjiazaianli').on('scroll',function(event){
+      lazyload();
+
+    })
+
+
+    function lazyload() {
+      var lazy = 500;
+      var images = document.images;
+      for (var i = 0, len = images.length; i < len; i++) {
+        var obj = images[i];
+        if (obj.getBoundingClientRect().top - lazy < document.documentElement.clientHeight && !obj.isLoad) {
+          obj.isLoad = true;
+          obj.style.cssText = "transition: ''; opacity: 0;"
+          if (obj.dataset)
+            imageLoaded(obj, obj.dataset.original);
+          else
+            imageLoaded(obj, obj.getAttribute('data-original'));
+        }
+
+        if (obj.getBoundingClientRect().top < document.documentElement.clientHeight && !obj.isShow) {
+          obj.isShow = true;
+          obj.style.cssText = "transition: 1s; opacity: 1;"
+        }
+      }
+    }
+
+    function imageLoaded(obj, src) {
+      var img = new Image();
+      img.onload = function() {
+        obj.src = src;
+      };
+      img.src = src;
+    }
+    </script>
+</body>
+
+</html>

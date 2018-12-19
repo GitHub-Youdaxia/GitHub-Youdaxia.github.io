@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/custom.css"> -->
+    <title>Document</title>
+    <style type="text/css">
+        div:focus {
+            border: 10px solid blue;
+        }
+
+        button:focus {
+            background: green;
+            color: #FFF;
+        }
+
+        .lock-bg {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .zongjie{
+            color: #FFF;
+        }
+    </style>
+</head>
+
+<body style="padding: 20px;">
+    <div id="lock-bg" class="lock-bg" style="background:green;">
+        <h2>锁屏界面如何阻止全局快捷键使用</h2>
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <button id="btn2">确定</button>
+        <ul class="zongjie">
+                <h4>总结</h4>
+                <li>焦点事件先于click事件发生</li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+    </div>
+
+    <div>
+
+    </div>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    <script>
+        //
+        $(function () {
+            $(window).on('keypress', function () {
+                console.log('window keypress');
+                console.log('当前焦点元素',$(':focus'));
+
+            })
+            $(window).on('focus', function () {
+                console.log('window focus');
+                console.log('当前焦点元素',$(':focus'));
+
+            })
+            $(window).on('click', function () {
+                console.log('window click');
+                console.log('当前焦点元素',$(':focus'));
+
+            })
+            $(document).on('keypress', function (event) {
+                event.stopPropagation();
+                console.log('window keypress')
+
+            })
+            $(document).on('focus', function (event) {
+                console.log('window focus')
+
+            })
+            $(document).on('click', function (event) {
+                console.log('document click')
+
+            })
+            $('body').on('keypress', function () {
+                console.log('body keypress')
+            })
+            $('body').on('focus', function () {
+                console.log('body focus');
+                // event.stopPropagation();
+
+            })
+            $('body').on('click', function () {
+                console.log('body click');
+                // event.stopPropagation();
+            })
+
+            $('#lock-bg').attr('tabindex','0');
+            $('.lock-bg').on('keypress', function (event) {
+                // event.stopPropagation();
+
+                console.log('lock-bg keypress');
+            })
+            $('.lock-bg').on('focus', function (event) {
+                // event.stopPropagation();
+
+                console.log('lock-bg focus');
+            })
+            $('#lock-bg').on('click', function (event) {
+                // event.stopPropagation();
+
+                console.log('lock-bg click');
+
+            })
+            $('#btn2').on('click', function (event) {
+                // event.stopPropagation();
+                console.log('btn2 click');
+                console.log('当前焦点元素',$(':focus'));
+
+            })
+            $('#btn2').on('focus', function (event) {
+
+                console.log('btn2 focus');
+
+            })
+
+        })
+    </script>
+</body>
+
+</html>

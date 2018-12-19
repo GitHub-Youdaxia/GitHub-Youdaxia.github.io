@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>前端案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank, _self, _parent, _top" href="">
+    <!-- 引入 Bootstrap -->
+    
+
+    <style type="text/css">
+  .box{
+    display: -webkit-flex; /* Safari */
+    display: flex;
+  }
+
+  .item{width: 100px;height: 100px;background-color: #DDD;margin-left: 2px;margin-bottom: 2px;}
+  .btns{margin-bottom: 10px;}
+
+  .-row{flex-direction:row;}
+  .-row-reverse{flex-direction:row-reverse;}
+  .-column{flex-direction:column;}
+  .-column-reverse {flex-direction:column-reverse ;}
+
+  .-nowrap{flex-wrap: nowrap}
+  .-wrap{flex-wrap: wrap}
+  .-wrap-reverse{flex-wrap: wrap-reverse}
+
+  .-flex-start{justify-content:flex-start}
+  .-flex-end{justify-content:flex-end}
+  .-center{justify-content:center}
+  .-space-between{justify-content:space-between}
+  .-space-around{justify-content:space-around}
+
+#flex-grow{padding-left: 200px;margin-right: 200px;}
+  #flex-grow .item{ flex-grow:1;width: auto;}
+  #flex-grow .flex-grow2{flex-grow:2}
+    </style>
+</head>
+
+<body>
+
+    <h2 id="title">flex布局</h2>
+    <p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html">Flex 布局教程：语法篇</a></p>
+    <p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html">Flex 布局教程：实例篇</a></p>
+
+    <div class="btns" id="directionBtns">
+      <h3>flex-direction:</h3>
+      <button type="button" class="btn btn-default">row</button>
+      <button type="button" class="btn btn-default">row-reverse</button>
+      <button type="button" class="btn btn-default">column</button>
+      <button type="button" class="btn btn-default">column-reverse</button>
+    </div>
+    <div class="box" id="direction">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+    </div>
+
+    <div class="btns" id="wrapBtns">
+      <h3>flex-wrap:</h3>
+      <button type="button" class="btn btn-default">nowrap</button>
+      <button type="button" class="btn btn-default">wrap</button>
+      <button type="button" class="btn btn-default"> wrap-reverse</button>
+    </div>
+    <div class="box" id="wrapBox">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+    </div>
+    <div class="btns" >
+      <h3>flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。</h3>
+
+    </div>
+    <div class="btns" id="justifyContentBtns">
+      <h3>justify-content: flex-start | flex-end | center | space-between | space-around;</h3>
+    </div>
+    <div class="box" id="justifyContentBox">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+    </div>
+    <div class="box" id="flex-grow">
+      <div class="item">1</div>
+      <div class="item flex-grow2">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+    </div>
+
+  <h3>flex-shrink属性,设置为0就不会缩放，默认值是1</h3>
+    <div class="box" >
+      <div class="flex-shrink-item">1</div>
+      <div class="flex-shrink-item flex-shrink0">flex-shrink属性:0</div>
+      <div class="flex-shrink-item">3</div>
+      <div class="flex-shrink-item">4</div>
+      <div class="flex-shrink-item">5</div>
+    </div>
+    <style>
+    .flex-shrink-item{height: 100px;background-color: #DDD;margin-left: 2px;margin-bottom: 2px;flex-grow:1}
+    .flex-shrink0{flex-grow: 0;}
+        </style>
+  <h3>flex-basis属性属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</h3>
+    <div class="box" >
+      <div class="flex-basis-item">1</div>
+      <div class="flex-basis-item flex-basis300">flex-basis300</div>
+      <div class="flex-basis-item">3</div>
+      <div class="flex-basis-item">4</div>
+      <div class="flex-basis-item">5</div>
+    </div>
+    <style>
+    .flex-basis-item{height: 100px;width: 100px;background-color: #DDD;margin-left: 2px;margin-bottom: 2px;flex-grow:1}
+    .flex-basis300{flex-basis: 300px;}
+    </style>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    
+    
+    <script type="text/javascript">
+
+    var directionArr=[ 'row' , 'row-reverse' , 'column' , 'column-reverse'];
+    var wrapArr=[ 'nowrap' , 'wrap' , 'wrap-reverse'];
+    var justifyContentArr=[ 'flex-start' , 'flex-end' , 'center','space-between','space-around'];
+
+
+  (function() {
+    var justifyContentBtns='';
+    for (var i = 0; i < justifyContentArr.length; i++) {
+      justifyContentBtns +='<button class="btn btn-default">'+justifyContentArr[i]+'</button>';
+    }
+    $('#justifyContentBtns').append(justifyContentBtns);
+
+  })()
+        $('#directionBtns').find('button').each(function(index, el) {
+
+          $(el).on('click' , function(event) {
+            event.preventDefault();
+            /* Act on the event */
+              console.log(index);
+            $('#direction').removeClass().addClass('box'+' '+'-'+directionArr[index]);
+
+          });
+        });
+        $('#wrapBtns').find('button').each(function(index, el) {
+
+          $(el).on('click' , function(event) {
+            event.preventDefault();
+            /* Act on the event */
+              console.log(index);
+            $('#wrapBox').removeClass().addClass('box'+' '+'-'+wrapArr[index]);
+
+          });
+        });
+        $('#justifyContentBtns').find('button').each(function(index, el) {
+
+          $(el).on('click' , function(event) {
+            event.preventDefault();
+            /* Act on the event */
+              console.log(index);
+            $('#justifyContentBox').removeClass().addClass('box'+' '+'-'+justifyContentArr[index]);
+
+          });
+        });
+    </script>
+
+<h3>常见flex布局</h3>
+
+<div class="flex-box width1000">
+  <div class="flex-box-item">1</div>
+  <div class="flex-box-item width500">2</div>
+  <div class="flex-box-item">3</div>
+  <div class="flex-box-item">4</div>
+  <div class="flex-box-item">5</div>
+</div>
+
+<style>
+.flex-box{display: flex-box;display: -webkit-flex;}
+.flex-box-item{background-color: #DDD;height: 100px;flex: 1 0 auto;}
+.width500{width: 500px;}
+.width1000{width: 1000px;}
+.flex-basis500{flex: 1 0 auto;width: 800px;}
+</style>
+
+
+
+
+
+
+
+
+</body>
+
+</html>

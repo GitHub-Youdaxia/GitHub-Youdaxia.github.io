@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <meta name="full-screen" content="yes" /> -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>个人主页</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <!-- <link rel="stylesheet" href="./css/bootstrap.css"> -->
+    <link rel="stylesheet" href="./css/swiper.min-4-0.css">
+    <link rel="stylesheet" href="./css/public.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/personHome.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <header class="person-header">
+        <div class="background">
+            <img src="images/山地@2x.png" alt="">
+        </div>
+        <div class="person-box">
+            <div class="person-box-left">
+                <img class="avatar" src="images/avatar.png" alt="">
+                <div class="person-info">
+                    <p class="person-nickname">西北大牛
+                        <img class="person-edit" src="images/bianji@2x.png"></img>
+                    </p>
+                    <!-- 考虑字数多的情况 -->
+                    <p class="person-describle">中国西北地区徒步爱好者</p>
+                </div>
+            </div>
+            <div class="person-box-right clearfix">
+                <img class="person-follow" src="images/follow@2x.png" alt="">
+                <img class="person-weix" src="images/weix@2x.png" alt="">
+            </div>
+
+        </div>
+        <div class="header-bottom">
+            <ul class="clearfix">
+                <li>
+                    <a href="#">
+                        <p>566</p>
+                        <p>粉丝</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p>167</p>
+                        <p>关注</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p>680</p>
+                        <p>点赞</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="person-content">
+        <div class="person-list-box ">
+            <div class="j-person-swiper tab-box">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide person-item-active">
+                        <span>游记</span>
+                    </div>
+                    <div class="swiper-slide">
+                        <span>收藏</span>
+                    </div>
+                    <div class="swiper-slide">
+                        <span>活动</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-con-list j-person-con-swipe">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide ">
+                    <div class="travel-notes" style="height: 10rem;">
+                        <ul>
+                            <li class="">
+                                <div class="travel-notes-con clearfix">
+                                    <div class="travel-notes-img">
+                                        <img src="images/滑雪@2x.png" alt="">
+                                    </div>
+                                    <div class="travel-notes-text">
+                                        <h3 class="travel-notes-title">自驾进藏，看看藏区老司机的经验总结，带你体验不一样的生活经历...</h3>
+                                        <div class="travel-notes-info clearfix">
+                                            <img src="images/avatar.png" alt="">
+                                            <span class="travel-person-nickname">风语者</span>
+                                            <span class="travel-person-date">2011-09-10</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="travel-notes-btn-box">
+                                    <button class="travel-notes-btn travel-notes-edit">编辑</button>
+                                    <button class="travel-notes-btn travel-notes-delete">删除</button>
+                                </div>
+                            </li>
+                            <li class="">
+                                <div class="travel-notes-con clearfix">
+                                    <div class="travel-notes-img">
+                                        <img src="images/滑雪@2x.png" alt="">
+                                    </div>
+                                    <div class="travel-notes-text">
+                                        <h3 class="travel-notes-title">自驾进藏，看看藏区老司机的经验总结，带你体验不一样的生活经历...</h3>
+                                        <div class="travel-notes-info clearfix">
+                                            <img src="images/avatar.png" alt="">
+                                            <span class="travel-person-nickname">风语者</span>
+                                            <span class="travel-person-date">2011-09-10</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="travel-notes-btn-box">
+                                    <button class="travel-notes-btn travel-notes-edit">编辑</button>
+                                    <button class="travel-notes-btn travel-notes-delete">删除</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div style="height: 30rem;">2</div>
+                </div>
+                <div class="swiper-slide">
+                    <div style="height: 10rem;">3</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+    <script src="./js/rem.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <!-- <script src="./js/bootstrap.min.js"></script> -->
+    <script src="./js/swiper4-0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*个人主页tab切换*/
+            var personSwiper = new Swiper('.j-person-swiper', {
+                slidesPerView: 3,
+            });
+            var personConSwiper = new Swiper('.j-person-con-swipe', {
+                slidesPerView: 1,
+                on: {
+                    slideChange: function () {
+                       var  personConIndex=personConSwiper.activeIndex;
+                       $('.j-person-swiper .swiper-slide').eq(personConIndex).trigger("click");
+                    },
+                },
+            });
+
+            // var index = 0;
+            // var maxIndex = personSwiper.slides.length - 1;
+
+            $('.j-person-swiper .swiper-slide').on('click', function () {
+                var index = $(this).index();
+                $('.j-person-swiper .swiper-slide').removeClass("person-item-active");
+                $(this).addClass("person-item-active");
+                $('.tab-con').hide();
+                $('.tab-con').eq(index).show();
+                personConSwiper.slideTo(index, 300, false);
+
+            })
+
+            $('.travel-notes-delete').on('click',function(){
+                var li=$(this).parents('li');
+                console.log(li);
+                
+                li.remove();
+            })
+            // $(".tab-con-list").on("touchstart", function (e) {
+            //     e.preventDefault();
+            //     startX = e.originalEvent.changedTouches[0].pageX,
+            //         startY = e.originalEvent.changedTouches[0].pageY;
+            // });
+            // $(".tab-con-list").on("touchmove", function (e) {
+            //     e.preventDefault();
+            //     moveEndX = e.originalEvent.changedTouches[0].pageX,
+            //         moveEndY = e.originalEvent.changedTouches[0].pageY,
+            //         X = moveEndX - startX,
+            //         Y = moveEndY - startY;
+
+            //     if (Math.abs(X) > Math.abs(Y) && X > 0) {
+            //         // alert("left 2 right");
+            //         index = index - 1;
+            //         if (index < 0) {
+            //             index = 0;
+            //         }
+            //         $('.j-person-swiper .swiper-slide').eq(index).trigger('click');
+            //     }
+            //     else if (Math.abs(X) > Math.abs(Y) && X < 0) {
+            //         // alert("right 2 left");
+            //         index = index + 1;
+            //         if (index > maxIndex) {
+            //             index = maxIndex;
+            //         }
+            //         $('.j-person-swiper .swiper-slide').eq(index).trigger('click');
+
+            //     }
+            //     else if (Math.abs(Y) > Math.abs(X) && Y > 0) {
+            //         // alert("top 2 bottom");
+            //     }
+            //     else if (Math.abs(Y) > Math.abs(X) && Y < 0) {
+            //         // alert("bottom 2 top");
+            //     }
+            //     else {
+            //         // alert("just touch");
+            //     }
+            // });
+        });
+    </script>
+</body>
+
+</html>
