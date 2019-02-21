@@ -1,4 +1,4 @@
-$.groupData=[{
+$.groupData = [{
     "className": "css案例",
     "list": [{
         "id": "id-0-0",
@@ -29,17 +29,25 @@ $.groupData=[{
         "title": "1px移动端",
         "url": "1px移动端.html"
     }, {
+        "id": "id-0-8",
+        "title": "css各种图形合集",
+        "url": "css各种图形合集.html"
+    }, {
+        "id": "id-0-9",
+        "title": "css常用布局.",
+        "url": "css常用布局.html"
+    }, {
         "id": "id-0-7",
         "title": "上传功能自定义样式",
         "url": "上传自定义样式.html"
     }]
 }, {
     "className": "js案例",
-    "list": [  {
+    "list": [{
         "id": "id-1-3",
         "title": "移动端tab切换_zepto",
         "url": "移动端tab切换_zepto.html",
-        "external":true
+        "external": true
     }, {
         "id": "id-1-4",
         "title": "PC端tab切换_Jquery",
@@ -49,10 +57,14 @@ $.groupData=[{
         "title": "惰性加载案例",
         "url": "惰性加载案例.html"
     }, {
+        "id": "id-1-111",
+        "title": "jquery三级联动插件",
+        "url": "jquery三级联动插件.html"
+    }, {
         "id": "id-1-6",
         "title": "获取上传文件路径和预览图片",
         "url": "获取上传文件路径和预览图片.html"
-    },  {
+    }, {
         "id": "id-1-8",
         "title": "一维数组转树形json",
         "url": "一维数组转树形json.html"
@@ -60,11 +72,24 @@ $.groupData=[{
         "id": "id-1-9",
         "title": "预览图片和html2canvas插件生成元素内容的图片",
         "url": "预览图片和canvas画图.html",
-        "external":true
+        "external": true
     }, {
         "id": "id-1-10",
         "title": "右键菜单",
         "url": "右键菜单.html"
+    }, {
+        "id": "id-1-12",
+        "title": "微信网页悬浮窗",
+        "url": "微信网页悬浮窗.html",
+        "external": true
+    }, {
+        "id": "id-1-13",
+        "title": "基于HTML5的drag_drop的模块拖动插入排序和删除",
+        "url": "基于HTML5的drag_drop的模块拖动插入排序和删除.html",
+    }, {
+        "id": "id-1-14",
+        "title": "点击页面出现文字动画效果",
+        "url": "点击页面出现文字动画效果.html",
     }, {
         "id": "id-1-11",
         "title": "重复选择select的某一项再次触发change事件方法",
@@ -73,59 +98,70 @@ $.groupData=[{
 }, {
     "className": "知识点",
     "list": [{
-        "id": "id-2-0",
-        "title": "事件委托",
-        "url": "事件委托.html"
-    }, {
-        "id": "id-2-2",
-        "title": "js通过原型链继承",
-        "url": "js继承.html"
-    }, {
-        "id": "id-2-3",
-        "title": "js闭包",
-        "url": "js闭包.html"
-    }, {
-        "id": "id-2-4",
-        "title": "用ES5模拟实现ES6中的Map类",
-        "url": "用ES5模拟实现ES6中的Map类.html"
-    }, {
-        "id": "id-2-5",
-        "title": "键盘事件总结",
-        "url": "键盘事件总结.html"
-    }, {
-        "id": "id-2-6",
-        "title": "键盘事件只在局部元素有效",
-        "url": "键盘事件只在局部元素有效.html"
-    }, {
-        "id": "id-2-7",
-        "title": "浏览器鼠标_键盘_htm事件.html",
-        "url": "浏览器鼠标_键盘_htm事件.html"
-    }, {
-        "id": "id-2-8",
-        "title": "js中的this",
-        "url": "js中的this.html"}, 
+            "id": "id-2-00",
+            "title": "纯文字",
+            "url": "纯文字.html"
+        }, {
+            "id": "id-2-0",
+            "title": "事件委托",
+            "url": "事件委托.html"
+        }, {
+            "id": "id-2-2",
+            "title": "js通过原型链继承",
+            "url": "js继承.html"
+        }, {
+            "id": "id-2-3",
+            "title": "js闭包",
+            "url": "js闭包.html"
+        }, {
+            "id": "id-2-4",
+            "title": "用ES5模拟实现ES6中的Map类",
+            "url": "用ES5模拟实现ES6中的Map类.html"
+        }, {
+            "id": "id-2-5",
+            "title": "键盘事件总结",
+            "url": "键盘事件总结.html"
+        }, {
+            "id": "id-2-6",
+            "title": "键盘事件只在局部元素有效",
+            "url": "键盘事件只在局部元素有效.html"
+        }, {
+            "id": "id-2-7",
+            "title": "浏览器鼠标_键盘_htm事件.html",
+            "url": "浏览器鼠标_键盘_htm事件.html"
+        }, {
+            "id": "id-2-8",
+            "title": "js中的this",
+            "url": "js中的this.html"
+        },
         {
-        "id": "id-2-9",
-        "title": "js开发技巧",
-        "url": "js开发技巧.html"
-    }]
+            "id": "id-2-10",
+            "title": "防抖函数与节流函数",
+            "url": "防抖函数与节流函数.html"
+        },
+        {
+            "id": "id-2-9",
+            "title": "js开发技巧",
+            "url": "js开发技巧.html"
+        }
+    ]
 }, {
     "className": "移动端",
     "list": [{
         "id": "id-3-0",
         "title": "移动端touchmouve做刮奖效果",
         "url": "刮奖.html",
-        "external":true
-    },{
+        "external": true
+    }, {
         "id": "id-3-1",
         "title": "移动端登陆",
         "url": "h5/login.html",
-        "external":true
-    },{
+        "external": true
+    }, {
         "id": "id-3-2",
         "title": "移动端个人主页",
         "url": "h5/personHome.html",
-        "external":true
+        "external": true
     }]
 }, {
     "className": "common",
@@ -145,6 +181,11 @@ $.groupData=[{
         "id": "id-4-3",
         "title": "递归与异步请求",
         "url": "递归与异步请求.html"
+    }, {
+        "id": "id-4-5",
+        "title": "localforage使用案例",
+        "url": "localforage使用案例.html",
+        "external": true
     }, {
         "id": "id-4-4",
         "title": "递归与异步请求_bootrapDialog",
@@ -168,14 +209,14 @@ $.groupData=[{
         "title": "数据字典或码表设计",
         "url": "数据字典或码表设计.html"
     }]
-},{
+}, {
     "className": "websocket和webworker",
     "list": [{
         "id": "id-8-1",
         "title": "websocket",
         "url": "websocket.html"
     }]
-},{
+}, {
     "className": "jQuery",
     "list": [{
         "id": "id-9-1",

@@ -22,7 +22,7 @@
 
     <script type="text/javascript">
         (function ($) {
-            $.fn.localAuthorize = function (options) {
+            $.localAuthorize = function (options) {
                 new localAuthorize(options);
             }
             var localAuthorize = function (options) {
@@ -76,7 +76,7 @@
             }];
 
             function request(item) {
-                $.fn.localAuthorize({
+                $.localAuthorize({
                     domId: item.name,
                     options: {
                         backdrop: 'static',

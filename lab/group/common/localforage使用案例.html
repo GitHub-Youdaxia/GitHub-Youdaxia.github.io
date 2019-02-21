@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <label for="fileImg">上传图片</label>
+    <input type="file" id="fileImg" accept="image/*" hidden>
+    <p id="result"></p>
+
+
+
+    <pre>
+        localforage用来本地存储数据的。
+
+        说到本地存储数据，我们首先想到的是localStorage，应该很多小伙伴都用过，使用很简单。然而，localStorage却有下面一些缺点：
+        
+        存储容量限制，大部分浏览器应该最多5M。我就遇到过localStorage存储字符然后尺寸爆掉的情况。
+        仅支持字符串，如果是存对象还需要将使用JSON.stringify和JSON.parse方法互相转换，有些啰嗦。
+        读取都是同步的。大多数情况下，还挺好使的。但，如果存储数据比较大，例如一张重要图片base64格式存储了，再读可能会有可感知的延迟时间。
+        localforage的作用就是用来规避上面localStorage的缺点，同时保留localStorage的优点而设计的。从命名上就可以看出两者关系不浅。
+        
+        localStorage的优点是API非常简单，使用很方便。于是，localforage和localStorage一模一样。
+        
+        至于localStorage的不足，localforage和使用了其他HTML5 API进行规避，什么API呢？是IndexedDB和WebSQL。
+        
+        也就是说，localforage的逻辑是这样的：优先使用IndexedDB存储数据，如果浏览器不支持，使用WebSQL，浏览器再不支持，使用localStorage。
+        
+        然后API还是localStorage的API，也就是数据增删改查通过get，set，remove，clear和length等API。    </pre>
+    <pre>
+        indexDB IE10+浏览器支持。因此，如果想要使用localforage存储任意格式数据，需要注意下浏览器的兼容性问题，例如，本地图片存储Blob数据，IE9肯定是不支持的。这些浏览器怕是只能存字符串了。
+    </pre>
+    <script src="./localforage使用案例/localforage.min.js"></script>
+    <script>
+        var eleResult = document.getElementById('result');
+        // 图片资源
+        var eleImg = document.createElement('img');
+        // 获取本地存储数据
+        localforage.getItem('zxxImg', function (err, value) {
+            if (err == null && value) {
+                eleImg.src = value;
+                eleResult.appendChild(eleImg);
+            }
+        });
+        // 选择的本地文件以Blob形式呈现
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            if (!eleImg.src) {
+                eleResult.appendChild(eleImg);
+            }
+            var blob = URL.createObjectURL(new Blob([event.target.result]));
+            eleImg.src = blob;
+            // blob本地存储
+            localforage.setItem('zxxImg', blob);
+        };
+        // 选择的文件对象
+        var file = null;
+        document.getElementById('fileImg').addEventListener('change', function (event) {
+            file = event.target.files[0];
+            // 选择的文件是图片
+            if (file.type.indexOf("image") == 0) {
+                reader.readAsArrayBuffer(file);
+            }
+        });
+    </script>
+</body>
+
+</html>

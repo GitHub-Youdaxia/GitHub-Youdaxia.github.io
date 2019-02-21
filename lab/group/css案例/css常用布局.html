@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="main">
+    <div id="body">
+        <div id="effect" class="part">
+            <h3>效果：</h3>
+            <div class="show">
+                <div class="demo" style="margin-bottom:-20px;">
+                    <p>宽度调节(240-414)：<input type="range" min="240" max="1024" value="1024" onInput="demo.style.width = this.value + 'px';"></p>
+                    <p>字号调节(12-16)：<input type="range" min="12" max="16" value="14" onInput="demo.style.fontSize = this.value + 'px';"></p>
+                </div>
+                <div id="demo" class="demo">
+                    <h4>1. absolute实现</h4>
+                    <dl class="dl1">
+                        <dt>手机系统</dt>
+                        <dd>Android</dd>
+                        <dt>登录方式</dt>
+                        <dd>QQ互联登录</dd>
+                        <dt>绑定事件</dt>
+                        <dd>2019-01-02 00:01</dd>
+                        <dt>绑定状态</dt>
+                        <dd>成功</dd>
+                        <dt>备注</dt>
+                        <dd>如果需要修改绑定，请联系HR进行修改</dd>
+                    </dl>
+                    <h4>2. flex实现</h4>
+                    <dl class="dl2">
+                        <dt>手机系统</dt>
+                        <dd>Android</dd>
+                        <dt>登录方式</dt>
+                        <dd>QQ互联登录</dd>
+                        <dt>绑定事件</dt>
+                        <dd>2019-01-02 00:01</dd>
+                        <dt>绑定状态</dt>
+                        <dd>成功</dd>
+                        <dt>备注</dt>
+                        <dd>如果需要修改绑定，请联系HR进行修改</dd>
+                    </dl>
+                    <h4>3. grid实现</h4>
+                    <dl class="dl3">
+                        <dt>手机系统</dt>
+                        <dd>Android</dd>
+                        <dt>登录方式</dt>
+                        <dd>QQ互联登录</dd>
+                        <dt>绑定事件</dt>
+                        <dd>2019-01-02 00:01</dd>
+                        <dt>绑定状态</dt>
+                        <dd>成功</dd>
+                        <dt>备注</dt>
+                        <dd>如果需要修改绑定，请联系HR进行修改</dd>
+                    </dl>
+                    <h4>4. float实现</h4>
+                    <dl class="dl4">
+                        <dt>手机系统</dt>
+                        <dd>Android</dd>
+                        <dt>登录方式</dt>
+                        <dd>QQ互联登录</dd>
+                        <dt>绑定事件</dt>
+                        <dd>2019-01-02 00:01</dd>
+                        <dt>绑定状态</dt>
+                        <dd>成功</dd>
+                        <dt>备注</dt>
+                        <dd>如果需要修改绑定，请联系HR进行修改</dd>
+                    </dl>
+                    <h4>5. 流体特性实现</h4>
+                    <dl class="dl5">
+                        <dt>手机系统</dt>
+                        <dd>Android</dd>
+                        <dt>登录方式</dt>
+                        <dd>QQ互联登录</dd>
+                        <dt>绑定事件</dt>
+                        <dd>2019-01-02 00:01</dd>
+                        <dt>绑定状态</dt>
+                        <dd>成功</dd>
+                        <dt>备注</dt>
+                        <dd>如果需要修改绑定，请联系HR进行修改</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
+
+<style>
+    /* 公共部分 */
+    dl {
+        line-height: 1.5;
+        margin: 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+
+    dd {
+        word-break: break-all;
+        text-align: right;
+        margin-left: 0;
+    }
+
+    dd:empty::before {
+        content: '-';
+        color: #999;
+    }
+
+    /* absolute实现 */
+    .dl1 dt {
+        position: absolute;
+    }
+
+    .dl1 dd {
+        margin-left: 5em;
+    }
+
+    /* flex实现 */
+    .dl2 {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .dl2 dt {
+        width: 5em;
+    }
+
+    .dl2 dd {
+        width: calc(100% - 5em);
+    }
+
+    /* grid实现 */
+    .dl3 {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-column-gap: 1em;
+    }
+
+    .dl3 dd {
+        text-align: right;
+    }
+
+    /* float实现 */
+    .dl4 dt {
+        width: 5em;
+        float: left;
+    }
+
+    .dl4 dd {
+        overflow: hidden;
+    }
+
+    /* 流体特性实现 */
+    .dl5 dd {
+        margin: -1.5em 0 0 5em;
+    }
+</style>

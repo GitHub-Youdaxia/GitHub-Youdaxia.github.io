@@ -236,28 +236,33 @@ function openMenuNavtab(id, title, url, external) {
         "external": external
     };
     sessionStorage.setItem('lastNavtab', JSON.stringify(lastNavtab));
-    BJUI.navtab({
-        id: id,
-        title: title,
-        url: url,
-        refresh: true,
-        external: external, //设置后，每个子页面要单独引入自己的js框架
-        onLoad: function () {
-            $.fn.BJUICustom.setFirstFormEleFocus();
-            // showCode();
+    if(!external){
+        BJUI.navtab({
+            id: id,
+            title: title,
+            url: url,
+            refresh: true,
+            external: external, //设置后，每个子页面要单独引入自己的js框架
+            onLoad: function () {
+                $.fn.BJUICustom.setFirstFormEleFocus();
+                // showCode();
+    
+                var $markdown = $('div.markdown');
+                var c = new Markdown.Converter();
+                $markdown.each(function () {
+                    // console.log('$(this).text():',$(this).text());
+                    // var html=c.makeHtml($(this).text());
+                    var html = parseMarkdown($(this).text());
+                    // console.log('html:',html);
+                    $(this).html(html);
+                })
+    
+            }
+        })
+    }else{
+        window.open(url)
+    }
 
-            var $markdown = $('div.markdown');
-            var c = new Markdown.Converter();
-            $markdown.each(function () {
-                // console.log('$(this).text():',$(this).text());
-                // var html=c.makeHtml($(this).text());
-                var html = parseMarkdown($(this).text());
-                // console.log('html:',html);
-                $(this).html(html);
-            })
-
-        }
-    })
 }
 
 (function ($, window, document, undefined) {
@@ -381,3 +386,11 @@ function parseMarkdown(text) {
 
     return html;
 }
+
+function getUniqueId() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16).toUpperCase();
+    });
+  }
