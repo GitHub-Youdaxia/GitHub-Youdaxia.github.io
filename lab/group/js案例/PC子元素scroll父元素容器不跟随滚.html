@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PC子元素scroll父元素容器不跟随滚</title>
+    <style>
+        .test {
+            width: 210px;
+            height: 200px;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body style="padding-left: 200px;">
+    <div id="test" class="test">
+        <div style="height: 500px;">id=test $('#test').scrollUnique();  子元素滚，父元素容器不跟随滚</div>
+    </div>
+    <div id="test2" class="test">
+        <div style="height: 500px;">id=test2 没做控制，子元素滚完父元素滚</div>
+    </div>
+
+    <div style="height:2000px;">
+
+    </div>
+
+    <script src="calculator/jquery-2.2.3.min.js"></script>
+    <script>
+        $.fn.scrollUnique = function () {
+            return $(this).each(function () {
+                var eventType = 'mousewheel';
+                if (document.mozHidden !== undefined) {
+                    eventType = 'DOMMouseScroll';
+                }
+                $(this).on(eventType, function (event) {
+                    // 一些数据
+                    var scrollTop = this.scrollTop,
+                        scrollHeight = this.scrollHeight,
+                        height = this.clientHeight;
+
+                    var delta = (event.originalEvent.wheelDelta) ? event.originalEvent.wheelDelta :
+                        -(event.originalEvent.detail || 0);
+
+                    if ((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height -
+                            scrollTop <= -1 * delta)) {
+                        // IE浏览器下滚动会跨越边界直接影响父级滚动，因此，临界时候手动边界滚动定位
+                        this.scrollTop = delta > 0 ? 0 : scrollHeight;
+                        // 向上滚 || 向下滚
+                        event.preventDefault();
+                    }
+                });
+            });
+        };
+
+        $('#test').scrollUnique();
+        //  $('.test').scrollUnique();
+    </script>
+</body>
+
+</html>

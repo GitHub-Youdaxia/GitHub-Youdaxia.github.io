@@ -91,6 +91,16 @@ $.groupData = [{
         "title": "点击页面出现文字动画效果",
         "url": "点击页面出现文字动画效果.html",
     }, {
+        "id": "id-1-15",
+        "title": "动画的缓动算法",
+        "url": "动画的缓动算法.html",
+        "external":true
+    }, {
+        "id": "id-1-15",
+        "title": "移动设备上任意元素在屏幕内惯性弹动",
+        "url": "移动设备上任意元素在屏幕内惯性弹动.html",
+        "external":true
+    }, {
         "id": "id-1-11",
         "title": "重复选择select的某一项再次触发change事件方法",
         "url": "重复选择select的某一项再次触发change事件方法.html"
