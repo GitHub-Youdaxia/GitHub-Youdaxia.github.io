@@ -150,6 +150,11 @@ $.groupData = [{
             "url": "防抖函数与节流函数.html"
         },
         {
+            "id": "id-2-11",
+            "title": "jquery插件的一般写法.html",
+            "url": "jquery插件的一般写法.html.html"
+        },
+        {
             "id": "id-2-9",
             "title": "js开发技巧",
             "url": "js开发技巧.html"
@@ -179,10 +184,6 @@ $.groupData = [{
         "id": "id-4-0",
         "title": "md5密码加密",
         "url": "md5.html"
-    }, {
-        "id": "id-4-1",
-        "title": "jquery插件一般写法",
-        "url": "jquery插件一般写法.html"
     }, {
         "id": "id-4-2",
         "title": "bootstrap下拉列表插件",

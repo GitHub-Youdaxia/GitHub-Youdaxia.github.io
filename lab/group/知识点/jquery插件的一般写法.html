@@ -1,0 +1,19 @@
+<h3>jquery插件的一般写法，扩展jquery dom 对象</h3>
+
+<pre>
+    $(function() {
+        $.fn.插件名称 = function(options) {
+           var defaults = {
+              Event : "click",        //触发响应事件
+              msg : "Holle word!"        //显示内容
+           };
+           var options = $.extend(defaults,options);
+           var $this = $(this);        //当然响应事件对象
+           //功能代码部分
+           //绑定事件
+           $this.on(options.Event,function(e){
+              alert(options.msg);
+           });
+        }
+     });
+</pre>

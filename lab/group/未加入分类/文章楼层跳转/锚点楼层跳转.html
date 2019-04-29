@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- saved from url=(0071)https://www.zhangxinxu.com/study/201804/jquery-plugin-title-anchor.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta http-equiv="description" content="文档标题自动生成锚点定位导航jQuery小插件演示页面">
+<meta name="description" content="张鑫旭web前端学习之文档标题自动生成锚点定位导航jQuery小插件演示页面实例页面">
+<meta name="keywords" content="插件,jQuery,titleNav, 锚点, 标题, 导航, 菜单">
+<meta name="author" content="张鑫旭,zhangxixnu">
+
+
+<!-- 这是插件相关的CSS -->
+<style>
+.title-nav-ul {
+	width: 200px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	box-shadow: 1px 1px 3px rgba(0,0,0,.25);
+	position: absolute;
+	top: 200px; right: 10px;
+}
+.title-nav-li {
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	color: inherit;
+}
+.title-nav-li.active {
+	font-weight: bold;
+}
+.title-nav-li:hover {
+	color: inherit;
+	background-color: #f0f0f0;
+	text-decoration: none;
+}
+</style>
+<style type="text/css">
+    
+    .block1{height: 300px;}
+    .block2{height: 500px;}
+    .block3{height: 300px;}
+    .block4{height: 400px;}
+    .block5{height: 100px;}
+</style>
+</head>
+<body style="zoom: 1;">
+<div class="zxx_out_box">
+    <div class="zxx_in_box">
+
+       <div class="title-nav block1">block1</div>
+       <div class="title-nav block2">block2</div>
+       <div class="title-nav block3">block3</div>
+       <div class="title-nav block4">block4</div>
+       <div class="title-nav block5">block5</div>
+
+
+    </div>
+</div>
+
+
+<script src="./js/jquery.min.js"></script>
+<script src="./js/jquery.titleNav.js"></script>
+<script>
+	/*
+导航中列表点击后的定位效果不需要额外写，插件已经帮忙完成了，且定位带动画哦~ 
+另外，如果滚动到底部，同时有多个标题，插件会自动定位到最后一个导航，做了相关的细节优化 
+兼容IE8+以及其他现代浏览器，以及移动端（不保证所有设备都OK）。	
+	*/ 
+$('.title-nav').titleNav();
+</script>
+
+</body></html>
