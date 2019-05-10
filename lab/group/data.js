@@ -191,14 +191,6 @@ $.groupData = [{
         "title": "md5密码加密",
         "url": "md5.html"
     }, {
-        "id": "id-4-1",
-        "title": "jquery插件一般写法",
-        "url": "jquery插件一般写法.html"
-    }, {
-        "id": "id-4-2",
-        "title": "bootstrap下拉列表插件",
-        "url": "bootstrap下拉列表插件.html"
-    }, {
         "id": "id-4-3",
         "title": "递归与异步请求",
         "url": "递归与异步请求.html"
@@ -222,10 +214,6 @@ $.groupData = [{
         "id": "id-6-0",
         "title": "远程加载模态框内容",
         "url": "远程加载模态框内容.html"
-    }, {
-        "id": "id-6-1",
-        "title": "bootstrap下拉列表插件使用",
-        "url": "bootstrap下拉列表插件.html"
     }]
 }, {
     "className": "数据库知识",
@@ -247,5 +235,9 @@ $.groupData = [{
         "id": "id-9-1",
         "title": "jquery事件命名空间用法",
         "url": "jquery事件命名空间用法.html"
+    },{
+        "id": "id-9-2",
+        "title": "jquery插件的良好写法",
+        "url": "jquery插件的良好写法.html"
     }]
 }]

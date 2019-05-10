@@ -1,0 +1,656 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>聊天插件</title>
+</head>
+
+<body>
+    <ul class="list">
+        <li>0_1</li>
+        <li>0_2</li>
+        <li>0_3</li>
+        <li>0_4</li>
+        <li>0_5</li>
+        <li>0_6</li>
+        <li>0_7</li>
+        <li>0_8</li>
+    </ul>
+
+    <script src="src/js/jquery-2.1.3.min.js"></script>
+    <script src="src/js/jquery-ui.js"></script>
+    <script src="chat.js"></script>
+    <script>
+        $(function () {
+            $('.list').on('click', 'li', function (event) {
+                var data = {
+                    tygmChatId: $(this).text(),
+                    chat_trade_name: '汇兑往账' + $(this).text(),
+                    chat_task_no: '1111222233334444',
+                    chat_send_teller_name: '审核人员1',
+                    chat_receive_teller_name: '接收人1',
+                    chatContent: [{
+                        toYou: '你好',
+                    }, {
+                        toMe: '我很好'
+                    }]
+                };
+                tygmChat.addChat(data);
+            });
+        })
+    </script>
+    <link rel="stylesheet" href="/lab/B-JUI/themes/css/bootstrap.min.css">
+    <style>
+        /*滚动条*/
+
+        .scrollStyle {
+            overflow: auto !important;
+        }
+
+        .scrollStyle::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #9a9a9a;
+        }
+
+        /* 统一柜面与营运中心 聊天窗口 开始*/
+
+        :root {
+            --white: #fff;
+            --black: #000;
+            --bg: #f8f8f8;
+            --grey: #999;
+            --dark: #1a1a1a;
+            --light: #e6e6e6;
+            --blue: #00b0ff;
+        }
+
+        #chat-plugin {
+            position: relative;
+            z-index: 32;
+        }
+
+        .tygmChatList {
+            /* position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top:0; */
+        }
+
+        .tygmChatList-item {
+            position: fixed;
+            /* top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto; */
+            width: 600px;
+            height: 562px;
+            /* border: 1px solid #ccc; */
+            /* margin-top: 90px; */
+        }
+
+        .tygmChatList-item:focus {
+            /* border: 1px solid red; */
+        }
+
+        .tygmChatList-item .left {
+            float: left;
+            width: 37.6%;
+            height: 100%;
+            border: 1px solid var(--light);
+            background-color: var(--white);
+        }
+
+        .tygmChatList-item .left .top {
+            position: relative;
+            width: 100%;
+            height: 96px;
+            padding: 29px;
+        }
+
+        .tygmChatList-item .left .top:after {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            display: block;
+            width: 80%;
+            height: 1px;
+            content: '';
+            background-color: var(--light);
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        .tygmChatList-item .left input {
+            float: left;
+            width: 188px;
+            height: 42px;
+            padding: 0 15px;
+            border: 1px solid var(--light);
+            background-color: #eceff1;
+            border-radius: 21px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 400;
+        }
+
+        .tygmChatList-item .left input:focus {
+            outline: none;
+        }
+
+        .tygmChatList-item .left a.search {
+            display: block;
+            float: left;
+            width: 42px;
+            height: 42px;
+            margin-left: 10px;
+            border: 1px solid var(--light);
+            background-color: var(--blue);
+            background-image: url("/common/images/chat/name-type.png");
+            background-repeat: no-repeat;
+            background-position: top 12px left 14px;
+            border-radius: 50%;
+        }
+
+        .tygmChatList-item .left .people {
+            margin-left: -1px;
+            border-right: 1px solid var(--light);
+            border-left: 1px solid var(--light);
+            width: calc(100% + 2px);
+        }
+
+        .tygmChatList-item .left .people .person {
+            position: relative;
+            width: 100%;
+            padding: 12px 10% 16px;
+            cursor: pointer;
+            background-color: var(--white);
+        }
+
+        .tygmChatList-item .left .people .person:after {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            display: block;
+            width: 80%;
+            height: 1px;
+            content: '';
+            background-color: var(--light);
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        .tygmChatList-item .left .people .person img {
+            float: left;
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+            border-radius: 50%;
+        }
+
+        .tygmChatList-item .left .people .person .name {
+            font-size: 14px;
+            line-height: 22px;
+            color: var(--dark);
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 600;
+        }
+
+        .tygmChatList-item .left .people .person .time {
+            font-size: 14px;
+            position: absolute;
+            top: 16px;
+            right: 10%;
+            padding: 0 0 5px 5px;
+            color: var(--grey);
+            background-color: var(--white);
+        }
+
+        .tygmChatList-item .left .people .person .preview {
+            font-size: 14px;
+            display: inline-block;
+            overflow: hidden !important;
+            width: 70%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: var(--grey);
+        }
+
+        .tygmChatList-item .left .people .person.active,
+        .tygmChatList-item .left .people .person:hover {
+            margin-top: -1px;
+            margin-left: -1px;
+            padding-top: 13px;
+            border: 0;
+            background-color: var(--blue);
+            width: calc(100% + 2px);
+            padding-left: calc(10% + 1px);
+        }
+
+        .tygmChatList-item .left .people .person.active span,
+        .tygmChatList-item .left .people .person:hover span {
+            color: var(--white);
+            background: transparent;
+        }
+
+        .tygmChatList-item .left .people .person.active:after,
+        .tygmChatList-item .left .people .person:hover:after {
+            display: none;
+        }
+
+        .tygmChatList-item .right {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+
+        }
+
+        .tygmChatList-item .right .top {
+            width: 100%;
+            height: 80px;
+            padding: 10px 15px;
+            background-color: #1da54a;
+            color: #FFF;
+        }
+
+        .tygmChatList-item .right .top>ul {
+            overflow: hidden;
+        }
+
+        .tygmChatList-item .right .top>ul>li {
+            float: left;
+            width: 50%;
+            margin-bottom: 15px;
+        }
+
+        .tygmChatList-item .right .top {
+            font-size: 15px;
+            color: #FFF;
+        }
+
+        .tygmChatList-item .right .chat::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tygmChatList-item .right .chat {
+            position: relative;
+            display: block;
+            padding: 0 35px 42px;
+            border-width: 1px 1px 1px 0;
+            border-style: solid;
+            border-color: var(--light);
+            height: 360px;
+            overflow: auto;
+            justify-content: flex-end;
+            flex-direction: column;
+        }
+
+        .tygmChatList-item .right .chat.active-chat {
+            display: block;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble {
+            transition-timing-function: cubic-bezier(0.4, -0.04, 1, 1);
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(1) {
+            -webkit-animation-duration: 0.15s;
+            animation-duration: 0.15s;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(2) {
+            -webkit-animation-duration: 0.3s;
+            animation-duration: 0.3s;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(3) {
+            -webkit-animation-duration: 0.45s;
+            animation-duration: 0.45s;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(4) {
+            -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(5) {
+            -webkit-animation-duration: 0.75s;
+            animation-duration: 0.75s;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(6) {
+            -webkit-animation-duration: 0.9s;
+            animation-duration: 0.9s;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(7) {
+            -webkit-animation-duration: 1.05s;
+            animation-duration: 1.05s;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(8) {
+            -webkit-animation-duration: 1.2s;
+            animation-duration: 1.2s;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(9) {
+            -webkit-animation-duration: 1.35s;
+            animation-duration: 1.35s;
+        }
+
+        .tygmChatList-item .right .chat.active-chat .bubble:nth-of-type(10) {
+            -webkit-animation-duration: 1.5s;
+            animation-duration: 1.5s;
+        }
+
+        .tygmChatList-item .right .write {
+
+            height: 120px;
+            border: 1px solid var(--light);
+            background-color: #eceff1;
+        }
+
+        .tygmChatList-item .right .write input {
+            font-size: 16px;
+            float: left;
+            width: 347px;
+            height: 40px;
+            padding: 0 10px;
+            color: var(--dark);
+            border: 0;
+            outline: none;
+            background-color: #eceff1;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 400;
+        }
+
+        .tygmChatList-item .right .write .write-link.attach:before {
+            float: left;
+            width: 20px;
+            height: 42px;
+            content: '';
+            background-image: url("/common/images/chat/attachment.png");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .tygmChatList-item .right .write .write-link.smiley:before {
+            float: left;
+            width: 20px;
+            height: 42px;
+            content: '';
+            background-image: url("/common/images/chat/smiley.png");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .tygmChatList-item .right .write .write-link.send:before {
+            float: left;
+            width: 20px;
+            height: 42px;
+            margin-left: 11px;
+            content: '';
+            background-image: url("/common/images/chat/send.png");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .tygmChatList-item .right .bubble {
+            font-size: 14px;
+            position: relative;
+            display: inline-block;
+            clear: both;
+            margin-bottom: 8px;
+            padding: 6px 7px;
+            vertical-align: top;
+            border-radius: 5px;
+        }
+
+        .tygmChatList-item .right .bubble:before {
+            position: absolute;
+            top: 19px;
+            display: block;
+            width: 8px;
+            height: 6px;
+            content: '\00a0';
+            -webkit-transform: rotate(29deg) skew(-35deg);
+            transform: rotate(29deg) skew(-35deg);
+        }
+
+        .tygmChatList-item .right .bubble.toYou {
+            float: left;
+            color: var(--white);
+            background-color: var(--blue);
+            align-self: flex-start;
+            -webkit-animation-name: slideFromLeft;
+            animation-name: slideFromLeft;
+        }
+
+        .tygmChatList-item .right .bubble.toYou:before {
+            left: -3px;
+            background-color: var(--blue);
+        }
+
+        .tygmChatList-item .right .bubble.toMe {
+            float: right;
+            color: var(--dark);
+            background-color: #1da54a;
+            color: #FFF;
+            align-self: flex-end;
+            -webkit-animation-name: slideFromRight;
+            animation-name: slideFromRight;
+        }
+
+        .tygmChatList-item .right .bubble.toMe:before {
+            right: -3px;
+            background-color: #1da54a;
+        }
+
+        .tygmChatList-item .right .conversation-start {
+            position: relative;
+            width: 100%;
+            margin-bottom: 27px;
+            text-align: center;
+        }
+
+        .tygmChatList-item .right .conversation-start span {
+            font-size: 14px;
+            display: inline-block;
+            color: var(--grey);
+        }
+
+        .tygmChatList-item .right .conversation-start span:before,
+        .tygmChatList-item .right .conversation-start span:after {
+            position: absolute;
+            top: 10px;
+            display: inline-block;
+            width: 30%;
+            height: 1px;
+            content: '';
+            background-color: var(--light);
+        }
+
+        .tygmChatList-item .right .conversation-start span:before {
+            left: 0;
+        }
+
+        .tygmChatList-item .right .conversation-start span:after {
+            right: 0;
+        }
+
+        .chat-title-label {
+            color: palegoldenrod;
+            display: inline-block;
+            ;
+            width: 70px;
+            text-align: right;
+        }
+
+        .write-textarea.form-control,
+        .write-textarea {
+            display: block;
+            width: 100%;
+            height: 90px;
+            resize: none;
+        }
+
+        .write-bottom {
+            height: 30px;
+        }
+
+        .write-bottom-btns {
+            float: right;
+            margin-top: 2px;
+        }
+
+        .write-bottom-btns .btn {
+            margin-left: 16px;
+        }
+
+        /* 右下角聊天提醒框 */
+
+        .tygmChatTip {
+            width: 200px;
+            height: 200px;
+            background-color: #fff;
+            position: fixed;
+            right: 0;
+            bottom: 0;
+        }
+
+        .tygmChatTip-title {
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            position: relative;
+            text-indent: 1em;
+        }
+
+        .tygmChatTip-title .tygmChatTip-close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: red;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .tygmChatTip-title .tygmChatTip-close:hover {
+            transform: scale(1.2);
+        }
+
+        .tygmChatTip-close i {
+            font-size: 16px;
+            position: relative;
+            left: -18px;
+            top: -4px;
+        }
+
+        .tygmChatTip-content {
+            font-size: 12px;
+            padding: 0 6px 6px 6px;
+            overflow: auto;
+        }
+
+        .tygmChatTip-content .replyText {
+            height: 80px;
+            text-indent: 2em;
+        }
+
+        .tygmChatTip-content-bottom {
+            margin-top: 8px;
+            border-top: 1px solid #ccc;
+            text-align: right;
+            padding-top: 4px;
+        }
+
+        .tygmChatTip-content-bottom span {
+            margin-right: 10px;
+            cursor: pointer;
+            color: blue;
+        }
+
+        .tygmChatTip-content-bottom span:hover {
+            color: #690;
+        }
+
+        .tygmChatTip-content .replyToBusinessName {
+            color: #960;
+        }
+
+        .replyToBusiness {
+            text-align: center;
+        }
+
+        /* 右下角聊天提醒框 */
+
+        /*清除浮动代码*/
+
+        .chat-content:after {
+            display: block;
+            clear: both;
+            content: "";
+            visibility: hidden;
+            height: 0;
+        }
+
+        .chat-content {
+            zoom: 1;
+        }
+
+        @keyframes slideFromLeft {
+            0% {
+                margin-left: -200px;
+                opacity: 0;
+            }
+            100% {
+                margin-left: 0;
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes slideFromLeft {
+            0% {
+                margin-left: -200px;
+                opacity: 0;
+            }
+            100% {
+                margin-left: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideFromRight {
+            0% {
+                margin-right: -200px;
+                opacity: 0;
+            }
+            100% {
+                margin-right: 0;
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes slideFromRight {
+            0% {
+                margin-right: -200px;
+                opacity: 0;
+            }
+            100% {
+                margin-right: 0;
+                opacity: 1;
+            }
+        }
+
+        /* 统一柜面与营运中心 聊天窗口 结束 */
+    </style>
+</body>
+
+</html>

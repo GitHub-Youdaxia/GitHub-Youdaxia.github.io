@@ -1,0 +1,118 @@
+<div>
+    <h4>每次打开这个navtab,jquerydom扩展方法就会重复定义一次,只做测试用</h4>
+    <p>按键放开注意按键放开了tab键的控制,以免按下时无法用tab键来切换焦点</p>
+
+
+    <div>
+        intNumberInput:
+        <input type="text" id="input2">
+    </div>
+    <div>
+        positveNumberInput:
+        <input type="text" id="input3">
+    </div>
+
+</div>
+
+
+<script>
+    /**
+     * 控制输入框只能输入数字0123456789 和退格键，上下左右，不能输进特殊字符
+     * @param
+     */
+    $.fn.intNumberInput = function () {
+        $(this).on('keydown', function (e) {
+
+            if (e.keyCode < 48 && e.keyCode != 8 && e.keyCode != 9 && e.keyCode != 37 && e.keyCode != 38 &&
+                e.keyCode != 39 &&
+                e.keyCode != 40) {
+                e.preventDefault()
+            }
+            if (e.keyCode > 57 && e.keyCode < 96) {
+                e.preventDefault()
+            }
+            if (e.keyCode > 105) {
+                e.preventDefault()
+            }
+            //禁止输入shift+1，shift+2 ...
+            if (e.shiftKey && (e.keyCode >= 48 && e.keyCode <= 57)) {
+                e.preventDefault()
+            }
+        })
+        //当输入非数字时，替换成''
+        $(this).on('keyup', function (e) {
+            //控制给输入框赋值的按键范围
+            if (e.keyCode < 48 && e.keyCode != 8 && e.keyCode != 9 && e.keyCode != 37 && e.keyCode != 38 &&
+                e.keyCode != 39 &&
+                e.keyCode != 40) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            }
+            if (e.keyCode > 57 && e.keyCode < 96) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            }
+            if (e.keyCode > 105) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            }
+
+            //禁止输入shift+1，shift+2 ...
+            if (e.shiftKey && (e.keyCode >= 48 && e.keyCode <= 57)) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            }
+
+        })
+    }
+    /**
+     * 控制输入框只能输入数字0123456789 一个. 和退格键，上下左右，不能输进特殊字符
+     * @param
+     */
+    $.fn.positveNumberInput = function () {
+        $(this).on('keydown', function (e) {
+            //允许上下左右和退格键
+            if (e.keyCode < 48 && e.keyCode != 8 && e.keyCode != 9 && e.keyCode != 37 && e.keyCode != 38 &&
+                e.keyCode != 39 &&
+                e.keyCode != 40) {
+                e.preventDefault()
+            }
+            if (e.keyCode > 57 && e.keyCode < 96) {
+                e.preventDefault()
+            }
+            if (e.keyCode > 105 && e.keyCode != 110 && e.keyCode != 190) {
+                e.preventDefault()
+            }
+            //只能输入一个.
+            if ((e.keyCode == 110 || e.keyCode == 190) && ($(this).val().indexOf('.') != -1)) {
+                e.preventDefault()
+            }
+            //禁止输入shift+1，shift+2 ...
+            if (e.shiftKey && (e.keyCode >= 48 && e.keyCode <= 57)) {
+                e.preventDefault()
+            }
+        })
+        $(this).on('keyup', function (e) {
+            //控制给输入框赋值的按键范围
+            if (e.keyCode < 48 && e.keyCode != 8 && e.keyCode != 9 && e.keyCode != 37 && e.keyCode != 38 &&
+                e.keyCode != 39 &&
+                e.keyCode != 40) {
+                $(this).val($(this).val().replace(/[^.0-9]/g, ''));
+            }
+            if (e.keyCode > 57 && e.keyCode < 96) {
+                $(this).val($(this).val().replace(/[^.0-9]/g, ''));
+            }
+            if (e.keyCode > 105 && e.keyCode != 110 && e.keyCode != 190) {
+                $(this).val($(this).val().replace(/[^.0-9]/g, ''));
+            }
+            //只能输入一个.
+            if ((e.keyCode == 110 || e.keyCode == 190) && ($(this).val().indexOf('.') != -1)) {
+                $(this).val($(this).val().replace(/[^.0-9]/g, ''));
+            }
+            //禁止输入shift+1，shift+2 ...
+            if (e.shiftKey && (e.keyCode >= 48 && e.keyCode <= 57)) {
+                $(this).val($(this).val().replace(/[^.0-9]/g, ''));
+            }
+        })
+    }
+
+
+    $('#input2').intNumberInput();
+    $('#input3').positveNumberInput();
+</script>

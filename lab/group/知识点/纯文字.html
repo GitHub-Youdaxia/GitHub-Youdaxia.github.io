@@ -10,6 +10,8 @@
     
     <pre id="text-aaa-pre">
 
+        
+
     </pre>
 
 
@@ -21,7 +23,24 @@
     对于数组遍历，如果不需要知道索引，for..of迭代更合适，因为还可以中断；
     如果需要知道索引，则forEach()更合适；对于其他字符串，类数组，类型数组的迭代，虽然for..in也有这方面能力，只是从今天的比赛场面来看，for..of更占上风
     
-    */    
+    */
+    //jquery 解除事件绑定和添加事件绑定    
+    /*
+        //获取jquery dom 对象 当前绑定的所有click事件
+        var clickEvents=$._data($('#ccc77976_4')[0])['events']['click'] 
+        //clickEvents 是一个数组可以 通过操作数组 来移除绑定的事件,也可以提前保存出来,删掉后再手动添加回去
+        //将引用对象指针保存到变量上
+        var click1=clickEvents[0];
+        //将变量指针指向空对象引用,此时解绑了索引为0的click事件
+        clickEvents[0]=null;
+        //重新绑定上之前的click1事件,恢复以前的点击事件处理功能
+        clickEvents[0]=click1
+    */  
+    /*
+        //原生js获取元素的绑定事件 window.getEventListeners(document.getElementById('demo'))
+        返回值类在控制台打开类似,未知兼容性,主要调试用到
+        "{"input":[{"useCapture":false,"passive":false,"once":false,"type":"input"}],"blur":[{"useCapture":false,"passive":false,"once":false,"type":"blur"},{"useCapture":false,"passive":false,"once":false,"type":"blur"}],"focus":[{"useCapture":false,"passive":false,"once":false,"type":"focus"}]}"        
+    */   
     </script>
 
     <script>

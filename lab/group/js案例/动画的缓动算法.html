@@ -434,6 +434,15 @@ Math.animation(0, 800 - 42, function (value) {
         //     doc.scrollTop = value;
         // });
     </script>
-</body>
 
-</html>
+    <div style="position: fixed;left: 0;top:0;height: 300px;width: 100%;background-color: #CCC;">
+        <div id="scrollEle" style="height: 1000px;overflow: scroll">11111111111</div>
+    </div>
+
+    <script>
+        $('#scrollEle').on('scroll',function(e){
+            e.stopPropagation();
+            console.log('阻止滚动事件向上冒泡');
+            
+        })
+    </script>
